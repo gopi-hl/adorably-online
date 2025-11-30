@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useId } from 'react';
 
 interface GlitchTextProps {
   children: string;
@@ -23,7 +23,9 @@ export const GlitchText: React.FC<GlitchTextProps> = ({
   continuous = true,
   as: Component = 'span',
 }) => {
-  const uniqueId = useMemo(() => Math.random().toString(36).substr(2, 9), []);
+  // useId generates stable IDs for SSR hydration
+  const reactId = useId();
+  const uniqueId = reactId.replace(/:/g, '');
 
   const intensityConfig = {
     subtle: { offset: 2, duration: 4 },
