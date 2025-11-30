@@ -92,7 +92,7 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
                      {/* Overlay Hint */}
                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
                         <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full font-mono text-sm uppercase tracking-widest font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                            View Details
+                            View Live Demo
                         </span>
                      </div>
                 </div>
@@ -186,14 +186,14 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
                 </button>
             </div>
 
-            <button 
+            <button
                 onClick={(e) => {
                     e.stopPropagation();
                     onOpenCode();
                 }}
-                className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider border px-4 py-2 rounded-full transition-all group/view dark:text-white dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/5 text-slate-700 bg-slate-50 hover:bg-slate-100 border-slate-200"
+                className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider px-4 py-2 rounded-full transition-all group/view dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 bg-slate-900 text-white hover:bg-slate-800"
             >
-                View Details <ArrowRight size={12} className="group-hover/view:translate-x-0.5 transition-transform" />
+                View Live Demo <ArrowRight size={12} className="group-hover/view:translate-x-0.5 transition-transform" />
             </button>
         </div>
       </div>

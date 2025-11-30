@@ -63,27 +63,27 @@ const PromptDetailPage: React.FC = () => {
     <div className="w-full min-h-screen animate-in slide-in-from-right duration-500 ease-out">
 
       {/* Sticky Sub-Header */}
-      <div className="sticky top-20 z-30 backdrop-blur-xl border-b px-4 md:px-6 h-14 flex items-center justify-between transition-colors duration-300 dark:bg-[#0a0a0b]/80 dark:border-white/5 bg-white/80 border-slate-200">
+      <div className="sticky top-20 z-30 px-4 md:px-6 h-12 flex items-center justify-between transition-colors duration-300">
         <Link
           to="/"
-          className="flex items-center gap-2 transition-colors group dark:text-slate-400 dark:hover:text-white text-slate-500 hover:text-slate-900"
+          className="flex items-center gap-2 transition-colors group dark:text-slate-500 dark:hover:text-white text-slate-400 hover:text-slate-900"
         >
-          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="font-mono text-xs uppercase tracking-wider font-medium">Back to Catalog</span>
+          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+          <span className="text-xs font-medium">Back to Catalog</span>
         </Link>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => toggleFavorite(prompt.id)}
-            className={`p-2 rounded-full border transition-all ${promptIsFavorite
-                ? 'bg-pink-500/10 border-pink-500/50 text-pink-500'
-                : 'dark:bg-white/5 dark:border-white/10 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/10 bg-slate-100 border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-200'
+            className={`p-1.5 rounded-full transition-all ${promptIsFavorite
+                ? 'text-pink-500'
+                : 'dark:text-slate-500 dark:hover:text-white text-slate-400 hover:text-slate-900'
               }`}
             title="Toggle Favorite"
           >
             <Heart size={16} className={promptIsFavorite ? "fill-current" : ""} />
           </button>
-          <button className="p-2 rounded-full border transition-colors dark:bg-white/5 dark:border-white/10 dark:text-slate-400 dark:hover:text-white bg-slate-100 border-slate-200 text-slate-500 hover:text-slate-900">
+          <button className="p-1.5 rounded-full transition-colors dark:text-slate-500 dark:hover:text-white text-slate-400 hover:text-slate-900">
             <Share2 size={16} />
           </button>
         </div>
@@ -139,7 +139,7 @@ const PromptDetailPage: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => setIsDrawerOpen(true)}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-4 bg-violet-600 hover:bg-violet-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-violet-500/20 hover:scale-105 active:scale-95 border border-violet-500"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold transition-all shadow-lg hover:scale-105 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 bg-slate-900 text-white hover:bg-slate-800"
               >
                 <Maximize2 size={18} />
                 View Live Demo
