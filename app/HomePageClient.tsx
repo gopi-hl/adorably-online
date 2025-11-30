@@ -68,15 +68,15 @@ const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
     <>
       {/* Hero Section */}
       <div className="text-center max-w-4xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <p className="font-mono text-violet-500 text-xs tracking-[0.2em] uppercase mb-6">AI Design Showcase</p>
+        <p className="font-mono text-violet-500 text-xs tracking-[0.2em] uppercase mb-6">UI Component Library</p>
         <h2 className={`text-5xl md:text-7xl font-bold mb-8 leading-[0.9] ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-          {prompts.length} Premium<br />
+          Build Stunning UIs<br />
           <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-violet-500 to-blue-500 pr-4">
-            Design Effects
+            In Minutes
           </span>
         </h2>
         <p className={`text-xl max-w-2xl mx-auto font-light mb-10 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-          A curated collection of modern UI effects and reusable components. Preview live, copy the prompt, or generate the React code instantly.
+          {prompts.length} production-ready React components with live previews. Copy the code, customize, and ship faster.
         </p>
       </div>
 
@@ -84,9 +84,10 @@ const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
       <div id="filter-section" className="sticky top-24 z-30 mb-12 max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
         <div className={`backdrop-blur-xl border p-2 rounded-3xl shadow-2xl transition-colors duration-300 ${isDarkMode ? 'bg-[#121214]/80 border-white/10' : 'bg-white/80 border-slate-200 shadow-slate-200/50'}`}>
           {/* Top row: Search + Filter Mode Toggle + View Mode */}
-          <div className="flex flex-col md:flex-row items-center gap-2 mb-2">
-            <div className="relative w-full md:w-72 shrink-0 group px-2">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-violet-500 transition-colors" size={18} />
+          <div className="flex flex-col md:flex-row items-center gap-2 mb-2 px-2">
+            {/* Search */}
+            <div className="relative w-full md:flex-1 group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-violet-500 transition-colors" size={18} />
               <input
                 type="text"
                 placeholder="Search effects..."
@@ -96,11 +97,12 @@ const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
               />
             </div>
 
-            <div className={`h-6 w-px hidden md:block mx-2 ${isDarkMode ? 'bg-white/10' : 'bg-slate-200'}`}></div>
+            <div className={`h-6 w-px hidden md:block ${isDarkMode ? 'bg-white/10' : 'bg-slate-200'}`}></div>
 
             {/* Filter Mode Toggle */}
-            <div className={`flex items-center gap-1 p-1 rounded-full ${isDarkMode ? 'bg-white/5' : 'bg-slate-100'}`}>
+            <div className={`flex items-center gap-1 p-1 rounded-full shrink-0 ${isDarkMode ? 'bg-white/5' : 'bg-slate-100'}`}>
               <button
+                type="button"
                 onClick={() => setFilterMode('style')}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${filterMode === 'style' ? (isDarkMode ? 'bg-white text-black' : 'bg-slate-900 text-white') : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
                 title="Filter by visual style"
@@ -109,6 +111,7 @@ const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
                 Style
               </button>
               <button
+                type="button"
                 onClick={() => setFilterMode('type')}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${filterMode === 'type' ? (isDarkMode ? 'bg-white text-black' : 'bg-slate-900 text-white') : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
                 title="Filter by component type"
@@ -118,11 +121,12 @@ const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
               </button>
             </div>
 
-            <div className={`h-6 w-px hidden md:block mx-2 ${isDarkMode ? 'bg-white/10' : 'bg-slate-200'}`}></div>
+            <div className={`h-6 w-px hidden md:block ${isDarkMode ? 'bg-white/10' : 'bg-slate-200'}`}></div>
 
             {/* View Mode Toggle */}
-            <div className={`flex items-center gap-1 p-1 rounded-full ${isDarkMode ? 'bg-white/5' : 'bg-slate-100'}`}>
+            <div className={`flex items-center gap-1 p-1 rounded-full shrink-0 ${isDarkMode ? 'bg-white/5' : 'bg-slate-100'}`}>
               <button
+                type="button"
                 onClick={() => setViewMode('list')}
                 className={`p-2 rounded-full transition-all ${viewMode === 'list' ? (isDarkMode ? 'bg-white text-black' : 'bg-white text-slate-900 shadow-sm') : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
                 title="List View"
@@ -130,6 +134,7 @@ const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
                 <LayoutList size={16} />
               </button>
               <button
+                type="button"
                 onClick={() => setViewMode('grid')}
                 className={`p-2 rounded-full transition-all ${viewMode === 'grid' ? (isDarkMode ? 'bg-white text-black' : 'bg-white text-slate-900 shadow-sm') : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
                 title="Grid View"
@@ -144,6 +149,7 @@ const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
             {filterMode === 'style' ? (
               STYLE_CATEGORIES.map(cat => (
                 <button
+                  type="button"
                   key={cat}
                   onClick={() => {
                     setActiveStyleCategory(cat);
@@ -160,6 +166,7 @@ const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
             ) : (
               TYPE_CATEGORIES.map(cat => (
                 <button
+                  type="button"
                   key={cat}
                   onClick={() => {
                     setActiveTypeCategory(cat);
@@ -184,17 +191,18 @@ const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
                 <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-violet-500/10 text-violet-500 text-xs font-medium">
                   <Layers size={12} />
                   {activeStyleCategory}
-                  <button onClick={() => setActiveStyleCategory('All')} className="ml-1 hover:text-violet-700">&times;</button>
+                  <button type="button" onClick={() => setActiveStyleCategory('All')} className="ml-1 hover:text-violet-700">&times;</button>
                 </span>
               )}
               {activeTypeCategory !== 'All' && (
                 <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-pink-500/10 text-pink-500 text-xs font-medium">
                   <Target size={12} />
                   {activeTypeCategory}
-                  <button onClick={() => setActiveTypeCategory('All')} className="ml-1 hover:text-pink-700">&times;</button>
+                  <button type="button" onClick={() => setActiveTypeCategory('All')} className="ml-1 hover:text-pink-700">&times;</button>
                 </span>
               )}
               <button
+                type="button"
                 onClick={() => { setActiveStyleCategory('All'); setActiveTypeCategory('All'); }}
                 className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 ml-auto"
               >
