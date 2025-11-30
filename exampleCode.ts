@@ -1055,25 +1055,1022 @@ const CinematicGlowHero = () => {
         <div className="relative w-full h-full min-h-[400px] flex flex-col items-center justify-center bg-black overflow-hidden">
             {/* Pulse Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-600/30 rounded-full blur-[100px] animate-pulse"></div>
-            
+
             {/* Content */}
             <div className="relative z-10 text-center px-4">
                 <h1 className="text-6xl md:text-8xl font-black text-white tracking-tighter mix-blend-overlay opacity-90 drop-shadow-lg">
                     IMPACT
                 </h1>
                 <p className="text-indigo-200 text-xs md:text-sm tracking-[0.3em] uppercase mt-4 opacity-70">The Future of Digital Experiences</p>
-                
+
                 <div className="mt-10 flex justify-center">
                      <button className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all hover:scale-110">
                          <Play size={20} fill="currentColor" />
                      </button>
                 </div>
             </div>
-            
+
             {/* Noise Overlay */}
             <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>
         </div>
     )
 }
-export default CinematicGlowHero;`
+export default CinematicGlowHero;`,
+
+  // === NEW REUSABLE UI COMPONENTS (52-71) ===
+
+  52: `import React, { useRef, useState, useCallback } from 'react';
+
+interface MagneticButtonProps {
+  children: React.ReactNode;
+  className?: string;
+  magnetStrength?: number;
+  variant?: 'default' | 'outline' | 'ghost' | 'gradient';
+}
+
+const MagneticButton: React.FC<MagneticButtonProps> = ({
+  children,
+  className = '',
+  magnetStrength = 0.4,
+  variant = 'default',
+}) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const distX = (e.clientX - centerX) * magnetStrength;
+    const distY = (e.clientY - centerY) * magnetStrength;
+    setPosition({ x: distX, y: distY });
+  }, [magnetStrength]);
+
+  const variantStyles = {
+    default: 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/25',
+    outline: 'border-2 border-violet-500 text-violet-500',
+    ghost: 'text-slate-700 hover:bg-slate-100 dark:text-slate-300',
+    gradient: 'bg-[linear-gradient(135deg,#667eea,#764ba2,#f093fb)] text-white bg-[length:200%_200%]',
+  };
+
+  return (
+    <button
+      ref={buttonRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => { setPosition({ x: 0, y: 0 }); setIsHovered(false); }}
+      onMouseEnter={() => setIsHovered(true)}
+      className={\`px-6 py-3 rounded-xl font-medium transition-all \${variantStyles[variant]} \${className}\`}
+      style={{ transform: \`translate(\${position.x}px, \${position.y}px) scale(\${isHovered ? 1.05 : 1})\` }}
+    >
+      {children}
+    </button>
+  );
+};
+
+export default MagneticButton;`,
+
+  53: `import React, { useState, useCallback } from 'react';
+
+interface RippleButtonProps {
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'success' | 'danger';
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const RippleButton: React.FC<RippleButtonProps> = ({
+  children,
+  variant = 'primary',
+  size = 'md',
+}) => {
+  const [ripples, setRipples] = useState<{ x: number; y: number; id: number }[]>([]);
+
+  const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const id = Date.now();
+    setRipples(prev => [...prev, { x, y, id }]);
+    setTimeout(() => setRipples(prev => prev.filter(r => r.id !== id)), 600);
+  }, []);
+
+  const variantStyles = {
+    primary: 'bg-violet-600 hover:bg-violet-700 text-white',
+    secondary: 'bg-slate-600 hover:bg-slate-700 text-white',
+    success: 'bg-emerald-600 hover:bg-emerald-700 text-white',
+    danger: 'bg-red-600 hover:bg-red-700 text-white',
+  };
+
+  const sizeStyles = { sm: 'px-3 py-1.5 text-sm', md: 'px-5 py-2.5', lg: 'px-7 py-3.5 text-lg' };
+
+  return (
+    <button onClick={handleClick} className={\`relative overflow-hidden rounded-lg \${variantStyles[variant]} \${sizeStyles[size]}\`}>
+      <span className="relative z-10">{children}</span>
+      {ripples.map(ripple => (
+        <span
+          key={ripple.id}
+          className="absolute rounded-full bg-white/40 animate-[ripple_0.6s_ease-out]"
+          style={{ left: ripple.x, top: ripple.y, transform: 'translate(-50%, -50%)' }}
+        />
+      ))}
+      <style>{\`@keyframes ripple { to { width: 500px; height: 500px; opacity: 0; } }\`}</style>
+    </button>
+  );
+};
+
+export default RippleButton;`,
+
+  54: `import React from 'react';
+
+interface GlowingTextProps {
+  children: React.ReactNode;
+  color?: 'violet' | 'cyan' | 'emerald' | 'pink' | 'rainbow';
+  intensity?: 'soft' | 'medium' | 'strong';
+  as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
+}
+
+const GlowingText: React.FC<GlowingTextProps> = ({
+  children,
+  color = 'violet',
+  intensity = 'medium',
+  as: Component = 'span',
+}) => {
+  const colorStyles = {
+    violet: 'text-violet-400 drop-shadow-[0_0_10px_rgba(139,92,246,0.8)]',
+    cyan: 'text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]',
+    emerald: 'text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.8)]',
+    pink: 'text-pink-400 drop-shadow-[0_0_10px_rgba(244,114,182,0.8)]',
+    rainbow: 'bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent',
+  };
+
+  const intensityStyles = {
+    soft: 'brightness-100',
+    medium: 'brightness-110',
+    strong: 'brightness-125 drop-shadow-[0_0_25px_currentColor]',
+  };
+
+  return (
+    <Component className={\`\${colorStyles[color]} \${intensityStyles[intensity]} animate-pulse\`}>
+      {children}
+    </Component>
+  );
+};
+
+export default GlowingText;`,
+
+  55: `import React, { useState, useEffect, useCallback } from 'react';
+
+interface TypingTextProps {
+  text: string | string[];
+  speed?: number;
+  deleteSpeed?: number;
+  pauseDuration?: number;
+  loop?: boolean;
+}
+
+const TypingText: React.FC<TypingTextProps> = ({
+  text,
+  speed = 100,
+  deleteSpeed = 50,
+  pauseDuration = 2000,
+  loop = true,
+}) => {
+  const texts = Array.isArray(text) ? text : [text];
+  const [displayText, setDisplayText] = useState('');
+  const [textIndex, setTextIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const typeText = useCallback(() => {
+    const currentText = texts[textIndex];
+    if (!isDeleting) {
+      if (displayText.length < currentText.length) {
+        setDisplayText(currentText.slice(0, displayText.length + 1));
+      } else if (texts.length > 1 || loop) {
+        setTimeout(() => setIsDeleting(true), pauseDuration);
+      }
+    } else {
+      if (displayText.length > 0) {
+        setDisplayText(displayText.slice(0, -1));
+      } else {
+        setIsDeleting(false);
+        setTextIndex((textIndex + 1) % texts.length);
+      }
+    }
+  }, [displayText, isDeleting, textIndex, texts, loop, pauseDuration]);
+
+  useEffect(() => {
+    const timer = setTimeout(typeText, isDeleting ? deleteSpeed : speed);
+    return () => clearTimeout(timer);
+  }, [typeText, isDeleting, speed, deleteSpeed]);
+
+  return (
+    <span className="inline-flex items-center">
+      {displayText}
+      <span className="ml-0.5 animate-pulse text-violet-500">|</span>
+    </span>
+  );
+};
+
+export default TypingText;`,
+
+  56: `import React from 'react';
+
+interface GlitchTextProps {
+  children: string;
+  intensity?: 'subtle' | 'medium' | 'intense';
+}
+
+const GlitchText: React.FC<GlitchTextProps> = ({
+  children,
+  intensity = 'medium',
+}) => {
+  const offset = { subtle: 2, medium: 4, intense: 8 }[intensity];
+
+  return (
+    <>
+      <span className="relative inline-block glitch-text" data-text={children}>
+        {children}
+      </span>
+      <style>{\`
+        .glitch-text { animation: glitch 2.5s infinite; }
+        .glitch-text::before, .glitch-text::after {
+          content: attr(data-text);
+          position: absolute;
+          top: 0;
+          left: 0;
+          opacity: 0.8;
+        }
+        .glitch-text::before {
+          color: #00ffff;
+          animation: glitch-before 2.5s infinite;
+          clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+        .glitch-text::after {
+          color: #ff0040;
+          animation: glitch-after 2.5s infinite;
+          clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        }
+        @keyframes glitch-before {
+          0%, 90%, 100% { transform: translate(0); }
+          92% { transform: translate(-\${offset}px, 0); }
+          94% { transform: translate(\${offset}px, 0); }
+        }
+        @keyframes glitch-after {
+          0%, 90%, 100% { transform: translate(0); }
+          92% { transform: translate(\${offset}px, 0); }
+          94% { transform: translate(-\${offset}px, 0); }
+        }
+      \`}</style>
+    </>
+  );
+};
+
+export default GlitchText;`,
+
+  57: `import React, { useRef, useState, useCallback } from 'react';
+
+interface ParallaxCardProps {
+  children: React.ReactNode;
+  intensity?: number;
+  glare?: boolean;
+}
+
+const ParallaxCard: React.FC<ParallaxCardProps> = ({
+  children,
+  intensity = 15,
+  glare = true,
+}) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = useState({ rotateX: 0, rotateY: 0 });
+  const [glarePos, setGlarePos] = useState({ x: 50, y: 50 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+    const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+    setTransform({ rotateX: -y * intensity, rotateY: x * intensity });
+    setGlarePos({ x: ((e.clientX - rect.left) / rect.width) * 100, y: ((e.clientY - rect.top) / rect.height) * 100 });
+  }, [intensity]);
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => { setTransform({ rotateX: 0, rotateY: 0 }); setIsHovered(false); }}
+      onMouseEnter={() => setIsHovered(true)}
+      className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
+      style={{
+        transform: \`perspective(1000px) rotateX(\${transform.rotateX}deg) rotateY(\${transform.rotateY}deg)\`,
+        transition: isHovered ? 'none' : 'transform 0.5s ease-out',
+      }}
+    >
+      <div style={{ transform: 'translateZ(20px)' }}>{children}</div>
+      {glare && isHovered && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: \`radial-gradient(circle at \${glarePos.x}% \${glarePos.y}%, rgba(255,255,255,0.15), transparent 60%)\` }}
+        />
+      )}
+    </div>
+  );
+};
+
+export default ParallaxCard;`,
+
+  58: `import React from 'react';
+
+interface MorphingBlobProps {
+  color?: 'violet' | 'cyan' | 'gradient';
+  size?: 'sm' | 'md' | 'lg';
+  blur?: boolean;
+}
+
+const MorphingBlob: React.FC<MorphingBlobProps> = ({
+  color = 'gradient',
+  size = 'md',
+  blur = true,
+}) => {
+  const sizeStyles = { sm: 'w-32 h-32', md: 'w-64 h-64', lg: 'w-96 h-96' };
+  const colorStyles = {
+    violet: 'bg-violet-500',
+    cyan: 'bg-cyan-500',
+    gradient: 'bg-gradient-to-br from-violet-500 via-pink-500 to-cyan-500',
+  };
+
+  return (
+    <div className={\`relative \${sizeStyles[size]}\`}>
+      <div
+        className={\`absolute inset-0 \${colorStyles[color]} \${blur ? 'blur-3xl' : ''} rounded-full opacity-60 animate-morph\`}
+      />
+      <style>{\`
+        @keyframes morph {
+          0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: rotate(0deg); }
+          50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: rotate(180deg); }
+        }
+        .animate-morph { animation: morph 8s ease-in-out infinite; }
+      \`}</style>
+    </div>
+  );
+};
+
+export default MorphingBlob;`,
+
+  59: `import React, { useMemo } from 'react';
+
+interface FloatingParticlesProps {
+  count?: number;
+  color?: 'violet' | 'cyan' | 'mixed';
+}
+
+const FloatingParticles: React.FC<FloatingParticlesProps> = ({
+  count = 30,
+  color = 'mixed',
+}) => {
+  const particles = useMemo(() =>
+    Array.from({ length: count }, (_, i) => ({
+      id: i,
+      size: Math.random() * 4 + 2,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      duration: Math.random() * 10 + 10,
+      delay: Math.random() * 5,
+    })), [count]);
+
+  const colors = {
+    violet: ['bg-violet-400', 'bg-violet-500'],
+    cyan: ['bg-cyan-400', 'bg-cyan-500'],
+    mixed: ['bg-violet-400', 'bg-cyan-400', 'bg-pink-400'],
+  };
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((p, i) => (
+        <div
+          key={p.id}
+          className={\`absolute rounded-full \${colors[color][i % colors[color].length]}\`}
+          style={{
+            width: p.size,
+            height: p.size,
+            left: \`\${p.x}%\`,
+            top: \`\${p.y}%\`,
+            animation: \`float-up \${p.duration}s linear infinite\`,
+            animationDelay: \`\${p.delay}s\`,
+          }}
+        />
+      ))}
+      <style>{\`@keyframes float-up { to { transform: translateY(-100vh); opacity: 0; } }\`}</style>
+    </div>
+  );
+};
+
+export default FloatingParticles;`,
+
+  60: `import React from 'react';
+
+interface GradientBorderProps {
+  children: React.ReactNode;
+  gradient?: 'rainbow' | 'sunset' | 'ocean';
+  animated?: boolean;
+}
+
+const GradientBorder: React.FC<GradientBorderProps> = ({
+  children,
+  gradient = 'rainbow',
+  animated = true,
+}) => {
+  const gradients = {
+    rainbow: 'linear-gradient(135deg, #f093fb, #f5576c, #4facfe, #00f2fe, #43e97b, #f093fb)',
+    sunset: 'linear-gradient(135deg, #fa709a, #fee140, #fa709a)',
+    ocean: 'linear-gradient(135deg, #667eea, #764ba2, #667eea)',
+  };
+
+  return (
+    <div className="relative rounded-xl group">
+      <div
+        className="absolute inset-0 rounded-xl"
+        style={{
+          background: gradients[gradient],
+          backgroundSize: animated ? '300% 300%' : '100% 100%',
+          animation: animated ? 'gradient-rotate 3s linear infinite' : 'none',
+        }}
+      />
+      <div className="relative bg-white dark:bg-[#0a0a0b] rounded-xl m-[2px]">
+        {children}
+      </div>
+      <style>{\`
+        @keyframes gradient-rotate {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      \`}</style>
+    </div>
+  );
+};
+
+export default GradientBorder;`,
+
+  61: `import React from 'react';
+
+interface SkeletonLoaderProps {
+  variant?: 'text' | 'circular' | 'rectangular' | 'rounded';
+  width?: string | number;
+  height?: string | number;
+  count?: number;
+}
+
+const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
+  variant = 'text',
+  width,
+  height,
+  count = 1,
+}) => {
+  const variantStyles = {
+    text: 'h-4 rounded',
+    circular: 'rounded-full',
+    rectangular: 'rounded-none',
+    rounded: 'rounded-xl',
+  };
+
+  return (
+    <div className="flex flex-col gap-2">
+      {Array.from({ length: count }).map((_, i) => (
+        <div
+          key={i}
+          className={\`bg-slate-200 dark:bg-slate-800 \${variantStyles[variant]} animate-shimmer\`}
+          style={{
+            width: width || '100%',
+            height: height || (variant === 'text' ? 16 : 100),
+            backgroundImage: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+            backgroundSize: '200% 100%',
+            animation: 'shimmer 1.5s infinite',
+          }}
+        />
+      ))}
+      <style>{\`@keyframes shimmer { to { background-position: 200% 0; } }\`}</style>
+    </div>
+  );
+};
+
+export default SkeletonLoader;`,
+
+  62: `import React, { useState, useEffect, useRef } from 'react';
+
+interface NumberCounterProps {
+  end: number;
+  duration?: number;
+  decimals?: number;
+  prefix?: string;
+  suffix?: string;
+}
+
+const NumberCounter: React.FC<NumberCounterProps> = ({
+  end,
+  duration = 2000,
+  decimals = 0,
+  prefix = '',
+  suffix = '',
+}) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        const startTime = performance.now();
+        const animate = (currentTime: number) => {
+          const progress = Math.min((currentTime - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          setCount(eased * end);
+          if (progress < 1) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+        observer.disconnect();
+      }
+    }, { threshold: 0.5 });
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [end, duration]);
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {prefix}{count.toFixed(decimals)}{suffix}
+    </span>
+  );
+};
+
+export default NumberCounter;`,
+
+  63: `import React, { useState, useCallback, useRef } from 'react';
+
+interface SpotlightProps {
+  children: React.ReactNode;
+  color?: string;
+  size?: number;
+}
+
+const Spotlight: React.FC<SpotlightProps> = ({
+  children,
+  color = 'rgba(139, 92, 246, 0.15)',
+  size = 400,
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative overflow-hidden"
+    >
+      <div
+        className="absolute pointer-events-none transition-opacity"
+        style={{
+          left: pos.x - size / 2,
+          top: pos.y - size / 2,
+          width: size,
+          height: size,
+          background: \`radial-gradient(circle, \${color} 0%, transparent 70%)\`,
+          filter: 'blur(80px)',
+          opacity: isHovered ? 1 : 0,
+        }}
+      />
+      <div className="relative z-10">{children}</div>
+    </div>
+  );
+};
+
+export default Spotlight;`,
+
+  64: `import React, { useState, useEffect, useRef } from 'react';
+
+interface TextRevealProps {
+  children: string;
+  direction?: 'up' | 'down' | 'left' | 'right';
+  stagger?: number;
+}
+
+const TextReveal: React.FC<TextRevealProps> = ({
+  children,
+  direction = 'up',
+  stagger = 30,
+}) => {
+  const [isRevealed, setIsRevealed] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const words = children.split(' ');
+
+  const transforms = {
+    up: { initial: 'translateY(100%)', final: 'translateY(0)' },
+    down: { initial: 'translateY(-100%)', final: 'translateY(0)' },
+    left: { initial: 'translateX(100%)', final: 'translateX(0)' },
+    right: { initial: 'translateX(-100%)', final: 'translateX(0)' },
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsRevealed(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.3 });
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="inline-flex flex-wrap gap-x-[0.25em]">
+      {words.map((word, i) => (
+        <span key={i} className="inline-block overflow-hidden">
+          <span
+            className="inline-block transition-transform duration-500"
+            style={{
+              transform: isRevealed ? transforms[direction].final : transforms[direction].initial,
+              transitionDelay: \`\${i * stagger}ms\`,
+            }}
+          >
+            {word}
+          </span>
+        </span>
+      ))}
+    </div>
+  );
+};
+
+export default TextReveal;`,
+
+  65: `import React from 'react';
+
+interface InfiniteMarqueeProps {
+  children: React.ReactNode;
+  speed?: number;
+  direction?: 'left' | 'right';
+  pauseOnHover?: boolean;
+}
+
+const InfiniteMarquee: React.FC<InfiniteMarqueeProps> = ({
+  children,
+  speed = 30,
+  direction = 'left',
+  pauseOnHover = true,
+}) => {
+  return (
+    <div className={\`overflow-hidden \${pauseOnHover ? 'group' : ''}\`}>
+      <div
+        className="flex gap-8 group-hover:[animation-play-state:paused]"
+        style={{
+          animation: \`marquee-\${direction} \${100 / speed}s linear infinite\`,
+        }}
+      >
+        <div className="flex gap-8 shrink-0">{children}</div>
+        <div className="flex gap-8 shrink-0" aria-hidden>{children}</div>
+      </div>
+      <style>{\`
+        @keyframes marquee-left { to { transform: translateX(-50%); } }
+        @keyframes marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+      \`}</style>
+    </div>
+  );
+};
+
+export default InfiniteMarquee;`,
+
+  66: `import React, { useState, useEffect, useRef } from 'react';
+
+interface RadialProgressProps {
+  value: number;
+  max?: number;
+  size?: number;
+  strokeWidth?: number;
+  color?: 'violet' | 'cyan' | 'gradient';
+}
+
+const RadialProgress: React.FC<RadialProgressProps> = ({
+  value,
+  max = 100,
+  size = 120,
+  strokeWidth = 8,
+  color = 'violet',
+}) => {
+  const [animatedValue, setAnimatedValue] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference * (1 - animatedValue / max);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        const startTime = performance.now();
+        const animate = (time: number) => {
+          const progress = Math.min((time - startTime) / 1500, 1);
+          setAnimatedValue((1 - Math.pow(1 - progress, 3)) * value);
+          if (progress < 1) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+        observer.disconnect();
+      }
+    }, { threshold: 0.5 });
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [value]);
+
+  const colors = { violet: '#8b5cf6', cyan: '#06b6d4', gradient: 'url(#gradient)' };
+
+  return (
+    <div ref={ref} className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="-rotate-90">
+        {color === 'gradient' && (
+          <defs>
+            <linearGradient id="gradient"><stop offset="0%" stopColor="#8b5cf6"/><stop offset="100%" stopColor="#06b6d4"/></linearGradient>
+          </defs>
+        )}
+        <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth={strokeWidth} />
+        <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke={colors[color]} strokeWidth={strokeWidth}
+          strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round" />
+      </svg>
+      <span className="absolute text-lg font-semibold">{Math.round(animatedValue)}%</span>
+    </div>
+  );
+};
+
+export default RadialProgress;`,
+
+  67: `import React, { useState, useRef, useEffect } from 'react';
+
+interface TooltipProps {
+  children: React.ReactNode;
+  content: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
+}
+
+const Tooltip: React.FC<TooltipProps> = ({
+  children,
+  content,
+  position = 'top',
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  const positions = {
+    top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
+    bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
+    left: 'right-full top-1/2 -translate-y-1/2 mr-2',
+    right: 'left-full top-1/2 -translate-y-1/2 ml-2',
+  };
+
+  useEffect(() => () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); }, []);
+
+  return (
+    <div
+      className="relative inline-block"
+      onMouseEnter={() => { timeoutRef.current = setTimeout(() => setIsVisible(true), 200); }}
+      onMouseLeave={() => { clearTimeout(timeoutRef.current); setIsVisible(false); }}
+    >
+      {children}
+      {isVisible && (
+        <div className={\`absolute z-50 px-3 py-2 text-sm bg-slate-900 text-white rounded-lg whitespace-nowrap \${positions[position]} animate-fade-in\`}>
+          {content}
+        </div>
+      )}
+      <style>{\`@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } } .animate-fade-in { animation: fade-in 0.15s ease-out; }\`}</style>
+    </div>
+  );
+};
+
+export default Tooltip;`,
+
+  68: `import React from 'react';
+
+interface SwitchToggleProps {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  variant?: 'default' | 'gradient' | 'glow';
+  size?: 'sm' | 'md' | 'lg';
+  label?: string;
+}
+
+const SwitchToggle: React.FC<SwitchToggleProps> = ({
+  checked,
+  onChange,
+  variant = 'default',
+  size = 'md',
+  label,
+}) => {
+  const sizes = {
+    sm: { track: 'w-8 h-4', thumb: 'w-3 h-3', translate: 'translate-x-4' },
+    md: { track: 'w-12 h-6', thumb: 'w-5 h-5', translate: 'translate-x-6' },
+    lg: { track: 'w-16 h-8', thumb: 'w-7 h-7', translate: 'translate-x-8' },
+  };
+
+  const variants = {
+    default: checked ? 'bg-violet-600' : 'bg-slate-300 dark:bg-slate-700',
+    gradient: checked ? 'bg-gradient-to-r from-violet-600 via-pink-500 to-cyan-500' : 'bg-slate-300 dark:bg-slate-700',
+    glow: checked ? 'bg-violet-600 shadow-lg shadow-violet-500/50' : 'bg-slate-300 dark:bg-slate-700',
+  };
+
+  return (
+    <label className="inline-flex items-center gap-3 cursor-pointer">
+      <div
+        role="switch"
+        aria-checked={checked}
+        onClick={() => onChange(!checked)}
+        className={\`relative rounded-full transition-all \${sizes[size].track} \${variants[variant]}\`}
+      >
+        <span className={\`absolute rounded-full bg-white transition-transform \${sizes[size].thumb} \${checked ? sizes[size].translate : 'translate-x-0.5'} top-0.5\`} />
+      </div>
+      {label && <span className="text-sm">{label}</span>}
+    </label>
+  );
+};
+
+export default SwitchToggle;`,
+
+  69: `import React from 'react';
+
+interface ShimmerCardProps {
+  children: React.ReactNode;
+  shimmerSpeed?: 'slow' | 'medium' | 'fast';
+}
+
+const ShimmerCard: React.FC<ShimmerCardProps> = ({
+  children,
+  shimmerSpeed = 'medium',
+}) => {
+  const speeds = { slow: '3s', medium: '2s', fast: '1s' };
+
+  return (
+    <div className="relative overflow-hidden rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shimmer-card">
+      <div className="relative z-10">{children}</div>
+      <div
+        className="absolute inset-0 shimmer-effect"
+        style={{
+          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+          width: 200,
+          animation: \`shimmer-slide \${speeds[shimmerSpeed]} ease-in-out infinite\`,
+        }}
+      />
+      <style>{\`
+        @keyframes shimmer-slide {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(calc(100% + 200px)); }
+        }
+      \`}</style>
+    </div>
+  );
+};
+
+export default ShimmerCard;`,
+
+  70: `import React, { useRef, useState, useCallback } from 'react';
+
+interface HoverTiltProps {
+  children: React.ReactNode;
+  maxTilt?: number;
+  glare?: boolean;
+  scale?: number;
+}
+
+const HoverTilt: React.FC<HoverTiltProps> = ({
+  children,
+  maxTilt = 15,
+  glare = true,
+  scale = 1.02,
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = useState({ rotateX: 0, rotateY: 0 });
+  const [glarePos, setGlarePos] = useState({ x: 50, y: 50 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+    const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+    setTransform({ rotateX: -y * maxTilt, rotateY: x * maxTilt });
+    setGlarePos({ x: ((e.clientX - rect.left) / rect.width) * 100, y: ((e.clientY - rect.top) / rect.height) * 100 });
+  }, [maxTilt]);
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => { setTransform({ rotateX: 0, rotateY: 0 }); setIsHovered(false); }}
+      className="relative"
+      style={{ perspective: '1000px' }}
+    >
+      <div
+        style={{
+          transform: \`rotateX(\${transform.rotateX}deg) rotateY(\${transform.rotateY}deg) scale(\${isHovered ? scale : 1})\`,
+          transition: isHovered ? 'none' : 'transform 0.4s ease-out',
+        }}
+      >
+        {children}
+        {glare && isHovered && (
+          <div
+            className="absolute inset-0 pointer-events-none rounded-[inherit]"
+            style={{ background: \`radial-gradient(circle at \${glarePos.x}% \${glarePos.y}%, rgba(255,255,255,0.2), transparent 60%)\` }}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default HoverTilt;`,
+
+  71: `import React, { useState, useEffect, useCallback, useRef } from 'react';
+
+interface MagneticCursorProps {
+  children: React.ReactNode;
+  cursorSize?: number;
+  cursorColor?: string;
+  trailEffect?: boolean;
+}
+
+const MagneticCursor: React.FC<MagneticCursorProps> = ({
+  children,
+  cursorSize = 20,
+  cursorColor = 'rgba(139, 92, 246, 0.5)',
+  trailEffect = true,
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [isInside, setIsInside] = useState(false);
+  const [trail, setTrail] = useState<{ x: number; y: number; id: number }[]>([]);
+  const idRef = useRef(0);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setPos({ x, y });
+    if (trailEffect) {
+      idRef.current++;
+      setTrail(prev => [...prev.slice(-4), { x, y, id: idRef.current }]);
+    }
+  }, [trailEffect]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.addEventListener('mousemove', handleMouseMove);
+    return () => el.removeEventListener('mousemove', handleMouseMove);
+  }, [handleMouseMove]);
+
+  return (
+    <div
+      ref={ref}
+      className="relative"
+      style={{ cursor: isInside ? 'none' : 'auto' }}
+      onMouseEnter={() => setIsInside(true)}
+      onMouseLeave={() => { setIsInside(false); setTrail([]); }}
+    >
+      {children}
+      {trailEffect && trail.map((p, i) => (
+        <div
+          key={p.id}
+          className="absolute pointer-events-none rounded-full"
+          style={{
+            left: p.x, top: p.y,
+            width: cursorSize * (0.3 + (i / 5) * 0.7),
+            height: cursorSize * (0.3 + (i / 5) * 0.7),
+            backgroundColor: cursorColor,
+            opacity: 0.2 + (i / 5) * 0.3,
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      ))}
+      {isInside && (
+        <div
+          className="absolute pointer-events-none rounded-full"
+          style={{ left: pos.x, top: pos.y, width: cursorSize, height: cursorSize, backgroundColor: cursorColor, transform: 'translate(-50%, -50%)' }}
+        />
+      )}
+    </div>
+  );
+};
+
+// MagneticElement wrapper for magnetic targets
+export const MagneticElement: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div data-magnetic>{children}</div>
+);
+
+export default MagneticCursor;`
 };

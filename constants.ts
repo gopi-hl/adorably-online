@@ -611,5 +611,186 @@ export const DESIGN_PROMPTS: DesignPrompt[] = [
     useCases: ["Gaming", "Crypto/Web3", "High-end Fashion", "Movie/Media"],
     implementationTips: ["Radial gradient background", "Animate pulse opacity", "Mix-blend-mode overlay"],
     accessibility: "Ensure text contrast against glow."
+  },
+  // === NEW REUSABLE UI COMPONENTS (52-71) ===
+  {
+    id: 52,
+    title: "Magnetic Button",
+    category: "Interaction",
+    description: "A button that follows the cursor with a magnetic pull effect. The button smoothly translates towards the mouse position within its bounds, creating an engaging interactive experience.",
+    useCases: ["Call-to-action buttons", "Navigation links", "Interactive portfolios", "Gaming interfaces"],
+    implementationTips: ["Track mouse position relative to button center", "Apply transform translate based on distance", "Use transition for smooth return on mouse leave", "Add scale effect on hover"],
+    accessibility: "Ensure button remains clickable and keyboard accessible. Motion should respect prefers-reduced-motion."
+  },
+  {
+    id: 53,
+    title: "Ripple Button",
+    category: "Interaction",
+    description: "Material Design inspired button with expanding ripple effect on click. The ripple originates from the click position and expands outward with a fade animation.",
+    useCases: ["Form submissions", "Action buttons", "Mobile-first interfaces", "Touch interactions"],
+    implementationTips: ["Track click coordinates", "Create ripple element at click position", "Animate scale and opacity", "Remove ripple after animation"],
+    accessibility: "Provides visual feedback for click actions. Ensure focus states are visible."
+  },
+  {
+    id: 54,
+    title: "Glowing Text",
+    category: "Animation",
+    description: "Text with animated neon glow effects using drop-shadow filters. Supports multiple color themes including rainbow gradients with pulsing intensity.",
+    useCases: ["Hero headlines", "Brand names", "Gaming UI", "Cyberpunk themes"],
+    implementationTips: ["Use drop-shadow filter for glow", "Layer multiple shadows for intensity", "Animate brightness/opacity", "Use background-clip for gradient text"],
+    accessibility: "Ensure base text color has sufficient contrast. Glow is decorative enhancement."
+  },
+  {
+    id: 55,
+    title: "Typing Text Animation",
+    category: "Animation",
+    description: "Typewriter effect that types out text character by character with a blinking cursor. Supports multiple strings that cycle through with delete animation.",
+    useCases: ["Hero sections", "Terminal-style interfaces", "Code demonstrations", "Interactive storytelling"],
+    implementationTips: ["Use setTimeout for character timing", "Track current character index", "Implement delete mode for cycling", "Add cursor blink animation"],
+    accessibility: "Provide complete text in aria-label. Consider prefers-reduced-motion."
+  },
+  {
+    id: 56,
+    title: "Glitch Text Effect",
+    category: "Animation",
+    description: "Cyberpunk-style glitch animation using CSS pseudo-elements with offset color layers. Creates a digital distortion effect with configurable intensity.",
+    useCases: ["Error states", "Sci-fi themes", "Gaming interfaces", "Edgy branding"],
+    implementationTips: ["Use ::before and ::after pseudo-elements", "Offset with clip-path", "Apply different colors (cyan/red)", "Randomize animation timing"],
+    accessibility: "Use sparingly. Provide alternative for users sensitive to flashing."
+  },
+  {
+    id: 57,
+    title: "Parallax 3D Card",
+    category: "Card",
+    description: "Card component with 3D perspective tilt that responds to mouse movement. Includes glare effect and depth shadow that follow the tilt angle.",
+    useCases: ["Product cards", "Portfolio items", "Profile cards", "Feature highlights"],
+    implementationTips: ["Use perspective transform on parent", "Calculate rotateX/Y from mouse position", "Add glare overlay at mouse position", "Transition on mouse leave"],
+    accessibility: "Content must be readable regardless of tilt angle."
+  },
+  {
+    id: 58,
+    title: "Morphing Blob Background",
+    category: "Background",
+    description: "Organic animated blob shapes that continuously morph using CSS border-radius animations. Perfect for ambient backgrounds with blur effects.",
+    useCases: ["Hero backgrounds", "Section dividers", "Loading screens", "Ambient decoration"],
+    implementationTips: ["Animate border-radius with many values", "Use blur filter", "Layer multiple blobs", "Apply mix-blend-mode"],
+    accessibility: "Purely decorative. Ensure sufficient contrast for overlaid content."
+  },
+  {
+    id: 59,
+    title: "Floating Particles",
+    category: "Background",
+    description: "Ambient floating particles that drift upward or in random directions. Configurable count, size, color, and speed for various atmospheres.",
+    useCases: ["Hero sections", "Night/space themes", "Celebration effects", "Ambient backgrounds"],
+    implementationTips: ["Generate particles with random positions", "Use CSS animation for movement", "Vary animation duration per particle", "Apply subtle opacity changes"],
+    accessibility: "Decorative only. Keep particle count reasonable for performance."
+  },
+  {
+    id: 60,
+    title: "Gradient Border Wrapper",
+    category: "Card",
+    description: "Container with animated gradient border that rotates through colors. Supports multiple gradient presets (rainbow, sunset, ocean) with glow effects.",
+    useCases: ["Featured content cards", "Subscription tiers", "Special announcements", "NFT displays"],
+    implementationTips: ["Use pseudo-element for gradient", "Animate background-position", "Inner container with solid background", "Add blur for glow effect"],
+    accessibility: "Border is decorative. Ensure content inside has proper contrast."
+  },
+  {
+    id: 61,
+    title: "Skeleton Loader",
+    category: "Animation",
+    description: "Customizable skeleton loading placeholders with shimmer animation. Supports various shapes including text lines, circles, and cards.",
+    useCases: ["Content loading states", "Image placeholders", "List loading", "Form loading"],
+    implementationTips: ["Use linear-gradient for shimmer", "Animate background-position", "Match skeleton to final content shape", "Provide multiple variants"],
+    accessibility: "Use aria-busy and aria-live for loading states."
+  },
+  {
+    id: 62,
+    title: "Animated Number Counter",
+    category: "Animation",
+    description: "Numbers that animate from start to end value with easing. Triggers on scroll into view with customizable duration and formatting.",
+    useCases: ["Statistics displays", "Dashboard metrics", "Achievement counters", "Pricing displays"],
+    implementationTips: ["Use requestAnimationFrame", "Apply easing function", "Intersection Observer for trigger", "Format with separators"],
+    accessibility: "Provide final value in aria-label. Don't rely solely on animation."
+  },
+  {
+    id: 63,
+    title: "Spotlight Cursor Effect",
+    category: "Interaction",
+    description: "A radial gradient spotlight that follows the cursor position, creating a flashlight effect over content. Great for dark themes.",
+    useCases: ["Dark mode emphasis", "Feature exploration", "Interactive galleries", "Mystery reveals"],
+    implementationTips: ["Track mouse position", "Position radial gradient at cursor", "Use pointer-events: none on overlay", "Smooth transition for performance"],
+    accessibility: "Decorative effect only. Content must be accessible without it."
+  },
+  {
+    id: 64,
+    title: "Text Reveal Animation",
+    category: "Animation",
+    description: "Text that reveals word-by-word or character-by-character with staggered animations. Triggers on scroll or hover with directional options.",
+    useCases: ["Hero headlines", "Section intros", "Quote displays", "Dramatic reveals"],
+    implementationTips: ["Split text into spans", "Apply staggered animation-delay", "Use overflow hidden for clip effect", "Intersection Observer for trigger"],
+    accessibility: "Full text should be available to screen readers immediately."
+  },
+  {
+    id: 65,
+    title: "Infinite Marquee",
+    category: "Animation",
+    description: "Seamlessly looping horizontal or vertical scroll animation. Perfect for logo walls, testimonials, or news tickers with pause on hover.",
+    useCases: ["Client logos", "Testimonial carousels", "News tickers", "Skill/tech stacks"],
+    implementationTips: ["Duplicate content for seamless loop", "CSS animation translateX", "Calculate duration from content width", "Pause on hover"],
+    accessibility: "Provide alternative static view. Respect prefers-reduced-motion."
+  },
+  {
+    id: 66,
+    title: "Radial Progress Circle",
+    category: "Animation",
+    description: "Circular progress indicator using SVG stroke-dasharray animation. Supports gradient colors and animated fill on scroll.",
+    useCases: ["Skill levels", "Loading progress", "Goal tracking", "Statistics visualization"],
+    implementationTips: ["SVG circle with stroke-dasharray", "Calculate circumference", "Animate stroke-dashoffset", "Rotate -90deg for top start"],
+    accessibility: "Provide percentage in accessible text. Use role='progressbar'."
+  },
+  {
+    id: 67,
+    title: "Animated Tooltip",
+    category: "Interaction",
+    description: "Tooltip component with smooth enter/exit animations. Supports multiple positions (top, bottom, left, right) and style variants.",
+    useCases: ["Help text", "Feature hints", "Abbreviation explanations", "Icon labels"],
+    implementationTips: ["Position absolute to trigger", "Animate opacity and transform", "Use delay before showing", "Arrow using border trick"],
+    accessibility: "Use aria-describedby. Ensure keyboard accessible via focus."
+  },
+  {
+    id: 68,
+    title: "Fancy Toggle Switch",
+    category: "Interaction",
+    description: "Premium toggle switch with smooth thumb animation and optional glow effect. Supports icons inside track and multiple size variants.",
+    useCases: ["Settings toggles", "Dark mode switch", "Feature flags", "Boolean inputs"],
+    implementationTips: ["Use checkbox input for accessibility", "Style with pseudo-elements", "Animate translateX for thumb", "Add focus-visible ring"],
+    accessibility: "Use proper checkbox input with label. Ensure focus states visible."
+  },
+  {
+    id: 69,
+    title: "Shimmer Card",
+    category: "Card",
+    description: "Card with a diagonal shimmer animation that sweeps across the surface. Creates a premium, polished look for featured content.",
+    useCases: ["Featured products", "Premium tiers", "New items", "Highlighted content"],
+    implementationTips: ["Linear gradient at angle", "Animate translateX across card", "Use overflow hidden", "Trigger on hover or continuous"],
+    accessibility: "Animation is decorative. Content should be accessible."
+  },
+  {
+    id: 70,
+    title: "3D Hover Tilt",
+    category: "Interaction",
+    description: "Wrapper component that adds 3D perspective tilt on hover with configurable intensity, glare effect, and smooth return animation.",
+    useCases: ["Image galleries", "Card hover effects", "Interactive elements", "Product displays"],
+    implementationTips: ["Apply perspective to parent", "Calculate tilt from mouse position", "Add glare overlay", "Smooth transition on leave"],
+    accessibility: "Purely visual enhancement. Content unchanged by tilt."
+  },
+  {
+    id: 71,
+    title: "Magnetic Cursor",
+    category: "Interaction",
+    description: "Custom cursor that replaces default cursor with styled element. Magnetizes towards interactive elements with trail effect option.",
+    useCases: ["Creative portfolios", "Agency sites", "Interactive experiences", "Art galleries"],
+    implementationTips: ["Hide default cursor", "Track mouse with requestAnimationFrame", "Detect magnetic elements with data attribute", "Add trail with delayed positions"],
+    accessibility: "Ensure all interactions work without custom cursor. Provide fallback."
   }
 ];
