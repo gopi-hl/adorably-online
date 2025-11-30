@@ -4,9 +4,11 @@ import PromptDetail from './components/PromptDetail';
 import AuthModal from './components/AuthModal';
 import PromptCard from './components/PromptCard';
 import { DesignPrompt, User } from './types';
-import { Sparkles, Github, Palette, Search, User as UserIcon, LogOut, Heart, Sun, Moon } from 'lucide-react';
+import { Sparkles, Github, Palette, Search, User as UserIcon, LogOut, Heart, Sun, Moon, LayoutList, LayoutGrid } from 'lucide-react';
 
 const CATEGORIES = ['All', 'Card', 'Layout', 'Animation', 'Interaction', 'Background'];
+
+type ViewMode = 'list' | 'grid';
 
 const App: React.FC = () => {
   const [selectedPrompt, setSelectedPrompt] = useState<DesignPrompt | null>(null);
@@ -17,6 +19,7 @@ const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
 
   // Initialize theme
   useEffect(() => {
@@ -200,7 +203,7 @@ const App: React.FC = () => {
                 <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-violet-500 transition-colors" size={18} />
                 <input 
                     type="text" 
-                    placeholder="Search effects, usage, accessibility..." 
+                    placeholder="Search effects..." 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className={`w-full bg-transparent border-none py-3 pl-12 pr-4 text-sm placeholder-slate-500 focus:outline-none focus:ring-0 font-mono ${isDarkMode ? 'text-white' : 'text-slate-900'}`}
@@ -209,7 +212,7 @@ const App: React.FC = () => {
 
                 <div className={`h-6 w-px hidden md:block mx-2 ${isDarkMode ? 'bg-white/10' : 'bg-slate-200'}`}></div>
 
-                <div className="flex items-center gap-1 w-full overflow-x-auto no-scrollbar pb-1 md:pb-0 px-2">
+                <div className="flex-1 flex items-center gap-1 w-full overflow-x-auto no-scrollbar pb-1 md:pb-0 px-2">
                 {CATEGORIES.map(cat => (
                     <button
                         key={cat}
@@ -224,6 +227,26 @@ const App: React.FC = () => {
                     </button>
                 ))}
                 </div>
+
+                {/* View Mode Toggle */}
+                <div className={`h-6 w-px hidden md:block mx-2 ${isDarkMode ? 'bg-white/10' : 'bg-slate-200'}`}></div>
+                
+                <div className={`flex items-center gap-1 p-1 rounded-full ${isDarkMode ? 'bg-white/5' : 'bg-slate-100'}`}>
+                    <button 
+                        onClick={() => setViewMode('list')}
+                        className={`p-2 rounded-full transition-all ${viewMode === 'list' ? (isDarkMode ? 'bg-white text-black' : 'bg-white text-slate-900 shadow-sm') : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                        title="List View"
+                    >
+                        <LayoutList size={16} />
+                    </button>
+                    <button 
+                        onClick={() => setViewMode('grid')}
+                        className={`p-2 rounded-full transition-all ${viewMode === 'grid' ? (isDarkMode ? 'bg-white text-black' : 'bg-white text-slate-900 shadow-sm') : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                        title="Grid View"
+                    >
+                        <LayoutGrid size={16} />
+                    </button>
+                </div>
             </div>
             </div>
         )}
@@ -236,14 +259,19 @@ const App: React.FC = () => {
             </div>
         )}
 
-        {/* Grid - Only show if no prompt selected */}
+        {/* Content Area - Only show if no prompt selected */}
         {!selectedPrompt ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-[1400px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+            <div className={viewMode === 'grid' 
+                ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-[1400px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200"
+                : "flex flex-col gap-0 max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200"
+            }>
             {filteredPrompts.length > 0 ? (
-                filteredPrompts.map((prompt) => (
+                filteredPrompts.map((prompt, index) => (
                 <PromptCard 
                     key={prompt.id}
                     prompt={prompt}
+                    index={index}
+                    viewMode={viewMode}
                     isFavorite={favorites.includes(prompt.id)}
                     onToggleFavorite={() => toggleFavorite(prompt.id)}
                     onOpenCode={() => setSelectedPrompt(prompt)}
