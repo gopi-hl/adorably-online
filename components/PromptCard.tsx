@@ -42,13 +42,13 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
     return (
       <div className="w-full py-20 border-b dark:border-white/5 border-slate-200 first:pt-0 last:border-0">
         <div className="flex flex-col lg:flex-row items-start gap-12">
-            
+
             {/* Header Section */}
             <div className="lg:w-1/3 flex flex-row lg:flex-col gap-6 lg:gap-8 sticky lg:top-32">
                  <div className="font-mono text-6xl lg:text-8xl font-bold dark:text-white/5 text-slate-300 leading-none select-none">
                     {(index + 1).toString().padStart(2, '0')}
                  </div>
-                 
+
                  <div className="flex-1">
                      <h3 className="text-2xl lg:text-3xl font-bold mb-4 dark:text-white text-slate-900 group-hover:text-violet-500 transition-colors cursor-pointer" onClick={onOpenCode}>
                         {prompt.title}
@@ -61,16 +61,16 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
                         <span className="px-3 py-1 rounded-full border dark:border-white/10 border-slate-200 dark:bg-white/5 bg-slate-100 text-xs font-mono uppercase tracking-wider dark:text-slate-400 text-slate-600">
                             {prompt.category}
                         </span>
-                        
+
                         <div className="w-px h-4 bg-slate-300 dark:bg-white/10 mx-2"></div>
-                        
+
                         <button
                             onClick={handleCopyCode}
                             className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-500 hover:text-slate-900"
                         >
                             {codeCopied ? <span className="text-green-500 flex items-center gap-1"><Check size={14}/> Copied</span> : "Copy Code"}
                         </button>
-                        
+
                         <button
                             onClick={(e) => { e.stopPropagation(); onToggleFavorite(); }}
                             className={`p-2 rounded-full transition-colors ${isFavorite ? 'text-pink-500' : 'text-slate-500 hover:text-pink-500'}`}
@@ -83,20 +83,22 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
 
             {/* Preview Section */}
             <div className="lg:w-2/3 w-full">
-                <div 
-                    className="w-full aspect-[4/3] lg:aspect-video rounded-3xl overflow-hidden border dark:border-white/5 border-slate-200 relative dark:bg-[#0a0a0b] bg-slate-50 shadow-2xl dark:shadow-black/50 shadow-slate-200/50 group cursor-pointer"
-                    onClick={onOpenCode}
+                <div
+                    className="w-full aspect-[4/3] lg:aspect-video rounded-3xl overflow-hidden border dark:border-white/5 border-slate-200 relative dark:bg-[#0a0a0b] bg-slate-50 shadow-2xl dark:shadow-black/50 shadow-slate-200/50 group"
                 >
-                     <div className="absolute inset-0 dark:bg-[#0f0f1a] bg-white transition-transform duration-700 group-hover:scale-[1.02]">
+                     <div className="absolute inset-0 dark:bg-[#0f0f1a] bg-white">
                         {LiveComponent ? LiveComponent : <GenericExample title={prompt.title} />}
                      </div>
-                     
-                     {/* Overlay Hint */}
-                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                        <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full font-mono text-sm uppercase tracking-widest font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                            View Live Demo
-                        </span>
-                     </div>
+
+                     {/* Small Docked Button - Bottom Right */}
+                     <button
+                        onClick={onOpenCode}
+                        className="absolute bottom-4 right-4 flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all dark:bg-white/10 dark:hover:bg-white dark:text-white dark:hover:text-black bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-sm border dark:border-white/20 border-transparent shadow-lg z-10"
+                     >
+                        <Code2 size={14} />
+                        Live Demo
+                        <ArrowRight size={12} />
+                     </button>
                 </div>
             </div>
         </div>
