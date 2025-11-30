@@ -1,5 +1,7 @@
 // Reusable UI Components
-// A collection of 20 innovative, out-of-the-box thinking components
+// A collection of 40+ innovative, out-of-the-box thinking components for SaaS
+
+// ============ ORIGINAL COMPONENTS ============
 
 // Buttons
 export { MagneticButton } from './MagneticButton';
@@ -35,3 +37,63 @@ export { InfiniteMarquee, MarqueeItem } from './InfiniteMarquee';
 export { TooltipWrapper } from './TooltipWrapper';
 export { SwitchToggle } from './SwitchToggle';
 export { MagneticCursor, MagneticElement } from './MagneticCursor';
+
+// ============ NEW SAAS COMPONENTS (React Motion) ============
+
+// Pricing
+export { AnimatedPricingCard, AnimatedPricingGrid } from './AnimatedPricingCard';
+
+// Testimonials (5 variants: cards, wall, featured, minimal, video)
+export { TestimonialCarousel } from './TestimonialCarousel';
+export { TestimonialShowcase } from './TestimonialShowcase';
+
+// Stats & Metrics
+export { AnimatedStatsCounter } from './AnimatedStatsCounter';
+
+// Timeline & Process
+export { ProcessTimeline } from './ProcessTimeline';
+
+// Feature Layouts
+export { FeatureBento } from './FeatureBento';
+export { FeatureTabs } from './FeatureTabs';
+
+// Logo & Brand
+export { LogoCloud } from './LogoCloud';
+export { IntegrationOrbit } from './IntegrationOrbit';
+
+// CTA & Banners
+export { CTABanner } from './CTABanner';
+
+// Notifications
+export { NotificationToast, useToast } from './NotificationToast';
+
+// Text Animation (6 variants: fade, slide, flip, blur, typewriter, scramble)
+export { MorphingText } from './MorphingText';
+
+// Dashboard Mockups (4 variants: 3d-tilt, float, parallax, perspective)
+export { FloatingDashboard } from './FloatingDashboard';
+
+// FAQ (4 variants: accordion, cards, minimal, chat)
+export { AnimatedFAQ } from './AnimatedFAQ';
+
+// Scroll Animations
+export {
+  ScrollRevealSection,
+  ParallaxSection,
+  ScaleOnScroll,
+  RotateOnScroll,
+  OpacityOnScroll,
+  StickySection
+} from './ScrollRevealSection';
+
+// Navigation (4 variants: default, floating, minimal, centered)
+export { AnimatedNav } from './AnimatedNav';
+
+// Cards with Glow (4 variants: default, spotlight, border, ambient)
+export { GlowingCard } from './GlowingCard';
+
+// Card Stacks (4 variants: stack, fan, tinder, deck)
+export { StackedCards } from './StackedCards';
+
+// Sliders (4 variants: default, gradient, glow, stepped)
+export { ElasticSlider } from './ElasticSlider';

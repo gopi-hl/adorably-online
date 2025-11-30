@@ -792,5 +792,186 @@ export const DESIGN_PROMPTS: DesignPrompt[] = [
     useCases: ["Creative portfolios", "Agency sites", "Interactive experiences", "Art galleries"],
     implementationTips: ["Hide default cursor", "Track mouse with requestAnimationFrame", "Detect magnetic elements with data attribute", "Add trail with delayed positions"],
     accessibility: "Ensure all interactions work without custom cursor. Provide fallback."
+  },
+  // === NEW SAAS COMPONENTS WITH REACT MOTION (72-91) ===
+  {
+    id: 72,
+    title: "Animated Pricing Cards",
+    category: "Card",
+    description: "Premium pricing cards with staggered reveal animations, hover lift effects, animated checkmarks, and highlighted tier with glowing border. Built with Framer Motion spring physics.",
+    useCases: ["SaaS pricing pages", "Subscription tiers", "Plan comparisons", "Upgrade prompts"],
+    implementationTips: ["Use spring animations for natural feel", "Stagger feature list items", "Add badge animation for highlighted tier", "Scale on hover with shadow depth"],
+    accessibility: "Ensure pricing information is readable. Focus states for keyboard navigation."
+  },
+  {
+    id: 73,
+    title: "Testimonial Showcase",
+    category: "Layout",
+    description: "5 testimonial variants: Cards Grid, Masonry Wall, Featured Large, Minimal Style, and Video Testimonials. Each with smooth transitions and hover effects using Framer Motion.",
+    useCases: ["Social proof sections", "Customer stories", "Reviews display", "Case study highlights"],
+    implementationTips: ["Use AnimatePresence for smooth transitions", "Implement drag gesture for carousel", "Stagger card animations on scroll", "Add quote icon animation"],
+    accessibility: "Include author attribution. Ensure quotes are properly marked up."
+  },
+  {
+    id: 74,
+    title: "Animated Stats Counter",
+    category: "Animation",
+    description: "Animated number counters with 3 variants: Cards with icons, Inline gradient style, and Minimal with animated borders. Numbers animate on scroll into view with spring physics.",
+    useCases: ["Metrics display", "Achievement counters", "Dashboard KPIs", "Social proof numbers"],
+    implementationTips: ["Use useSpring for smooth counting", "Intersection Observer trigger", "Add trend indicators", "Format large numbers with separators"],
+    accessibility: "Provide final values in aria-label. Don't rely solely on animation."
+  },
+  {
+    id: 75,
+    title: "Process Timeline",
+    category: "Layout",
+    description: "Animated timeline with 2 variants: Vertical with scroll-linked line animation and Horizontal with staggered steps. Supports completed, current, and upcoming states with pulse effects.",
+    useCases: ["Onboarding flows", "Feature roadmaps", "How it works sections", "Project milestones"],
+    implementationTips: ["Use useScroll for progress line", "Pulse animation for current step", "Stagger step reveals on scroll", "Counter-rotate icons to stay upright"],
+    accessibility: "Use proper list semantics. Ensure status is communicated beyond color."
+  },
+  {
+    id: 76,
+    title: "Feature Bento Grid",
+    category: "Layout",
+    description: "Masonry-style bento grid with staggered reveal animations, spotlight hover effect, and configurable spans. Built with Framer Motion for smooth entrance and hover states.",
+    useCases: ["Feature showcases", "Dashboard layouts", "Portfolio grids", "Service highlights"],
+    implementationTips: ["Use CSS Grid with span classes", "Add mouse-tracking spotlight effect", "Stagger entrance animations", "Animate borders on hover"],
+    accessibility: "Maintain logical reading order. Ensure all content is keyboard accessible."
+  },
+  {
+    id: 77,
+    title: "Logo Cloud",
+    category: "Layout",
+    description: "3 variants for displaying partner/client logos: Grid with hover effects, Infinite scroll marquee, and Simple fade layout. Supports grayscale filter with color on hover.",
+    useCases: ["Client logos", "Partner badges", "Integration showcases", "Trust signals"],
+    implementationTips: ["Duplicate logos for seamless scroll", "Fade edges with mask-image", "Pause on hover", "Grayscale to color transition"],
+    accessibility: "Include alt text for all logos. Marquee should respect prefers-reduced-motion."
+  },
+  {
+    id: 78,
+    title: "CTA Banner",
+    category: "Card",
+    description: "4 CTA banner variants: Gradient with shimmer, Glass morphism, Dark solid, and Bordered. Includes animated background patterns, floating elements, and spring button animations.",
+    useCases: ["Newsletter signups", "Free trial prompts", "Upgrade CTAs", "Contact sections"],
+    implementationTips: ["Animate background gradient position", "Add floating decorative elements", "Use spring physics for buttons", "Include noise texture overlay"],
+    accessibility: "Clear call-to-action text. Sufficient contrast for all variants."
+  },
+  {
+    id: 79,
+    title: "Feature Tabs",
+    category: "Interaction",
+    description: "3 tab variants: Pills with sliding background, Underline with animated indicator, and Cards with selection state. Smooth content transitions using AnimatePresence.",
+    useCases: ["Feature comparisons", "Settings panels", "Content switchers", "Multi-step forms"],
+    implementationTips: ["Use layoutId for tab indicator", "AnimatePresence for content", "Spring physics for smooth motion", "Stagger card entrances"],
+    accessibility: "Use ARIA tabs pattern. Ensure keyboard navigation works correctly."
+  },
+  {
+    id: 80,
+    title: "Integration Orbit",
+    category: "Animation",
+    description: "Circular orbiting integration logos around a central element. Supports pause on hover, tooltip on item hover, and counter-rotation to keep items upright.",
+    useCases: ["Integration showcases", "Ecosystem visualization", "Technology stack", "Partner networks"],
+    implementationTips: ["Use transform rotate for orbit", "Counter-rotate items to stay upright", "Pause animation on hover", "Show tooltip for hovered item"],
+    accessibility: "Provide list of integrations for screen readers. Pause should be keyboard accessible."
+  },
+  {
+    id: 81,
+    title: "Notification Toast",
+    category: "Interaction",
+    description: "Animated toast notification system with 4 types (success, error, warning, info), auto-dismiss with progress bar, and stacked positioning. Includes useToast hook.",
+    useCases: ["Success messages", "Error alerts", "System notifications", "Action confirmations"],
+    implementationTips: ["Use AnimatePresence for enter/exit", "Spring physics for slide in", "Progress bar tied to duration", "Support action buttons"],
+    accessibility: "Use aria-live for announcements. Ensure toasts don't block content."
+  },
+  {
+    id: 82,
+    title: "Morphing Text",
+    category: "Animation",
+    description: "6 text animation variants: Fade, Slide up, Flip 3D, Blur, Typewriter with cursor, and Scramble effect. Cycles through array of texts with configurable interval.",
+    useCases: ["Hero headlines", "Role/title cycling", "Feature highlights", "Loading messages"],
+    implementationTips: ["AnimatePresence for smooth transitions", "Scramble uses random characters", "Typewriter has blinking cursor", "Support prefix/suffix text"],
+    accessibility: "Full text available to screen readers. Respect prefers-reduced-motion."
+  },
+  {
+    id: 83,
+    title: "Floating Dashboard",
+    category: "Hero",
+    description: "4 dashboard mockup variants: 3D Tilt following mouse, Float with gentle animation, Parallax on scroll, and Perspective with scroll reveal. Includes glow effect and browser chrome.",
+    useCases: ["SaaS hero sections", "Product showcases", "App previews", "Feature demos"],
+    implementationTips: ["Use perspective transform", "Track mouse for 3D tilt", "Add glare effect overlay", "Include browser chrome for context"],
+    accessibility: "Decorative element. Ensure actual content is accessible separately."
+  },
+  {
+    id: 84,
+    title: "Animated FAQ",
+    category: "Interaction",
+    description: "4 FAQ variants: Classic Accordion with spring animation, Cards Grid with modal, Minimal with plus icon rotation, and Chat-style with progressive reveal.",
+    useCases: ["FAQ sections", "Help documentation", "Support pages", "Knowledge bases"],
+    implementationTips: ["Use AnimatePresence for expand/collapse", "Spring physics for smooth open", "Rotate icon on toggle", "Chat variant reveals progressively"],
+    accessibility: "Use proper disclosure pattern. ARIA expanded states required."
+  },
+  {
+    id: 85,
+    title: "Scroll Reveal Section",
+    category: "Animation",
+    description: "Multiple scroll-triggered animations: Fade, Slide variants, Scale, Blur, and Split. Plus ParallaxSection, ScaleOnScroll, RotateOnScroll, OpacityOnScroll, and StickySection.",
+    useCases: ["Section entrances", "Content reveals", "Scroll storytelling", "Landing page effects"],
+    implementationTips: ["Use useInView for trigger", "useScroll for progress-based effects", "Support staggered children", "Configure threshold for trigger point"],
+    accessibility: "Content must be accessible without animation. Respect prefers-reduced-motion."
+  },
+  {
+    id: 86,
+    title: "Animated Navigation",
+    category: "Layout",
+    description: "4 navigation variants: Default with dropdowns, Floating pill style, Minimal inline, and Centered layout. Supports hide on scroll, transparency, and mobile menu.",
+    useCases: ["Site headers", "App navigation", "Landing pages", "Dashboard layouts"],
+    implementationTips: ["Track scroll for hide/show", "AnimatePresence for mobile menu", "Dropdown with hover delay", "Floating variant with shadow"],
+    accessibility: "Full keyboard navigation. Mobile menu properly announced."
+  },
+  {
+    id: 87,
+    title: "Glowing Card",
+    category: "Card",
+    description: "4 glow variants: Default with outer glow, Spotlight following cursor, Border with rotating gradient, and Ambient with pulsing multi-layer glow. Configurable color and intensity.",
+    useCases: ["Featured content", "Premium features", "Call-to-action cards", "Highlight sections"],
+    implementationTips: ["Use blur filter for glow", "Track mouse for spotlight", "Conic gradient for border", "Layer multiple glows for ambient"],
+    accessibility: "Glow is decorative. Content must be accessible without effect."
+  },
+  {
+    id: 88,
+    title: "Stacked Cards",
+    category: "Card",
+    description: "4 card stack variants: Stack with click to cycle, Fan with hover selection, Tinder with swipe gestures, and Deck with navigation arrows. All with spring physics.",
+    useCases: ["Flashcards", "Onboarding steps", "Swipe interfaces", "Content carousels"],
+    implementationTips: ["Use drag gestures for swipe", "Calculate offset for stacking", "Spring physics for smooth motion", "Support keyboard navigation"],
+    accessibility: "Keyboard alternatives for swipe. Announce current card to screen readers."
+  },
+  {
+    id: 89,
+    title: "Elastic Slider",
+    category: "Interaction",
+    description: "4 slider variants: Default with thumb, Gradient with animated fill, Glow with shadow effect, and Stepped with marks. All support drag gestures and spring animations.",
+    useCases: ["Volume controls", "Price filters", "Settings adjustment", "Range selection"],
+    implementationTips: ["Track drag for value update", "Spring for elastic feel", "Pulse effect while dragging", "Step snapping with marks"],
+    accessibility: "Use proper slider ARIA pattern. Keyboard increment support required."
+  },
+  {
+    id: 90,
+    title: "Testimonial Carousel",
+    category: "Card",
+    description: "3D carousel testimonials with drag gesture support, perspective rotation, auto-play with pause on hover, and navigation dots. Built with Framer Motion for smooth 3D transforms.",
+    useCases: ["Customer testimonials", "Reviews showcase", "Quote rotator", "Social proof"],
+    implementationTips: ["Use perspective for 3D effect", "Calculate rotation from drag", "Swipe detection with thresholds", "Auto-play with intersection"],
+    accessibility: "Include pause control. Full quotes available to screen readers."
+  },
+  {
+    id: 91,
+    title: "Animated Counter",
+    category: "Animation",
+    description: "Spring-physics number counter that animates from 0 to target value on scroll into view. Supports prefixes, suffixes, decimals, and locale formatting.",
+    useCases: ["Statistics display", "Metrics counters", "Progress indicators", "Achievement numbers"],
+    implementationTips: ["useSpring for smooth counting", "useInView for trigger", "Format with toLocaleString", "Support decimal places"],
+    accessibility: "Announce final value. Don't rely solely on animation for information."
   }
 ];
