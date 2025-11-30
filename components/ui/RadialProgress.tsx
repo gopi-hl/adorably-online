@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useId, useMemo } from 'react';
 
 interface RadialProgressProps {
   value: number;
@@ -50,7 +50,11 @@ export const RadialProgress: React.FC<RadialProgressProps> = ({
     gradient: '',
   };
 
-  const gradientId = `radial-gradient-${Math.random().toString(36).substr(2, 9)}`;
+  const reactId = useId();
+  const gradientId = useMemo(() => {
+    const sanitized = reactId.replace(/[^a-zA-Z0-9-_]/g, '');
+    return `radial-gradient-${sanitized || 'gradient'}`;
+  }, [reactId]);
 
   useEffect(() => {
     if (!animated) {

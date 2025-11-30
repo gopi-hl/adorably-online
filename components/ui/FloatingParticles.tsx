@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useId } from 'react';
 
 interface Particle {
   id: number;
@@ -23,6 +23,31 @@ interface FloatingParticlesProps {
   interactive?: boolean;
 }
 
+const sanitizeId = (value: string, fallback: string) => {
+  const sanitized = value.replace(/[^a-zA-Z0-9-_]/g, '');
+  return sanitized || fallback;
+};
+
+const hashStringToSeed = (value: string) => {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash << 5) - hash + value.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash) || 1;
+};
+
+const createDeterministicRandom = (seedInput: number) => {
+  let seed = seedInput;
+  return () => {
+    seed += 0x6d2b79f5;
+    let t = seed;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+};
+
 export const FloatingParticles: React.FC<FloatingParticlesProps> = ({
   className = '',
   count = 30,
@@ -33,6 +58,12 @@ export const FloatingParticles: React.FC<FloatingParticlesProps> = ({
   direction = 'up',
   interactive = false,
 }) => {
+  const reactId = useId();
+  const seed = useMemo(
+    () => hashStringToSeed(sanitizeId(reactId, 'floating-particles')),
+    [reactId]
+  );
+
   const speedMultiplier = {
     slow: 1.5,
     medium: 1,
@@ -47,16 +78,19 @@ export const FloatingParticles: React.FC<FloatingParticlesProps> = ({
   };
 
   const particles = useMemo<Particle[]>(() => {
+    const random = createDeterministicRandom(seed);
+    const randomBetween = (min: number, max: number) => random() * (max - min) + min;
+
     return Array.from({ length: count }, (_, i) => ({
       id: i,
-      size: Math.random() * (maxSize - minSize) + minSize,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      duration: (Math.random() * 10 + 10) * speedMultiplier[speed],
-      delay: Math.random() * 5,
-      opacity: Math.random() * 0.5 + 0.3,
+      size: randomBetween(minSize, maxSize),
+      x: random() * 100,
+      y: random() * 100,
+      duration: randomBetween(10, 20) * speedMultiplier[speed],
+      delay: random() * 5,
+      opacity: randomBetween(0.3, 0.8),
     }));
-  }, [count, minSize, maxSize, speed]);
+  }, [count, seed, minSize, maxSize, speed]);
 
   const getColorClass = (index: number) => {
     const colors = colorStyles[color];
