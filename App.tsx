@@ -4,9 +4,9 @@ import PromptDetail from './components/PromptDetail';
 import AuthModal from './components/AuthModal';
 import PromptCard from './components/PromptCard';
 import { DesignPrompt, User } from './types';
-import { Sparkles, Github, Palette, Search, User as UserIcon, LogOut, Heart, Sun, Moon, LayoutList, LayoutGrid } from 'lucide-react';
+import { Sparkles, Github, Palette, Search, User as UserIcon, LogOut, Heart, Sun, Moon, LayoutList, LayoutGrid, ArrowRight } from 'lucide-react';
 
-const CATEGORIES = ['All', 'Card', 'Layout', 'Animation', 'Interaction', 'Background'];
+const CATEGORIES = ['All', 'Hero', 'Card', 'Layout', 'Animation', 'Interaction', 'Background'];
 
 type ViewMode = 'list' | 'grid';
 
@@ -68,6 +68,11 @@ const App: React.FC = () => {
     });
   }, [searchQuery, activeCategory, favorites, showFavoritesOnly]);
 
+  const handleOpenDetail = (prompt: DesignPrompt) => {
+    setSelectedPrompt(prompt);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
   const handleCloseDetail = () => {
     setSelectedPrompt(null);
   };
@@ -78,6 +83,14 @@ const App: React.FC = () => {
     setShowFavoritesOnly(false);
     setSearchQuery('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleViewHeroDesigns = () => {
+    setActiveCategory('Hero');
+    const filterSection = document.getElementById('filter-section');
+    if (filterSection) {
+      filterSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -183,20 +196,29 @@ const App: React.FC = () => {
             <div className="text-center max-w-4xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <p className="font-mono text-violet-500 text-xs tracking-[0.2em] uppercase mb-6">AI Design Showcase</p>
             <h2 className={`text-5xl md:text-7xl font-bold mb-8 leading-[0.9] ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                45 Premium<br />
+                51 Premium<br />
                 <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-violet-500 to-blue-500 pr-4">
                 Design Effects
                 </span>
             </h2>
-            <p className={`text-xl max-w-2xl mx-auto font-light ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                A curated collection of modern UI effects and animations. Preview live, copy the prompt, or generate the React code instantly.
+            <p className={`text-xl max-w-2xl mx-auto font-light mb-10 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                A curated collection of modern UI effects, including <span className="text-violet-500 font-medium">6 new Hero Sections</span>. Preview live, copy the prompt, or generate the React code instantly.
             </p>
+            <div className="flex justify-center gap-4">
+               <button 
+                  onClick={handleViewHeroDesigns}
+                  className="flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-bold shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform"
+               >
+                  <Sparkles size={18} className="text-violet-600" />
+                  View New Hero Designs
+               </button>
+            </div>
             </div>
         )}
 
         {/* Search & Filter - Only show if no prompt selected */}
         {!selectedPrompt && (
-            <div className="sticky top-24 z-30 mb-12 max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
+            <div id="filter-section" className="sticky top-24 z-30 mb-12 max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
             <div className={`backdrop-blur-xl border p-2 rounded-full shadow-2xl flex flex-col md:flex-row items-center gap-2 transition-colors duration-300 ${isDarkMode ? 'bg-[#121214]/80 border-white/10' : 'bg-white/80 border-slate-200 shadow-slate-200/50'}`}>
                 
                 <div className="relative w-full md:w-72 shrink-0 group px-2">
@@ -217,13 +239,19 @@ const App: React.FC = () => {
                     <button
                         key={cat}
                         onClick={() => setActiveCategory(cat)}
-                        className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all font-mono ${
+                        className={`relative px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all font-mono ${
                         activeCategory === cat 
                             ? (isDarkMode ? 'bg-white text-black' : 'bg-slate-900 text-white')
                             : (isDarkMode ? 'text-slate-500 hover:text-white hover:bg-white/5' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100')
                         }`}
                     >
                         {cat}
+                        {cat === 'Hero' && (
+                          <span className="absolute top-0 right-0 flex h-2.5 w-2.5 translate-x-1/2 -translate-y-1/4">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-pink-500"></span>
+                          </span>
+                        )}
                     </button>
                 ))}
                 </div>
@@ -274,7 +302,7 @@ const App: React.FC = () => {
                     viewMode={viewMode}
                     isFavorite={favorites.includes(prompt.id)}
                     onToggleFavorite={() => toggleFavorite(prompt.id)}
-                    onOpenCode={() => setSelectedPrompt(prompt)}
+                    onOpenCode={() => handleOpenDetail(prompt)}
                 />
                 ))
             ) : (

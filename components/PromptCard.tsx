@@ -76,15 +76,6 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
                             <Heart size={18} className={isFavorite ? "fill-current" : ""} />
                         </button>
                      </div>
-
-                     <div className="mt-8">
-                         <button 
-                            onClick={onOpenCode}
-                            className="flex items-center gap-2 text-sm font-bold border-b-2 border-violet-500 pb-1 hover:pr-4 transition-all dark:text-white text-slate-900"
-                         >
-                            View Implementation <ArrowRight size={16} />
-                         </button>
-                     </div>
                  </div>
             </div>
 

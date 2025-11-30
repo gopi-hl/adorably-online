@@ -3,7 +3,7 @@ export interface DesignPrompt {
   id: number;
   title: string;
   description: string;
-  category: 'Card' | 'Layout' | 'Animation' | 'Interaction' | 'Background';
+  category: 'Card' | 'Layout' | 'Animation' | 'Interaction' | 'Background' | 'Hero';
   useCases?: string[];
   implementationTips?: string[];
   accessibility?: string;

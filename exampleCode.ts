@@ -1,5 +1,7 @@
 
 
+
+
 export const CODE_EXAMPLES: Record<number, string> = {
   1: `import React from 'react';
 
@@ -920,5 +922,158 @@ const AccordionSpring = () => {
         </div>
     )
 }
-export default AccordionSpring;`
+export default AccordionSpring;`,
+
+  46: `import React from 'react';
+
+const PerspectiveDashboardHero = () => {
+    return (
+        <div className="relative w-full h-[300px] flex items-center justify-center perspective-1000 overflow-hidden bg-slate-50 dark:bg-[#0a0a0b]">
+            <div className="relative w-80 h-56 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl animate-float [transform:rotateX(20deg)_rotateY(-10deg)_rotateZ(2deg)]">
+                <div className="absolute inset-x-0 top-0 h-8 border-b dark:border-white/10 border-slate-200 flex items-center px-4 gap-2">
+                    <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                </div>
+                <div className="p-4 pt-10 grid grid-cols-2 gap-3">
+                    <div className="h-20 bg-slate-100 dark:bg-white/5 rounded-lg"></div>
+                    <div className="h-20 bg-slate-100 dark:bg-white/5 rounded-lg"></div>
+                    <div className="col-span-2 h-16 bg-slate-100 dark:bg-white/5 rounded-lg"></div>
+                </div>
+            </div>
+        </div>
+    )
+}
+export default PerspectiveDashboardHero;`,
+
+  47: `import React from 'react';
+
+const FloatingPhoneMockup = () => {
+    return (
+        <div className="w-full h-[400px] flex items-center justify-center bg-slate-100 dark:bg-[#0f0f1a]">
+            <div className="w-48 h-80 bg-black rounded-[30px] p-2 shadow-2xl animate-float border-[4px] border-slate-800">
+                <div className="w-full h-full bg-slate-900 rounded-[24px] overflow-hidden relative">
+                    <div className="absolute top-0 inset-x-0 h-6 bg-black z-20 flex justify-center">
+                        <div className="w-16 h-4 bg-black rounded-b-xl"></div>
+                    </div>
+                    <div className="p-4 pt-10 space-y-3">
+                        <div className="w-12 h-12 rounded-full bg-white/10"></div>
+                        <div className="w-3/4 h-4 bg-white/10 rounded"></div>
+                        <div className="w-1/2 h-4 bg-white/10 rounded"></div>
+                        <div className="w-full h-24 bg-white/5 rounded-xl mt-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+export default FloatingPhoneMockup;`,
+
+  48: `import React from 'react';
+
+const RetroHorizonGrid = () => {
+    return (
+        <div className="relative w-full h-[300px] bg-[#050510] overflow-hidden flex flex-col items-center justify-center">
+            <div className="absolute inset-0 bg-[linear-gradient(transparent_0%,#a855f7_100%)] opacity-20"></div>
+            <div className="absolute inset-0 perspective-1000">
+                <div className="absolute inset-0 [transform:rotateX(60deg)] origin-bottom h-[200%] -top-[50%] bg-[linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:40px_40px] animate-grid-flow"></div>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent to-[#050510] h-full"></div>
+            <h1 className="relative z-10 text-5xl font-black italic text-transparent bg-clip-text bg-gradient-to-b from-fuchsia-400 to-purple-700 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">RETRO</h1>
+        </div>
+    )
+}
+export default RetroHorizonGrid;`,
+
+  49: `import React from 'react';
+
+const ModernSaaSHero = () => {
+    return (
+        <div className="w-full h-full min-h-[400px] flex flex-col items-center justify-center p-6 text-center bg-slate-50 dark:bg-[#0a0a0b] overflow-hidden">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 text-violet-500 text-xs font-bold mb-4 border border-violet-500/20">
+                 <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse"></span>
+                 New Release 2.0
+             </div>
+             <h1 className="text-4xl md:text-5xl font-bold dark:text-white text-slate-900 mb-4">
+                 Build faster with <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-pink-500">AI Power</span>
+             </h1>
+             <p className="text-sm dark:text-slate-400 text-slate-500 max-w-sm mb-6 leading-relaxed">
+                 Deploy your next project in seconds, not hours. Trusted by 10,000+ developers worldwide for scalability and speed.
+             </p>
+             <div className="flex gap-3 mb-10">
+                 <button className="px-5 py-2.5 bg-violet-600 text-white rounded-lg text-sm font-bold shadow-lg shadow-violet-500/25 hover:bg-violet-500 transition-colors">Get Started</button>
+                 <button className="px-5 py-2.5 dark:bg-white/5 bg-slate-200 dark:text-white text-slate-700 rounded-lg text-sm font-bold hover:bg-slate-300 dark:hover:bg-white/10 transition-colors">Documentation</button>
+             </div>
+             
+             {/* Dashboard Mockup */}
+             <div className="w-[80%] h-40 bg-slate-900 rounded-t-xl border-t border-x border-slate-700 shadow-2xl p-2 relative overflow-hidden perspective-1000 [transform:rotateX(10deg)] origin-bottom">
+                  <div className="w-full h-full bg-slate-800 rounded-lg opacity-80 border border-slate-700 grid grid-cols-3 gap-2 p-2">
+                       <div className="col-span-1 bg-white/5 rounded"></div>
+                       <div className="col-span-2 bg-white/5 rounded"></div>
+                       <div className="col-span-3 h-20 bg-white/5 rounded mt-2"></div>
+                  </div>
+             </div>
+        </div>
+    )
+}
+export default ModernSaaSHero;`,
+
+  50: `import React from 'react';
+import { ArrowRight } from 'lucide-react';
+
+const SplitScreenHero = () => {
+    return (
+        <div className="w-full h-full min-h-[400px] grid grid-cols-1 md:grid-cols-2 bg-white dark:bg-[#0a0a0b]">
+            {/* Left Content */}
+            <div className="p-8 flex flex-col justify-center">
+                <h1 className="text-3xl font-black dark:text-white text-slate-900 mb-3 leading-tight">Design<br/>Without<br/>Limits.</h1>
+                <p className="text-xs dark:text-slate-400 text-slate-500 mb-6 leading-relaxed">
+                    Create stunning interfaces with our comprehensive component library. Open source and free forever.
+                </p>
+                <div className="flex items-center gap-2 text-xs font-bold dark:text-white text-slate-900 group cursor-pointer hover:text-pink-500 transition-colors">
+                    See Portfolio <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+            </div>
+            {/* Right Visual */}
+            <div className="relative overflow-hidden bg-slate-100 dark:bg-slate-900 flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-bl from-pink-500 to-orange-400 opacity-20"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-pink-500 to-violet-600 rounded-full blur-2xl animate-pulse"></div>
+                <div className="w-32 h-40 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl transform rotate-12 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-white/20 to-transparent"></div>
+                </div>
+            </div>
+        </div>
+    )
+}
+export default SplitScreenHero;`,
+
+  51: `import React from 'react';
+import { Play } from 'lucide-react';
+
+const CinematicGlowHero = () => {
+    return (
+        <div className="relative w-full h-full min-h-[400px] flex flex-col items-center justify-center bg-black overflow-hidden">
+            {/* Pulse Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-600/30 rounded-full blur-[100px] animate-pulse"></div>
+            
+            {/* Content */}
+            <div className="relative z-10 text-center px-4">
+                <h1 className="text-6xl md:text-8xl font-black text-white tracking-tighter mix-blend-overlay opacity-90 drop-shadow-lg">
+                    IMPACT
+                </h1>
+                <p className="text-indigo-200 text-xs md:text-sm tracking-[0.3em] uppercase mt-4 opacity-70">The Future of Digital Experiences</p>
+                
+                <div className="mt-10 flex justify-center">
+                     <button className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all hover:scale-110">
+                         <Play size={20} fill="currentColor" />
+                     </button>
+                </div>
+            </div>
+            
+            {/* Noise Overlay */}
+            <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>
+        </div>
+    )
+}
+export default CinematicGlowHero;`
 };

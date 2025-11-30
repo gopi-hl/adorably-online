@@ -557,5 +557,59 @@ export const DESIGN_PROMPTS: DesignPrompt[] = [
     useCases: ["FAQs", "Menus", "Details", "Spoilers"],
     implementationTips: ["Max-height transition", "Cubic-bezier easing", "Overflow hidden"],
     accessibility: "Aria-expanded."
+  },
+  {
+    id: 46,
+    title: "Perspective Dashboard Hero",
+    category: "Hero",
+    description: "A 3D tilted dashboard interface that floats gently. Uses perspective transform to create depth.",
+    useCases: ["SaaS Landing Pages", "App Showcases", "Feature Highlights", "Software Portfolios"],
+    implementationTips: ["perspective: 2000px", "rotateX(20deg) rotateY(-10deg)", "Box shadow layering"],
+    accessibility: "Purely decorative, ensure content is legible."
+  },
+  {
+    id: 47,
+    title: "Floating Phone Mockup",
+    category: "Hero",
+    description: "A sleek mobile phone container that floats up and down with internal scrolling content.",
+    useCases: ["Mobile App Landing Pages", "Feature Walkthroughs", "Device Previews", "Hero Images"],
+    implementationTips: ["Border-radius masking", "Animation float", "Inner shadow for bezel"],
+    accessibility: "Decorative."
+  },
+  {
+    id: 48,
+    title: "Retro Horizon Grid",
+    category: "Hero",
+    description: "A vaporwave-style perspective grid floor that moves endlessly towards the viewer.",
+    useCases: ["Tech backgrounds", "Retro themes", "Music sites", "Creative portfolios"],
+    implementationTips: ["Perspective container", "Linear gradient grid", "Animate background position"],
+    accessibility: "Low contrast background."
+  },
+  {
+    id: 49,
+    title: "Modern SaaS Hero",
+    category: "Hero",
+    description: "High-converting layout with centered typography, dual CTA buttons, and a 'peeking' dashboard interface that fades in from the bottom.",
+    useCases: ["SaaS Startups", "Product Launches", "Enterprise Software", "Marketing Sites"],
+    implementationTips: ["Text-center", "Gradient text for emphasis", "Perspective 3D transform for dashboard preview"],
+    accessibility: "Clear H1, distinct CTA buttons."
+  },
+  {
+    id: 50,
+    title: "Split Screen Foundation",
+    category: "Hero",
+    description: "A robust 50/50 layout: Bold typography and lead capture form on the left, interactive abstract 3D visual on the right.",
+    useCases: ["Consulting Firms", "Agency Portfolios", "Webinars", "Ebooks"],
+    implementationTips: ["Grid cols-2", "Order-1/Order-2 for mobile stacking", "Sticky alignment"],
+    accessibility: "Logical reading order."
+  },
+  {
+    id: 51,
+    title: "Cinematic Glow Hero",
+    category: "Hero",
+    description: "Dark mode heavy hero with a massive, pulsing background glow, floating particles, and stark white typography.",
+    useCases: ["Gaming", "Crypto/Web3", "High-end Fashion", "Movie/Media"],
+    implementationTips: ["Radial gradient background", "Animate pulse opacity", "Mix-blend-mode overlay"],
+    accessibility: "Ensure text contrast against glow."
   }
 ];
