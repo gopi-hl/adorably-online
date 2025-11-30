@@ -43,7 +43,7 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
             
             {/* Header Section */}
             <div className="lg:w-1/3 flex flex-row lg:flex-col gap-6 lg:gap-8 sticky lg:top-32">
-                 <div className="font-mono text-6xl lg:text-8xl font-bold dark:text-white/5 text-slate-200 leading-none select-none">
+                 <div className="font-mono text-6xl lg:text-8xl font-bold dark:text-white/5 text-slate-300 leading-none select-none">
                     {(index + 1).toString().padStart(2, '0')}
                  </div>
                  
@@ -62,16 +62,16 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
                         
                         <div className="w-px h-4 bg-slate-300 dark:bg-white/10 mx-2"></div>
                         
-                        <button 
+                        <button
                             onClick={handleCopyCode}
-                            className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-400 hover:text-slate-900"
+                            className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-500 hover:text-slate-900"
                         >
                             {codeCopied ? <span className="text-green-500 flex items-center gap-1"><Check size={14}/> Copied</span> : "Copy Code"}
                         </button>
                         
-                        <button 
+                        <button
                             onClick={(e) => { e.stopPropagation(); onToggleFavorite(); }}
-                            className={`p-2 rounded-full transition-colors ${isFavorite ? 'text-pink-500' : 'text-slate-400 hover:text-pink-500'}`}
+                            className={`p-2 rounded-full transition-colors ${isFavorite ? 'text-pink-500' : 'text-slate-500 hover:text-pink-500'}`}
                         >
                             <Heart size={18} className={isFavorite ? "fill-current" : ""} />
                         </button>
@@ -123,9 +123,9 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
                     onToggleFavorite();
                 }}
                 className={`w-10 h-10 rounded-full backdrop-blur-md flex items-center justify-center border transition-all shadow-lg ${
-                    isFavorite 
-                    ? 'bg-pink-500 text-white border-pink-500' 
-                    : 'bg-black/50 text-white hover:bg-white hover:text-black border-white/10 dark:bg-black/50 dark:hover:bg-white dark:hover:text-black bg-white/50 text-slate-900 hover:bg-slate-900 hover:text-white border-slate-200'
+                    isFavorite
+                    ? 'bg-pink-500 text-white border-pink-500'
+                    : 'dark:bg-black/50 dark:text-white dark:hover:bg-white dark:hover:text-black dark:border-white/10 bg-white/80 text-slate-700 hover:bg-slate-900 hover:text-white border-slate-200'
                 }`}
                 title="Add to Favorites"
             >
@@ -146,7 +146,7 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
             <h3 className="text-xl font-bold transition-all cursor-pointer dark:text-white text-slate-900 group-hover:text-violet-500" onClick={onOpenCode}>
                 {prompt.title}
             </h3>
-             <span className="font-mono text-3xl font-bold absolute right-6 top-0 pointer-events-none transition-colors dark:text-white/10 text-slate-100 group-hover:dark:text-white/5">
+             <span className="font-mono text-3xl font-bold absolute right-6 top-0 pointer-events-none transition-colors dark:text-white/10 text-slate-200 group-hover:dark:text-white/5 group-hover:text-slate-300">
                 {(index + 1).toString().padStart(2, '0')}
             </span>
         </div>
@@ -157,9 +157,9 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
         
         <div className="mt-auto flex items-center justify-between border-t pt-6 gap-2 dark:border-white/5 border-slate-100">
             <div className="flex items-center gap-4">
-                <button 
+                <button
                     onClick={handleCopyPrompt}
-                    className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-400 hover:text-slate-900"
+                    className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-500 hover:text-slate-900"
                     title="Copy Prompt Description"
                 >
                     {promptCopied ? (
@@ -171,9 +171,9 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
                     )}
                 </button>
 
-                <button 
+                <button
                     onClick={handleCopyCode}
-                    className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-400 hover:text-slate-900"
+                    className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-500 hover:text-slate-900"
                     title="Copy Component Code"
                 >
                     {codeCopied ? (

@@ -286,7 +286,7 @@ const PromptDetail: React.FC<PromptDetailProps> = ({ prompt, onClose, isFavorite
                     <span className="px-3 py-1 rounded-full bg-violet-500/10 text-violet-500 border border-violet-500/20 text-[10px] font-bold font-mono uppercase tracking-wider">
                         {prompt.category}
                     </span>
-                    <span className="text-xs font-mono dark:text-slate-600 text-slate-400">#{prompt.id.toString().padStart(3, '0')}</span>
+                    <span className="text-xs font-mono dark:text-slate-600 text-slate-500">#{prompt.id.toString().padStart(3, '0')}</span>
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-[1.1] dark:text-white text-slate-900 tracking-tight">
                     {prompt.title}
