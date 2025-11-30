@@ -9,9 +9,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Syne', 'sans-serif'],
-        mono: ['Space Mono', 'monospace'],
-        serif: ['Instrument Serif', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+        serif: ['Source Serif 4', 'Georgia', 'serif'],
       },
       colors: {
         violet: '#8338ec',
