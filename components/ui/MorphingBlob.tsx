@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useId } from 'react';
 
 interface MorphingBlobProps {
   className?: string;
@@ -41,7 +41,11 @@ export const MorphingBlob: React.FC<MorphingBlobProps> = ({
     fast: '4s',
   };
 
-  const uniqueId = useMemo(() => Math.random().toString(36).substr(2, 9), []);
+  const reactId = useId();
+  const uniqueId = useMemo(() => {
+    const sanitized = reactId.replace(/[^a-zA-Z0-9-_]/g, '');
+    return sanitized || 'morph';
+  }, [reactId]);
 
   return (
     <div className={`relative ${sizeStyles[size]} ${className}`}>
