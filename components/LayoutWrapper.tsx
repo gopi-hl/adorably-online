@@ -1,15 +1,20 @@
-import React, { ReactNode } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+'use client';
+
+import React, { ReactNode, Suspense } from 'react';
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { Sparkles, Github, User as UserIcon, LogOut, Heart, Sun, Moon } from 'lucide-react';
-import { useApp } from '../context/AppContext';
+import { useApp } from '@/context/AppContext';
 import AuthModal from './AuthModal';
 
-interface LayoutProps {
+interface LayoutWrapperProps {
   children: ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const location = useLocation();
+// Header navigation component that uses searchParams
+const HeaderNav: React.FC = () => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const {
     isDarkMode,
     toggleTheme,
@@ -20,7 +25,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     favorites,
   } = useApp();
 
-  const isHome = location.pathname === '/';
+  const isHome = pathname === '/';
+  const hasFavoritesParam = searchParams.get('favorites') === 'true';
 
   const handleLogout = () => {
     setUser(null);
@@ -31,23 +37,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className={`min-h-screen font-sans selection:bg-violet-500/30 pb-20 overflow-x-hidden transition-colors duration-300 ${isDarkMode ? 'bg-[#0a0a0b] text-slate-200' : 'bg-slate-50 text-slate-800'}`}>
-
-      {/* Background Ambience (Dark Mode Only) */}
-      <div className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-500 ${isDarkMode ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="absolute top-[-20%] left-[20%] w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(131,56,236,0.15)_0%,transparent_70%)] blur-3xl"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(255,0,110,0.1)_0%,transparent_70%)] blur-3xl"></div>
-      </div>
-
-      {/* Background Ambience (Light Mode Only) */}
-      <div className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-500 ${isDarkMode ? 'opacity-0' : 'opacity-100'}`}>
-        <div className="absolute top-[-10%] right-[10%] w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(59,130,246,0.05)_0%,transparent_70%)] blur-3xl"></div>
-      </div>
-
-      {/* Header */}
+    <>
       <header className={`sticky top-0 z-40 w-full backdrop-blur-md border-b transition-colors duration-300 ${isDarkMode ? 'bg-[#0a0a0b]/80 border-white/5' : 'bg-white/80 border-slate-200'}`}>
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 cursor-pointer group">
+          <Link href="/" className="flex items-center gap-3 cursor-pointer group">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-tr from-violet-600 to-pink-500 blur-lg opacity-50 group-hover:opacity-100 transition-opacity"></div>
               <div className={`relative w-10 h-10 rounded-xl flex items-center justify-center border transition-colors ${isDarkMode ? 'bg-black border-white/10' : 'bg-white border-slate-200'}`}>
@@ -65,7 +58,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <nav className={`flex items-center gap-6 text-sm font-medium font-mono ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
             <div className="hidden md:flex items-center gap-6 mr-2">
               <Link
-                to="/"
+                href="/"
                 className={`transition-colors hover:text-violet-500 ${isHome && (isDarkMode ? 'text-white' : 'text-slate-900')}`}
               >
                 CATALOG
@@ -88,10 +81,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             {user ? (
               <div className={`flex items-center gap-4 pl-6 border-l ${isDarkMode ? 'border-white/10' : 'border-slate-200'}`}>
                 <Link
-                  to="/?favorites=true"
-                  className={`flex items-center gap-2 transition-colors ${location.search.includes('favorites=true') ? 'text-pink-500' : 'hover:text-pink-400'}`}
+                  href="/?favorites=true"
+                  className={`flex items-center gap-2 transition-colors ${hasFavoritesParam ? 'text-pink-500' : 'hover:text-pink-400'}`}
                 >
-                  <Heart size={16} className={location.search.includes('favorites=true') ? "fill-current" : ""} />
+                  <Heart size={16} className={hasFavoritesParam ? "fill-current" : ""} />
                   <span className="hidden sm:inline">FAVORITES</span>
                   {favorites.length > 0 && (
                     <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${isDarkMode ? 'bg-white/10 text-white' : 'bg-slate-200 text-slate-700'}`}>{favorites.length}</span>
@@ -119,6 +112,37 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </div>
       </header>
 
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onLogin={handleLogin}
+      />
+    </>
+  );
+};
+
+const LayoutWrapper: React.FC<LayoutWrapperProps> = ({ children }) => {
+  const { isDarkMode } = useApp();
+
+  return (
+    <div className={`min-h-screen font-sans selection:bg-violet-500/30 pb-20 overflow-x-hidden transition-colors duration-300 ${isDarkMode ? 'bg-[#0a0a0b] text-slate-200' : 'bg-slate-50 text-slate-800'}`}>
+
+      {/* Background Ambience (Dark Mode Only) */}
+      <div className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-500 ${isDarkMode ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="absolute top-[-20%] left-[20%] w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(131,56,236,0.15)_0%,transparent_70%)] blur-3xl"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(255,0,110,0.1)_0%,transparent_70%)] blur-3xl"></div>
+      </div>
+
+      {/* Background Ambience (Light Mode Only) */}
+      <div className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-500 ${isDarkMode ? 'opacity-0' : 'opacity-100'}`}>
+        <div className="absolute top-[-10%] right-[10%] w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(59,130,246,0.05)_0%,transparent_70%)] blur-3xl"></div>
+      </div>
+
+      {/* Header wrapped in Suspense */}
+      <Suspense fallback={<HeaderFallback />}>
+        <HeaderNav />
+      </Suspense>
+
       <main className="container mx-auto px-4 py-16 relative z-10">
         {children}
       </main>
@@ -129,14 +153,23 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <p className="text-slate-500 text-xs font-mono uppercase tracking-widest">&copy; {new Date().getFullYear()} AI Design Showcase</p>
         </div>
       </footer>
-
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-        onLogin={handleLogin}
-      />
     </div>
   );
 };
 
-export default Layout;
+// Fallback header for Suspense
+const HeaderFallback: React.FC = () => (
+  <header className="sticky top-0 z-40 w-full backdrop-blur-md border-b transition-colors duration-300 bg-[#0a0a0b]/80 border-white/5">
+    <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-white/10 animate-pulse"></div>
+        <div>
+          <div className="h-5 w-32 bg-white/10 rounded animate-pulse"></div>
+          <div className="h-3 w-24 bg-white/5 rounded mt-1 animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+);
+
+export default LayoutWrapper;

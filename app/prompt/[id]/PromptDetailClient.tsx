@@ -1,26 +1,31 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { DESIGN_PROMPTS } from '../constants';
-import { getExampleComponent } from '../components/LiveExamples';
-import CodeViewer from '../components/CodeViewer';
-import { useApp } from '../context/AppContext';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { DesignPrompt } from '@/types';
+import { getExampleComponent } from '@/components/LiveExamples';
+import CodeViewer from '@/components/CodeViewer';
+import { useApp } from '@/context/AppContext';
 import {
   ArrowLeft, Lightbulb, Accessibility, Layers, Heart, Share2, Maximize2,
   ChevronDown
 } from 'lucide-react';
 
-const PromptDetailPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+interface PromptDetailClientProps {
+  prompt: DesignPrompt;
+}
+
+const PromptDetailClient: React.FC<PromptDetailClientProps> = ({ prompt }) => {
+  const router = useRouter();
   const { isDarkMode, toggleFavorite, isFavorite } = useApp();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const prompt = DESIGN_PROMPTS.find(p => p.id === Number(id));
-  const LiveComponent = prompt ? getExampleComponent(prompt.id) : null;
+  const LiveComponent = getExampleComponent(prompt.id);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [id]);
+  }, [prompt.id]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -28,13 +33,13 @@ const PromptDetailPage: React.FC = () => {
         if (isDrawerOpen) {
           setIsDrawerOpen(false);
         } else {
-          navigate('/');
+          router.push('/');
         }
       }
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
-  }, [navigate, isDrawerOpen]);
+  }, [router, isDrawerOpen]);
 
   // Prevent body scroll when drawer is open
   useEffect(() => {
@@ -48,15 +53,6 @@ const PromptDetailPage: React.FC = () => {
     };
   }, [isDrawerOpen]);
 
-  if (!prompt) {
-    return (
-      <div className="text-center py-32">
-        <h2 className={`text-2xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Prompt not found</h2>
-        <Link to="/" className="text-violet-500 hover:underline">Back to Catalog</Link>
-      </div>
-    );
-  }
-
   const promptIsFavorite = isFavorite(prompt.id);
 
   return (
@@ -65,7 +61,7 @@ const PromptDetailPage: React.FC = () => {
       {/* Sticky Sub-Header */}
       <div className="sticky top-20 z-30 px-4 md:px-6 h-12 flex items-center justify-between transition-colors duration-300">
         <Link
-          to="/"
+          href="/"
           className="flex items-center gap-2 transition-colors group dark:text-slate-500 dark:hover:text-white text-slate-400 hover:text-slate-900"
         >
           <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
@@ -220,7 +216,7 @@ const PromptDetailPage: React.FC = () => {
 };
 
 // --- Live Demo Content ---
-const LiveDemoContent: React.FC<{ prompt: any; LiveComponent: React.ReactNode; onClose: () => void }> = ({ prompt, LiveComponent }) => {
+const LiveDemoContent: React.FC<{ prompt: DesignPrompt; LiveComponent: React.ReactNode; onClose: () => void }> = ({ prompt, LiveComponent }) => {
   const isHero = prompt.category === 'Hero';
   const isBackground = prompt.category === 'Background';
 
@@ -243,4 +239,4 @@ const LiveDemoContent: React.FC<{ prompt: any; LiveComponent: React.ReactNode; o
   );
 };
 
-export default PromptDetailPage;
+export default PromptDetailClient;

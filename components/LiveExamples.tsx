@@ -1,4 +1,4 @@
-
+'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Box, Layers, MousePointer2, Search as SearchIcon, Bell, Check, X, Code, Terminal, Star, ChevronDown, ChevronRight, Info, Play, ArrowRight, Layout, Monitor, Smartphone, Globe } from 'lucide-react';

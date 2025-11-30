@@ -1,17 +1,23 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import { DESIGN_PROMPTS } from '../constants';
-import PromptCard from '../components/PromptCard';
-import { useApp } from '../context/AppContext';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { DesignPrompt } from '@/types';
+import PromptCard from '@/components/PromptCard';
+import { useApp } from '@/context/AppContext';
 import { Palette, Search, LayoutList, LayoutGrid } from 'lucide-react';
 
 const CATEGORIES = ['All', 'Hero', 'Card', 'Layout', 'Animation', 'Interaction', 'Background'];
 
 type ViewMode = 'list' | 'grid';
 
-const HomePage: React.FC = () => {
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+interface HomePageClientProps {
+  prompts: DesignPrompt[];
+}
+
+const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { isDarkMode, favorites, toggleFavorite, isFavorite } = useApp();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -22,15 +28,15 @@ const HomePage: React.FC = () => {
 
   const setShowFavoritesOnly = (show: boolean) => {
     if (show) {
-      setSearchParams({ favorites: 'true' });
+      router.push('/?favorites=true');
     } else {
-      setSearchParams({});
+      router.push('/');
     }
   };
 
   const filteredPrompts = useMemo(() => {
     const query = searchQuery.toLowerCase();
-    return DESIGN_PROMPTS.filter(prompt => {
+    return prompts.filter(prompt => {
       const matchesSearch =
         prompt.title.toLowerCase().includes(query) ||
         prompt.description.toLowerCase().includes(query) ||
@@ -43,10 +49,10 @@ const HomePage: React.FC = () => {
 
       return matchesSearch && matchesCategory && matchesFavorite;
     });
-  }, [searchQuery, activeCategory, favorites, showFavoritesOnly]);
+  }, [searchQuery, activeCategory, favorites, showFavoritesOnly, prompts]);
 
   const handleOpenDetail = (promptId: number) => {
-    navigate(`/prompt/${promptId}`);
+    router.push(`/prompt/${promptId}`);
   };
 
 
@@ -168,4 +174,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default HomePageClient;

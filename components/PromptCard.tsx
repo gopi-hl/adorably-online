@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { DesignPrompt } from '../types';
 import { getExampleComponent, GenericExample } from './LiveExamples';
