@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Box, Layers, MousePointer2, Search as SearchIcon, Bell, Check, X, Code, Terminal, Star, ChevronDown, ChevronRight, Info, Play, ArrowRight, Layout, Monitor, Smartphone, Globe } from 'lucide-react';
+import { Box, Layers, MousePointer2, Search as SearchIcon, Bell, Check, X, Code, Terminal, Star, ChevronDown, ChevronRight, Info, Play, ArrowRight, Layout, Monitor, Smartphone, Globe, CheckCircle } from 'lucide-react';
 
 // --- Utility ---
 export const ExampleContainer = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => (
@@ -1051,13 +1051,10 @@ import {
   CTABanner,
   FeatureTabs,
   IntegrationOrbit,
-  NotificationToast,
-  useToast,
   MorphingText,
   FloatingDashboard,
   AnimatedFAQ,
   ScrollRevealSection,
-  AnimatedNav,
   GlowingCard,
   StackedCards,
   ElasticSlider,
@@ -1620,30 +1617,41 @@ export const IntegrationOrbitExample = () => {
 };
 
 // --- 81. Notification Toast ---
-type ToastType = 'success' | 'error' | 'warning' | 'info';
-interface ToastItem {
-  id: string;
-  type: ToastType;
-  title: string;
-  message?: string;
-  duration?: number;
-}
-
+// Note: NotificationToast uses fixed positioning, so we show a static preview here
 export const NotificationToastExample = () => {
-  const [toasts, setToasts] = useState<ToastItem[]>([
-    { id: '1', type: 'success', title: 'Success!', message: 'Your changes have been saved.', duration: 5000 },
-  ]);
   return (
-    <ExampleContainer className="relative overflow-visible">
-      <div className="absolute top-4 right-4">
-        <NotificationToast toasts={toasts} onDismiss={(id) => setToasts(t => t.filter(x => x.id !== id))} position="top-right" />
+    <ExampleContainer>
+      <div className="flex flex-col gap-3 w-80">
+        {/* Success Toast Preview */}
+        <div className="p-4 rounded-lg dark:bg-slate-800 bg-white border dark:border-white/10 border-slate-200 shadow-lg border-l-4 border-l-emerald-500">
+          <div className="flex items-start gap-3">
+            <CheckCircle className="text-emerald-500 mt-0.5" size={20} />
+            <div className="flex-1">
+              <h4 className="font-semibold dark:text-white text-slate-900">Success!</h4>
+              <p className="text-sm dark:text-slate-400 text-slate-500">Your changes have been saved.</p>
+            </div>
+            <button className="dark:text-slate-400 text-slate-500 hover:text-slate-700">
+              <X size={16} />
+            </button>
+          </div>
+        </div>
+        {/* Info Toast Preview */}
+        <div className="p-4 rounded-lg dark:bg-slate-800 bg-white border dark:border-white/10 border-slate-200 shadow-lg border-l-4 border-l-blue-500">
+          <div className="flex items-start gap-3">
+            <Info className="text-blue-500 mt-0.5" size={20} />
+            <div className="flex-1">
+              <h4 className="font-semibold dark:text-white text-slate-900">New Notification</h4>
+              <p className="text-sm dark:text-slate-400 text-slate-500">You have a new message.</p>
+            </div>
+            <button className="dark:text-slate-400 text-slate-500 hover:text-slate-700">
+              <X size={16} />
+            </button>
+          </div>
+        </div>
+        <p className="text-xs dark:text-slate-500 text-slate-400 text-center">
+          Preview (actual component uses fixed positioning)
+        </p>
       </div>
-      <button
-        onClick={() => setToasts(t => [...t, { id: Date.now().toString(), type: 'info', title: 'New Notification', message: 'Click to add more!', duration: 3000 }])}
-        className="px-4 py-2 bg-violet-500 text-white rounded-lg font-medium"
-      >
-        Add Toast
-      </button>
     </ExampleContainer>
   );
 };
@@ -1713,21 +1721,35 @@ export const ScrollRevealSectionExample = () => {
 };
 
 // --- 86. Animated Nav ---
+// Note: AnimatedNav uses fixed positioning, so we show a static preview here
 export const AnimatedNavExample = () => {
-  const items = [
-    { label: 'Features' },
-    { label: 'Pricing' },
-    { label: 'About' },
-  ];
   return (
     <ExampleContainer>
-      <div className="w-full relative h-20">
-        <AnimatedNav
-          logo={<span className="font-bold text-lg dark:text-white text-slate-900">Logo</span>}
-          items={items}
-          cta={{ label: 'Get Started' }}
-          variant="floating"
-        />
+      <div className="w-full max-w-2xl">
+        {/* Static preview since AnimatedNav uses fixed positioning */}
+        <div className="px-2 py-2 rounded-2xl dark:bg-slate-900/90 bg-white/90 backdrop-blur-xl border dark:border-white/10 border-slate-200 shadow-2xl">
+          <div className="flex items-center gap-4">
+            <div className="px-4">
+              <span className="text-lg font-bold dark:text-white text-slate-900">Logo</span>
+            </div>
+            <div className="hidden md:flex items-center">
+              {['Features', 'Pricing', 'About'].map((item) => (
+                <span
+                  key={item}
+                  className="px-4 py-2 dark:text-slate-300 text-slate-600 hover:text-violet-500 transition-colors font-medium text-sm cursor-pointer"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+            <button className="px-5 py-2 rounded-xl bg-violet-500 text-white font-medium text-sm hover:bg-violet-600 transition-colors">
+              Get Started
+            </button>
+          </div>
+        </div>
+        <p className="text-xs dark:text-slate-500 text-slate-400 mt-3 text-center">
+          Preview of floating variant (actual component uses fixed positioning)
+        </p>
       </div>
     </ExampleContainer>
   );
