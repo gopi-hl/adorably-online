@@ -56,13 +56,13 @@ const HomePage: React.FC = () => {
       <div className="text-center max-w-4xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
         <p className="font-mono text-violet-500 text-xs tracking-[0.2em] uppercase mb-6">AI Design Showcase</p>
         <h2 className={`text-5xl md:text-7xl font-bold mb-8 leading-[0.9] ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-          51 Premium<br />
+          71 Premium<br />
           <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-violet-500 to-blue-500 pr-4">
             Design Effects
           </span>
         </h2>
         <p className={`text-xl max-w-2xl mx-auto font-light mb-10 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-          A curated collection of modern UI effects, including <span className="text-violet-500 font-medium">6 new Hero Sections</span>. Preview live, copy the prompt, or generate the React code instantly.
+          A curated collection of modern UI effects, including <span className="text-violet-500 font-medium">20 new Reusable Components</span>. Preview live, copy the prompt, or generate the React code instantly.
         </p>
       </div>
 
@@ -97,7 +97,7 @@ const HomePage: React.FC = () => {
                   }`}
               >
                 {cat}
-                {cat === 'Hero' && (
+                {cat === 'Interaction' && (
                   <span className="absolute top-0 right-0 flex h-2.5 w-2.5 translate-x-1/2 -translate-y-1/4">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-pink-500"></span>

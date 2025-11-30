@@ -93,17 +93,12 @@ const PromptDetailPage: React.FC = () => {
 
         {/* Left Column: Sticky Preview */}
         <div className="lg:sticky lg:top-40 h-fit space-y-6">
-          <div className="group relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] dark:bg-[#121214] dark:border-white/10 dark:shadow-black/50 bg-white border-slate-200 shadow-slate-200/50 border ring-1 ring-white/10">
+          <div
+            className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] dark:bg-[#121214] dark:border-white/10 dark:shadow-black/50 bg-white border-slate-200 shadow-slate-200/50 border ring-1 ring-white/10 cursor-pointer"
+            onClick={() => setIsDrawerOpen(true)}
+          >
             <div className="absolute inset-0 dark:bg-[#0f0f1a] bg-slate-50 transition-colors duration-300">
               {LiveComponent}
-            </div>
-            <div
-              onClick={() => setIsDrawerOpen(true)}
-              className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer backdrop-blur-[2px]"
-            >
-              <span className="bg-white/20 backdrop-blur-md border border-white/30 text-white px-6 py-3 rounded-full font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <Maximize2 size={18} /> View Live Demo
-              </span>
             </div>
           </div>
 

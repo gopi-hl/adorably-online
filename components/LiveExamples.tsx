@@ -1015,6 +1015,437 @@ export const CinematicGlowHeroExample = () => {
     )
 }
 
+// === NEW REUSABLE UI COMPONENT EXAMPLES (52-71) ===
+
+import {
+  MagneticButton as MagneticBtn,
+  RippleButton as RippleBtn,
+  GlowingText,
+  TypingText,
+  GlitchText,
+  ParallaxCard,
+  MorphingBlob,
+  FloatingParticles,
+  GradientBorder,
+  SkeletonLoader,
+  NumberCounter,
+  Spotlight,
+  TextReveal,
+  InfiniteMarquee,
+  MarqueeItem,
+  RadialProgress,
+  TooltipWrapper,
+  SwitchToggle,
+  ShimmerCard,
+  HoverTilt,
+  MagneticCursor,
+  MagneticElement,
+} from './ui';
+
+// --- 52. Magnetic Button ---
+export const MagneticButtonExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="flex flex-col items-center gap-6">
+        <MagneticBtn variant="default" magnetStrength={0.4}>
+          <span className="flex items-center gap-2">✨ Magnetic Effect</span>
+        </MagneticBtn>
+        <MagneticBtn variant="gradient" magnetStrength={0.3}>
+          Gradient Style
+        </MagneticBtn>
+        <MagneticBtn variant="outline" magnetStrength={0.5}>
+          Outline Variant
+        </MagneticBtn>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 53. Ripple Button ---
+export const RippleButtonExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="flex flex-col items-center gap-4">
+        <RippleBtn variant="primary" size="lg">
+          Click for Ripple
+        </RippleBtn>
+        <div className="flex gap-3">
+          <RippleBtn variant="success" size="md">Success</RippleBtn>
+          <RippleBtn variant="danger" size="md">Danger</RippleBtn>
+          <RippleBtn variant="secondary" size="md">Secondary</RippleBtn>
+        </div>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 54. Glowing Text ---
+export const GlowingTextExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="flex flex-col items-center gap-6 text-center">
+        <GlowingText color="violet" intensity="strong" as="h2" className="text-3xl font-bold">
+          Violet Glow
+        </GlowingText>
+        <GlowingText color="cyan" intensity="medium" as="h2" className="text-3xl font-bold">
+          Cyan Neon
+        </GlowingText>
+        <GlowingText color="rainbow" intensity="strong" as="h2" className="text-3xl font-bold">
+          Rainbow Magic
+        </GlowingText>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 55. Typing Text ---
+export const TypingTextExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="text-center">
+        <p className="dark:text-slate-400 text-slate-500 text-sm mb-4">I am a</p>
+        <div className="text-3xl font-bold dark:text-white text-slate-900">
+          <TypingText
+            text={["Developer", "Designer", "Creator", "Problem Solver"]}
+            speed={100}
+            deleteSpeed={50}
+            pauseDuration={2000}
+          />
+        </div>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 56. Glitch Text ---
+export const GlitchTextExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="flex flex-col items-center gap-8">
+        <GlitchText intensity="subtle" className="text-4xl font-black dark:text-white text-slate-900">
+          SUBTLE
+        </GlitchText>
+        <GlitchText intensity="medium" color="cyan-red" className="text-4xl font-black dark:text-white text-slate-900">
+          MEDIUM
+        </GlitchText>
+        <GlitchText intensity="intense" color="purple-green" className="text-4xl font-black dark:text-white text-slate-900">
+          INTENSE
+        </GlitchText>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 57. Parallax 3D Card ---
+export const ParallaxCardExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <ParallaxCard intensity={15} glare shadow className="w-64">
+        <div className="p-6 dark:bg-slate-900 bg-white rounded-2xl">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 mb-4 flex items-center justify-center text-white text-xl">
+            🎯
+          </div>
+          <h3 className="text-lg font-bold dark:text-white text-slate-900 mb-2">3D Card</h3>
+          <p className="text-sm dark:text-slate-400 text-slate-500">
+            Move your mouse over this card to see the parallax effect.
+          </p>
+        </div>
+      </ParallaxCard>
+    </ExampleContainer>
+  );
+};
+
+// --- 58. Morphing Blob ---
+export const MorphingBlobExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="relative w-full h-full flex items-center justify-center">
+        <MorphingBlob color="gradient" size="lg" speed="medium" blur opacity={0.6} />
+        <div className="absolute z-10 text-center">
+          <h3 className="text-xl font-bold dark:text-white text-slate-900">Morphing Blob</h3>
+          <p className="text-sm dark:text-slate-400 text-slate-500">Organic animation</p>
+        </div>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 59. Floating Particles ---
+export const FloatingParticlesExampleNew = () => {
+  return (
+    <ExampleContainer className="bg-slate-900">
+      <FloatingParticles count={40} color="mixed" speed="medium" direction="up" />
+      <div className="relative z-10 text-center">
+        <h3 className="text-xl font-bold text-white">Floating Particles</h3>
+        <p className="text-sm text-slate-400">Ambient atmosphere</p>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 60. Gradient Border ---
+export const GradientBorderExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="flex gap-4">
+        <GradientBorder gradient="rainbow" animated speed="medium" borderWidth={2}>
+          <div className="p-6 dark:bg-[#0a0a0b] bg-white rounded-xl">
+            <h4 className="font-bold dark:text-white text-slate-900">Rainbow</h4>
+            <p className="text-xs dark:text-slate-400 text-slate-500">Animated border</p>
+          </div>
+        </GradientBorder>
+        <GradientBorder gradient="sunset" animated speed="slow" borderWidth={2}>
+          <div className="p-6 dark:bg-[#0a0a0b] bg-white rounded-xl">
+            <h4 className="font-bold dark:text-white text-slate-900">Sunset</h4>
+            <p className="text-xs dark:text-slate-400 text-slate-500">Warm tones</p>
+          </div>
+        </GradientBorder>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 61. Skeleton Loader ---
+export const SkeletonLoaderExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="w-64 p-4 dark:bg-slate-900 bg-white rounded-xl border dark:border-white/10 border-slate-200">
+        <SkeletonLoader variant="rounded" height={120} className="mb-4" />
+        <div className="flex items-center gap-3 mb-4">
+          <SkeletonLoader variant="circular" width={40} height={40} />
+          <div className="flex-1">
+            <SkeletonLoader variant="text" width="70%" className="mb-2" />
+            <SkeletonLoader variant="text" width="50%" height={12} />
+          </div>
+        </div>
+        <SkeletonLoader variant="text" count={3} gap={8} />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 62. Number Counter ---
+export const NumberCounterExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="flex gap-8 text-center">
+        <div>
+          <div className="text-4xl font-bold dark:text-white text-slate-900">
+            <NumberCounter end={1234} duration={2000} />
+          </div>
+          <p className="text-sm dark:text-slate-400 text-slate-500">Users</p>
+        </div>
+        <div>
+          <div className="text-4xl font-bold dark:text-white text-slate-900">
+            $<NumberCounter end={99} duration={1500} decimals={0} />K
+          </div>
+          <p className="text-sm dark:text-slate-400 text-slate-500">Revenue</p>
+        </div>
+        <div>
+          <div className="text-4xl font-bold dark:text-white text-slate-900">
+            <NumberCounter end={99.9} duration={2500} decimals={1} />%
+          </div>
+          <p className="text-sm dark:text-slate-400 text-slate-500">Uptime</p>
+        </div>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 63. Spotlight ---
+export const SpotlightExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <Spotlight color="rgba(139, 92, 246, 0.2)" size={350} blur={100}>
+        <div className="p-8 dark:bg-slate-900/50 bg-white rounded-2xl border dark:border-white/10 border-slate-200">
+          <h3 className="text-xl font-bold dark:text-white text-slate-900 mb-2">Spotlight Effect</h3>
+          <p className="text-sm dark:text-slate-400 text-slate-500 max-w-xs">
+            Move your cursor over this area to see the spotlight follow you.
+          </p>
+        </div>
+      </Spotlight>
+    </ExampleContainer>
+  );
+};
+
+// --- 64. Text Reveal ---
+export const TextRevealExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="text-center space-y-6">
+        <TextReveal direction="up" stagger={40} className="text-3xl font-bold dark:text-white text-slate-900">
+          Words reveal one by one
+        </TextReveal>
+        <TextReveal direction="left" stagger={30} className="text-lg dark:text-slate-400 text-slate-500">
+          Scroll triggered animation
+        </TextReveal>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 65. Infinite Marquee ---
+export const InfiniteMarqueeExampleNew = () => {
+  const logos = ['React', 'TypeScript', 'Tailwind', 'Vite', 'Node.js', 'GraphQL', 'Next.js', 'Prisma'];
+  return (
+    <ExampleContainer>
+      <div className="w-full">
+        <InfiniteMarquee speed={30} pauseOnHover gap={32}>
+          {logos.map((logo, i) => (
+            <MarqueeItem key={i}>
+              <span className="px-6 py-3 rounded-full dark:bg-white/5 bg-slate-100 dark:text-white text-slate-700 font-medium">
+                {logo}
+              </span>
+            </MarqueeItem>
+          ))}
+        </InfiniteMarquee>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 66. Radial Progress ---
+export const RadialProgressExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="flex gap-8 items-center">
+        <RadialProgress value={75} color="violet" size={100} strokeWidth={8} />
+        <RadialProgress value={50} color="gradient" size={100} strokeWidth={8} />
+        <RadialProgress value={90} color="emerald" size={100} strokeWidth={8}>
+          <div className="text-center">
+            <span className="text-lg font-bold dark:text-white text-slate-900">A+</span>
+          </div>
+        </RadialProgress>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 67. Animated Tooltip ---
+export const AnimatedTooltipExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <div className="flex gap-4">
+        <TooltipWrapper content="Top tooltip!" position="top" variant="default">
+          <button className="px-4 py-2 dark:bg-white/10 bg-slate-200 rounded-lg dark:text-white text-slate-700 font-medium">
+            Hover Top
+          </button>
+        </TooltipWrapper>
+        <TooltipWrapper content="Gradient style" position="bottom" variant="gradient">
+          <button className="px-4 py-2 dark:bg-white/10 bg-slate-200 rounded-lg dark:text-white text-slate-700 font-medium">
+            Hover Bottom
+          </button>
+        </TooltipWrapper>
+        <TooltipWrapper content="Light theme" position="right" variant="light">
+          <button className="px-4 py-2 dark:bg-white/10 bg-slate-200 rounded-lg dark:text-white text-slate-700 font-medium">
+            Hover Right
+          </button>
+        </TooltipWrapper>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 68. Fancy Toggle ---
+export const FancyToggleExampleNew = () => {
+  const [toggle1, setToggle1] = useState(false);
+  const [toggle2, setToggle2] = useState(true);
+  const [toggle3, setToggle3] = useState(false);
+
+  return (
+    <ExampleContainer>
+      <div className="flex flex-col gap-6">
+        <SwitchToggle
+          checked={toggle1}
+          onChange={setToggle1}
+          variant="default"
+          size="lg"
+          label="Default Style"
+        />
+        <SwitchToggle
+          checked={toggle2}
+          onChange={setToggle2}
+          variant="gradient"
+          size="lg"
+          label="Gradient Track"
+        />
+        <SwitchToggle
+          checked={toggle3}
+          onChange={setToggle3}
+          variant="glow"
+          size="lg"
+          label="Glow Effect"
+        />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 69. Shimmer Card ---
+export const ShimmerCardExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <ShimmerCard shimmerSpeed="medium" className="w-64">
+        <div className="p-6">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-violet-500 to-pink-500 mb-4 flex items-center justify-center text-white">
+            ✨
+          </div>
+          <h3 className="font-bold dark:text-white text-slate-900 mb-2">Shimmer Card</h3>
+          <p className="text-sm dark:text-slate-400 text-slate-500">
+            Watch the shimmer effect sweep across the card.
+          </p>
+        </div>
+      </ShimmerCard>
+    </ExampleContainer>
+  );
+};
+
+// --- 70. 3D Hover Tilt ---
+export const HoverTiltExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <HoverTilt maxTilt={15} glare glareOpacity={0.2} scale={1.05}>
+        <div className="w-56 h-72 rounded-2xl bg-gradient-to-br from-violet-500 via-purple-500 to-pink-500 p-1">
+          <div className="w-full h-full dark:bg-slate-900 bg-white rounded-xl p-4 flex flex-col justify-between">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-500 to-pink-500"></div>
+            <div>
+              <h4 className="font-bold dark:text-white text-slate-900">3D Tilt</h4>
+              <p className="text-xs dark:text-slate-400 text-slate-500">Hover to see effect</p>
+            </div>
+          </div>
+        </div>
+      </HoverTilt>
+    </ExampleContainer>
+  );
+};
+
+// --- 71. Magnetic Cursor ---
+export const MagneticCursorExampleNew = () => {
+  return (
+    <ExampleContainer>
+      <MagneticCursor cursorSize={24} cursorColor="rgba(139, 92, 246, 0.6)" trailEffect trailLength={5}>
+        <div className="w-full h-full flex items-center justify-center gap-8 p-8">
+          <MagneticElement>
+            <button className="px-6 py-3 bg-violet-600 text-white rounded-xl font-medium hover:bg-violet-500 transition-colors">
+              Magnetic
+            </button>
+          </MagneticElement>
+          <MagneticElement>
+            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 flex items-center justify-center text-white text-2xl">
+              🎯
+            </div>
+          </MagneticElement>
+          <MagneticElement>
+            <button className="px-6 py-3 dark:bg-white/10 bg-slate-200 dark:text-white text-slate-700 rounded-xl font-medium">
+              Element
+            </button>
+          </MagneticElement>
+        </div>
+      </MagneticCursor>
+    </ExampleContainer>
+  );
+};
+
 // --- Generic Fallback ---
 export const GenericExample = ({ title }: { title: string }) => (
     <ExampleContainer>
@@ -1080,6 +1511,27 @@ export const getExampleComponent = (id: number) => {
     case 49: return <ModernSaaSHeroExample />;
     case 50: return <SplitScreenHeroExample />;
     case 51: return <CinematicGlowHeroExample />;
+    // New reusable UI components (52-71)
+    case 52: return <MagneticButtonExampleNew />;
+    case 53: return <RippleButtonExampleNew />;
+    case 54: return <GlowingTextExampleNew />;
+    case 55: return <TypingTextExampleNew />;
+    case 56: return <GlitchTextExampleNew />;
+    case 57: return <ParallaxCardExampleNew />;
+    case 58: return <MorphingBlobExampleNew />;
+    case 59: return <FloatingParticlesExampleNew />;
+    case 60: return <GradientBorderExampleNew />;
+    case 61: return <SkeletonLoaderExampleNew />;
+    case 62: return <NumberCounterExampleNew />;
+    case 63: return <SpotlightExampleNew />;
+    case 64: return <TextRevealExampleNew />;
+    case 65: return <InfiniteMarqueeExampleNew />;
+    case 66: return <RadialProgressExampleNew />;
+    case 67: return <AnimatedTooltipExampleNew />;
+    case 68: return <FancyToggleExampleNew />;
+    case 69: return <ShimmerCardExampleNew />;
+    case 70: return <HoverTiltExampleNew />;
+    case 71: return <MagneticCursorExampleNew />;
     default: return null;
   }
 };
