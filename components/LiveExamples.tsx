@@ -21,11 +21,11 @@ export const GlassCardExample = () => {
         <div className="absolute inset-[3px] rounded-[22px] dark:bg-white/5 bg-white/40 backdrop-blur-xl p-6 flex flex-col justify-between shadow-[inset_0_0_30px_rgba(255,255,255,0.05)] border border-white/20 dark:border-transparent">
             <div>
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-white text-xl mb-6 shadow-lg shadow-violet-500/20">⚡</div>
-                <h3 className="text-xl font-bold dark:text-white text-slate-800 mb-2 font-sans">Glassmorphism</h3>
-                <p className="dark:text-white/60 text-slate-600 text-sm">Frosted glass effect with rotating gradient border.</p>
+                <h3 className="text-xl font-bold dark:text-white text-slate-800 mb-2 font-sans">Analytics Pro</h3>
+                <p className="dark:text-white/60 text-slate-600 text-sm">Real-time insights and custom dashboards for your team.</p>
             </div>
             <div className="flex gap-2 text-[10px] font-mono dark:text-white/30 text-slate-400 uppercase">
-                <span>blur-xl</span> • <span>gradient</span>
+                <span>$29/mo</span> • <span>Pro Plan</span>
             </div>
         </div>
       </div>
@@ -63,15 +63,15 @@ export const ParallaxHeroExample = () => {
 
   return (
     <ExampleContainer>
-      <div 
+      <div
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setOffset({ x: 0, y: 0 })}
         className="relative w-full h-full bg-gradient-to-br dark:from-[#1a1a2e] dark:via-[#16213e] dark:to-[#0f0f23] from-slate-100 via-slate-200 to-slate-300 overflow-hidden flex items-center justify-center cursor-default"
       >
-        <span className="absolute text-5xl font-black dark:text-white/5 text-slate-900/5 transition-transform duration-100 ease-out select-none scale-125" style={{ transform: `translate(${offset.x * 20}px, ${offset.y * 20}px) scale(1.3)` }}>PARALLAX</span>
-        <span className="absolute text-5xl font-black dark:text-white/10 text-slate-900/10 transition-transform duration-100 ease-out select-none scale-110" style={{ transform: `translate(${offset.x * 40}px, ${offset.y * 40}px) scale(1.15)` }}>PARALLAX</span>
-        <span className="absolute text-5xl font-black dark:text-white text-slate-900 transition-transform duration-100 ease-out select-none dark:drop-shadow-[0_0_60px_rgba(255,255,255,0.3)] drop-shadow-xl" style={{ transform: `translate(${offset.x * 80}px, ${offset.y * 80}px)` }}>PARALLAX</span>
+        <span className="absolute text-5xl font-black dark:text-white/5 text-slate-900/5 transition-transform duration-100 ease-out select-none scale-125" style={{ transform: `translate(${offset.x * 20}px, ${offset.y * 20}px) scale(1.3)` }}>VELOCITY</span>
+        <span className="absolute text-5xl font-black dark:text-white/10 text-slate-900/10 transition-transform duration-100 ease-out select-none scale-110" style={{ transform: `translate(${offset.x * 40}px, ${offset.y * 40}px) scale(1.15)` }}>VELOCITY</span>
+        <span className="absolute text-5xl font-black dark:text-white text-slate-900 transition-transform duration-100 ease-out select-none dark:drop-shadow-[0_0_60px_rgba(255,255,255,0.3)] drop-shadow-xl" style={{ transform: `translate(${offset.x * 80}px, ${offset.y * 80}px)` }}>VELOCITY</span>
       </div>
     </ExampleContainer>
   );
@@ -202,7 +202,7 @@ export const MorphingBlobExample = () => {
         </div>
 
         <div className="absolute inset-0 flex items-center justify-center">
-            <h3 className="text-3xl font-bold dark:text-white text-slate-800 text-center z-10">Morphing<br/>Background</h3>
+            <h3 className="text-3xl font-bold dark:text-white text-slate-800 text-center z-10">Unleash Your<br/>Creativity</h3>
         </div>
       </div>
     </ExampleContainer>
@@ -280,7 +280,7 @@ export const MagneticButtonExample = () => {
             style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
             className="relative px-8 py-3 bg-gradient-to-br from-violet-500 to-indigo-600 text-white rounded-full font-bold text-lg transition-transform duration-100 ease-out shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_0_40px_rgba(131,56,236,0.6)] animate-pulse-glow z-20 pointer-events-none"
         >
-            Hover Me
+            Get Started Free
         </button>
     </ExampleContainer>
   );
@@ -294,11 +294,11 @@ export const ScrollingMarqueeExample = () => {
                 <div className="flex gap-8 whitespace-nowrap animate-marquee hover:[animation-play-state:paused]">
                     {[1,2,3,4].map(i => (
                         <React.Fragment key={i}>
-                            <span className="text-2xl font-bold dark:text-white/80 text-slate-700">React</span>
+                            <span className="text-2xl font-bold dark:text-white/80 text-slate-700">STRIPE</span>
                             <span className="text-violet-500">•</span>
-                            <span className="text-2xl font-bold dark:text-white/80 text-slate-700">Tailwind</span>
+                            <span className="text-2xl font-bold dark:text-white/80 text-slate-700">VERCEL</span>
                             <span className="text-violet-500">•</span>
-                            <span className="text-2xl font-bold dark:text-white/80 text-slate-700">Gemini</span>
+                            <span className="text-2xl font-bold dark:text-white/80 text-slate-700">NOTION</span>
                             <span className="text-violet-500">•</span>
                         </React.Fragment>
                     ))}
@@ -315,8 +315,8 @@ export const LayeredPaperExample = () => {
             <div className="relative w-64 h-48 rounded-xl overflow-hidden bg-gradient-to-br from-indigo-500 to-purple-600 shadow-xl">
                 <div className="absolute inset-0 flex items-center justify-center z-20 text-center">
                      <div>
-                        <h3 className="text-xl font-bold text-white">Layers</h3>
-                        <p className="text-white/60 text-xs">Paper cut effect</p>
+                        <h3 className="text-xl font-bold text-white">Enterprise</h3>
+                        <p className="text-white/60 text-xs">Unlimited everything</p>
                      </div>
                 </div>
                 <div className="absolute left-0 right-0 bottom-0 h-20 bg-white/10 [clip-path:ellipse(80%_100%_at_50%_100%)]"></div>
@@ -350,7 +350,7 @@ export const SpotlightCursorExample = () => {
         className="relative w-full h-full flex items-center justify-center cursor-none group transition-colors duration-300"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-rose-500 via-pink-500 to-violet-500 flex items-center justify-center">
-            <h3 className="text-4xl font-black text-white tracking-widest">REVEAL</h3>
+            <h3 className="text-4xl font-black text-white tracking-widest">DISCOVER</h3>
         </div>
         <div 
             className="absolute inset-0 dark:bg-[#0a0a0b] bg-slate-50 pointer-events-none transition-opacity duration-100"
@@ -377,13 +377,13 @@ export const FlipCardExample = () => {
                 <div className="relative w-40 h-56 preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
                     {/* Front */}
                     <div className="absolute inset-0 backface-hidden rounded-xl p-6 bg-gradient-to-br from-cyan-500 to-blue-500 flex flex-col justify-between shadow-xl">
-                         <span className="text-3xl text-white">🎴</span>
-                         <h4 className="text-white font-bold">Flip Me</h4>
+                         <span className="text-3xl text-white">📊</span>
+                         <h4 className="text-white font-bold">Analytics</h4>
                     </div>
                     {/* Back */}
                     <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-xl p-6 bg-gradient-to-br from-fuchsia-500 to-purple-600 flex flex-col justify-between shadow-xl">
-                         <span className="text-3xl text-white">✨</span>
-                         <h4 className="text-white font-bold">Revealed</h4>
+                         <span className="text-3xl text-white">📈</span>
+                         <h4 className="text-white font-bold">+340% Growth</h4>
                     </div>
                 </div>
                 {/* Reflection */}
@@ -413,7 +413,7 @@ export const MeshGradientExample = () => {
                 </div>
 
                  <div className="absolute inset-0 flex items-center justify-center">
-                    <h3 className="text-2xl font-bold dark:text-white text-slate-800 drop-shadow-lg">Mesh Gradient</h3>
+                    <h3 className="text-2xl font-bold dark:text-white text-slate-800 drop-shadow-lg">Ship Faster</h3>
                  </div>
             </div>
         </ExampleContainer>
@@ -425,7 +425,7 @@ export const AuroraTextExample = () => {
   return (
     <ExampleContainer>
       <h1 className="text-5xl font-black text-transparent bg-clip-text bg-[linear-gradient(45deg,#3b82f6,#8b5cf6,#ec4899,#3b82f6)] bg-[length:200%_auto] animate-shimmer dark:drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
-        AURORA
+        VELOCITY
       </h1>
     </ExampleContainer>
   );
@@ -436,9 +436,9 @@ export const GlitchTextExample = () => {
   return (
     <ExampleContainer>
       <div className="relative group cursor-default">
-        <h1 className="text-5xl font-black tracking-wider text-white relative z-10 mix-blend-difference">GLITCH_</h1>
-        <h1 className="text-5xl font-black tracking-wider text-cyan-500 absolute top-0 left-0 -translate-x-1 animate-glitch opacity-70">GLITCH_</h1>
-        <h1 className="text-5xl font-black tracking-wider text-pink-500 absolute top-0 left-0 translate-x-1 animate-glitch opacity-70 [animation-delay:-0.5s]">GLITCH_</h1>
+        <h1 className="text-5xl font-black tracking-wider text-white relative z-10 mix-blend-difference">LAUNCH_</h1>
+        <h1 className="text-5xl font-black tracking-wider text-cyan-500 absolute top-0 left-0 -translate-x-1 animate-glitch opacity-70">LAUNCH_</h1>
+        <h1 className="text-5xl font-black tracking-wider text-pink-500 absolute top-0 left-0 translate-x-1 animate-glitch opacity-70 [animation-delay:-0.5s]">LAUNCH_</h1>
       </div>
     </ExampleContainer>
   );
@@ -466,7 +466,7 @@ export const HolographicCardExample = () => {
       <div className="w-48 h-64 rounded-xl bg-slate-800 relative overflow-hidden group">
         <div className="absolute inset-0 opacity-50 group-hover:opacity-100 transition-opacity bg-[linear-gradient(135deg,transparent_20%,rgba(255,255,255,0.4)_25%,transparent_30%,rgba(255,255,255,0.4)_35%,transparent_100%)] bg-[length:200%_200%] animate-shine"></div>
         <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-blue-500/20 mix-blend-overlay"></div>
-        <div className="absolute inset-0 flex items-center justify-center text-white/20 font-bold text-2xl rotate-45">HOLO</div>
+        <div className="absolute inset-0 flex items-center justify-center text-white/20 font-bold text-2xl rotate-45">PRO</div>
       </div>
     </ExampleContainer>
   );
@@ -492,7 +492,7 @@ export const MagicBorderBeamExample = () => {
             <div className="w-[150%] h-[150%] bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] animate-spin-slow opacity-50"></div>
         </div>
         <div className="absolute inset-[1px] bg-[#0a0a0b] rounded-xl flex items-center justify-center">
-            <span className="text-white font-bold">Border Beam</span>
+            <span className="text-white font-bold">Deploy Now</span>
         </div>
       </div>
     </ExampleContainer>
@@ -596,11 +596,11 @@ export const RadarPulseExample = () => {
 export const RippleButtonExample = () => {
     return (
         <ExampleContainer>
-            <button 
+            <button
                 className="relative overflow-hidden px-8 py-3 bg-blue-600 text-white rounded-full font-bold active:scale-95 transition-transform group"
                 onClick={(e) => e.stopPropagation()}
             >
-                Click Me
+                Try Free
                 <div className="absolute inset-0 pointer-events-none group-active:after:content-[''] group-active:after:absolute group-active:after:top-1/2 group-active:after:left-1/2 group-active:after:w-4 group-active:after:h-4 group-active:after:bg-white/30 group-active:after:rounded-full group-active:after:-translate-x-1/2 group-active:after:-translate-y-1/2 group-active:after:animate-ripple"></div>
             </button>
         </ExampleContainer>
@@ -613,10 +613,10 @@ export const SlidingTabsExample = () => {
     return (
         <ExampleContainer>
             <div className="relative flex bg-slate-200 dark:bg-slate-800 rounded-full p-1">
-                {['Home', 'About', 'Contact'].map((tab, i) => (
-                    <button 
-                        key={tab} 
-                        onClick={(e) => { e.stopPropagation(); setActive(i); }} 
+                {['Overview', 'Analytics', 'Settings'].map((tab, i) => (
+                    <button
+                        key={tab}
+                        onClick={(e) => { e.stopPropagation(); setActive(i); }}
                         className={`relative z-10 px-4 py-2 text-sm font-medium transition-colors ${active === i ? 'text-slate-900 dark:text-white' : 'text-slate-500'}`}
                     >
                         {tab}
@@ -637,7 +637,7 @@ export const StackedNotificationsExample = () => {
                 <div className="absolute w-60 h-16 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-white/10 bottom-4 scale-95 opacity-80 z-10"></div>
                 <div className="relative w-64 h-16 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-white/10 flex items-center px-4 gap-3 z-20">
                     <div className="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center"><Check size={16}/></div>
-                    <div className="text-sm dark:text-white"><span className="font-bold">Success!</span> Item saved.</div>
+                    <div className="text-sm dark:text-white"><span className="font-bold">Deployed!</span> Live in 2s.</div>
                 </div>
             </div>
         </ExampleContainer>
@@ -760,7 +760,7 @@ export const CodeTypingExample = () => {
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                 </div>
                 <div className="text-green-400 animate-typewriter overflow-hidden whitespace-nowrap w-0 border-r-2 border-green-400">
-                    npm install magic-ui
+                    npx velocity deploy
                 </div>
             </div>
         </ExampleContainer>
@@ -934,7 +934,7 @@ export const RetroGridExample = () => {
              <div className="absolute inset-0 [transform:rotateX(60deg)] origin-bottom h-[200%] -top-[50%] bg-[linear-gradient(to_right,rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:40px_40px] animate-grid-flow"></div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-transparent to-[#050510] h-full"></div>
-        <h1 className="relative z-10 text-5xl font-black italic text-transparent bg-clip-text bg-gradient-to-b from-fuchsia-400 to-purple-700 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">RETRO</h1>
+        <h1 className="relative z-10 text-5xl font-black italic text-transparent bg-clip-text bg-gradient-to-b from-fuchsia-400 to-purple-700 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">FUTURE</h1>
     </ExampleContainer>
   );
 };
@@ -1001,9 +1001,9 @@ export const CinematicGlowHeroExample = () => {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-600/30 rounded-full blur-[100px] animate-pulse"></div>
             <div className="relative z-10 text-center">
                 <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter mix-blend-overlay opacity-90">
-                    IMPACT
+                    VELOCITY
                 </h1>
-                <p className="text-indigo-200 text-sm tracking-[0.3em] uppercase mt-2 opacity-70">The Future of Digital</p>
+                <p className="text-indigo-200 text-sm tracking-[0.3em] uppercase mt-2 opacity-70">Ship Products 10x Faster</p>
                 <div className="mt-8 flex justify-center">
                      <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all">
                          <Play size={16} fill="currentColor" />
