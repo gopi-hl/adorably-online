@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef, useEffect, useState } from 'react';
 
 interface InfiniteMarqueeProps {
@@ -45,7 +47,10 @@ export const InfiniteMarquee: React.FC<InfiniteMarqueeProps> = ({
         ref={containerRef}
         className={`flex ${vertical ? 'flex-col' : 'flex-row'}`}
         style={{
-          animation: `marquee-${vertical ? 'vertical' : 'horizontal'}-${animationDirection} ${duration}s linear infinite`,
+          animationName: `marquee-${vertical ? 'vertical' : 'horizontal'}-${animationDirection}`,
+          animationDuration: `${duration}s`,
+          animationTimingFunction: 'linear',
+          animationIterationCount: 'infinite',
           animationPlayState: isPaused ? 'paused' : 'running',
         }}
       >

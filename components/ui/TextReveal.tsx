@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 
 interface TextRevealProps {
@@ -22,7 +24,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
   as: Component = 'div',
 }) => {
   const [isRevealed, setIsRevealed] = useState(!triggerOnView && !hover);
-  const containerRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const words = children.split(' ');
 
@@ -63,7 +65,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
 
   return (
     <Component
-      ref={containerRef as React.RefObject<HTMLDivElement>}
+      ref={containerRef as any}
       className={`inline-flex flex-wrap gap-x-[0.25em] ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -103,7 +105,7 @@ export const CharacterReveal: React.FC<CharacterRevealProps> = ({
   as: Component = 'span',
 }) => {
   const [isRevealed, setIsRevealed] = useState(!triggerOnView);
-  const containerRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLSpanElement>(null);
 
   const characters = children.split('');
 
@@ -128,7 +130,7 @@ export const CharacterReveal: React.FC<CharacterRevealProps> = ({
   }, [triggerOnView]);
 
   return (
-    <Component ref={containerRef as React.RefObject<HTMLSpanElement>} className={className}>
+    <Component ref={containerRef as any} className={className}>
       {characters.map((char, index) => (
         <span
           key={index}

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Copy, Terminal, Loader2, Code2, Check, Sparkles } from 'lucide-react';
 import { generateComponentCode } from '../services/geminiService';

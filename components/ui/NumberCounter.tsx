@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 interface NumberCounterProps {
@@ -32,7 +34,7 @@ export const NumberCounter: React.FC<NumberCounterProps> = ({
   const [count, setCount] = useState(start);
   const [hasStarted, setHasStarted] = useState(false);
   const elementRef = useRef<HTMLSpanElement>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | undefined>(undefined);
 
   const easingFunctions = {
     linear: (t: number) => t,

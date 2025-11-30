@@ -1,21 +1,24 @@
+'use client';
+
 import { GoogleGenAI } from "@google/genai";
 import { GeneratedCodeResponse } from '../types';
 
 const getClient = () => {
-  const apiKey = process.env.API_KEY;
+  // Use NEXT_PUBLIC_ prefix for client-side environment variables in Next.js
+  const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
   if (!apiKey) {
-    throw new Error("API Key not found");
+    throw new Error("API Key not found. Set NEXT_PUBLIC_GEMINI_API_KEY in .env.local");
   }
   return new GoogleGenAI({ apiKey });
 };
 
 export const generateComponentCode = async (promptTitle: string, promptDescription: string): Promise<GeneratedCodeResponse> => {
   const ai = getClient();
-  
+
   const systemInstruction = `
     You are an expert Senior React Frontend Engineer specializing in Tailwind CSS.
     Your task is to generate a functional, single-file React component based on the user's design prompt.
-    
+
     Rules:
     1. Use React Functional Components with Hooks.
     2. Use Tailwind CSS for ALL styling. Do not use CSS modules or styled-components.
@@ -23,7 +26,7 @@ export const generateComponentCode = async (promptTitle: string, promptDescripti
     4. Ensure the component is responsive and visually stunning.
     5. Return ONLY the code, no markdown backticks around the code block itself if possible, but standard markdown is okay as I will strip it.
     6. Include a brief 1-sentence explanation at the end.
-    
+
     Format your response as a JSON object:
     {
       "code": "string (the full react component code)",
