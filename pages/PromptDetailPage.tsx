@@ -1,162 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { DESIGN_PROMPTS } from '../constants';
-import { DesignPrompt } from '../types';
 import { getExampleComponent } from '../components/LiveExamples';
 import CodeViewer from '../components/CodeViewer';
 import { useApp } from '../context/AppContext';
-import { ArrowLeft, Lightbulb, Accessibility, Layers, Heart, Share2, Maximize2, X, CheckCircle2, BarChart3, Users, Globe, ArrowRight } from 'lucide-react';
-
-// --- Mock Page Context for Live Demo ---
-const MockPageContext: React.FC<{ children: React.ReactNode; category: string; title: string }> = ({ children, category, title }) => {
-  const isHero = category === 'Hero';
-  const isBackground = category === 'Background';
-
-  const Header = () => (
-    <header className={`w-full py-4 px-6 flex items-center justify-between border-b z-20 relative ${isBackground ? 'bg-transparent border-white/10' : 'bg-white dark:bg-[#0a0a0b] border-slate-200 dark:border-white/10'}`}>
-      <div className="flex items-center gap-2">
-        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">A</div>
-        <span className={`font-bold ${isBackground ? 'text-white' : 'text-slate-900 dark:text-white'}`}>Acme Corp</span>
-      </div>
-      <nav className={`hidden md:flex gap-6 text-sm font-medium ${isBackground ? 'text-white/80' : 'text-slate-600 dark:text-slate-400'}`}>
-        <span>Product</span>
-        <span>Solutions</span>
-        <span>Enterprise</span>
-        <span>Pricing</span>
-      </nav>
-      <div className="flex gap-3">
-        <button className={`text-sm font-medium px-4 py-2 ${isBackground ? 'text-white' : 'text-slate-600 dark:text-slate-300'}`}>Log in</button>
-        <button className="text-sm font-medium px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500">Sign up</button>
-      </div>
-    </header>
-  );
-
-  const Features = () => (
-    <section className={`py-20 px-6 ${isBackground ? 'relative z-10 text-white' : 'bg-slate-50 dark:bg-[#111] text-slate-900 dark:text-white'}`}>
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold mb-4">Enterprise-grade capabilities</h2>
-          <p className={`max-w-2xl mx-auto ${isBackground ? 'text-white/70' : 'text-slate-500 dark:text-slate-400'}`}>
-            Everything you need to manage your business, scale your operations, and delight your customers.
-          </p>
-        </div>
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            { icon: BarChart3, title: "Advanced Analytics", desc: "Real-time insights into your performance metrics." },
-            { icon: Users, title: "Team Collaboration", desc: "Built-in tools for seamless remote work." },
-            { icon: Globe, title: "Global Scale", desc: "Deploy worldwide with edge computing network." }
-          ].map((f, i) => (
-            <div key={i} className={`p-6 rounded-xl border ${isBackground ? 'bg-white/10 border-white/10 backdrop-blur-md' : 'bg-white dark:bg-[#1a1a1a] border-slate-200 dark:border-white/5'}`}>
-              <div className="w-12 h-12 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 mb-4">
-                <f.icon size={24} />
-              </div>
-              <h3 className="text-xl font-bold mb-2">{f.title}</h3>
-              <p className={isBackground ? 'text-white/60' : 'text-slate-500 dark:text-slate-400'}>{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-
-  if (isBackground) {
-    return (
-      <div className="relative w-full h-full min-h-screen overflow-y-auto overflow-x-hidden bg-slate-900">
-        <div className="fixed inset-0 z-0">{children}</div>
-        <div className="relative z-10">
-          <Header />
-          <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-4">
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
-              Build the <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Future</span>
-            </h1>
-            <p className="text-xl text-white/70 max-w-2xl mb-10 leading-relaxed">
-              Experience the background effect in a full-page context. Scroll down to see how it behaves with content overlays.
-            </p>
-            <div className="flex gap-4">
-              <button className="px-8 py-4 bg-white text-slate-900 rounded-full font-bold hover:bg-slate-200 transition-colors">Get Started</button>
-              <button className="px-8 py-4 bg-white/10 text-white border border-white/20 rounded-full font-bold hover:bg-white/20 transition-colors">Learn More</button>
-            </div>
-          </section>
-          <Features />
-          <footer className="py-12 text-center text-white/40 border-t border-white/10">
-            <p>© 2024 Acme Corp. All rights reserved.</p>
-          </footer>
-        </div>
-      </div>
-    );
-  }
-
-  if (isHero) {
-    return (
-      <div className="w-full h-full min-h-screen overflow-y-auto bg-white dark:bg-[#0a0a0b]">
-        <Header />
-        <div className="relative z-0">{children}</div>
-        <div className="py-12 border-y border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-[#111]">
-          <div className="max-w-6xl mx-auto px-6 flex flex-wrap justify-center gap-12 opacity-50 grayscale">
-            <span className="text-xl font-bold">NETFLIX</span>
-            <span className="text-xl font-bold">STRIPE</span>
-            <span className="text-xl font-bold">SPOTIFY</span>
-            <span className="text-xl font-bold">SLACK</span>
-          </div>
-        </div>
-        <Features />
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full h-full min-h-screen overflow-y-auto bg-white dark:bg-[#0a0a0b]">
-      <Header />
-      <section className="py-20 px-6 text-center border-b border-slate-100 dark:border-white/5">
-        <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">Integrate Seemlessly</h1>
-        <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
-          See how the <span className="text-indigo-600 font-mono bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 rounded">{title}</span> component fits into a real application layout.
-        </p>
-      </section>
-      <section className="py-24 px-6 bg-slate-50 dark:bg-[#0f0f12]">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-wider mb-6">
-              Live Component Demo
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">Interactive & Dynamic</h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-              This component is designed to enhance user engagement. Interact with the live example on the right to see its behavior in context.
-            </p>
-            <ul className="space-y-4 mb-8">
-              {['Fully Responsive', 'Dark Mode Compatible', 'Smooth Animations'].map((item, i) => (
-                <li key={i} className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
-                  <CheckCircle2 size={20} className="text-indigo-500" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <button className="flex items-center gap-2 font-bold text-indigo-600 hover:text-indigo-500 transition-colors">
-              Read Documentation <ArrowRight size={16} />
-            </button>
-          </div>
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-            <div className="relative bg-white dark:bg-[#1a1a1a] rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl p-8 md:p-12 flex items-center justify-center min-h-[400px]">
-              <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#6366f1 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
-              <div className="relative z-10 w-full flex justify-center">{children}</div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <Features />
-      <footer className="py-12 border-t border-slate-200 dark:border-white/5 bg-white dark:bg-[#0a0a0b] text-center text-slate-500 text-sm">
-        <p>© 2024 Acme Corp. Built with Adorably.</p>
-      </footer>
-    </div>
-  );
-};
+import {
+  ArrowLeft, Lightbulb, Accessibility, Layers, Heart, Share2, Maximize2, X,
+  Zap, Shield, BarChart3, Users, Globe, Sparkles, CheckCircle2, ArrowRight,
+  Play, Star, ChevronRight, Menu, Cpu, Rocket, ChevronDown
+} from 'lucide-react';
 
 const PromptDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isDarkMode, toggleFavorite, isFavorite } = useApp();
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const prompt = DESIGN_PROMPTS.find(p => p.id === Number(id));
   const LiveComponent = prompt ? getExampleComponent(prompt.id) : null;
@@ -168,8 +26,8 @@ const PromptDetailPage: React.FC = () => {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        if (isFullScreen) {
-          setIsFullScreen(false);
+        if (isDrawerOpen) {
+          setIsDrawerOpen(false);
         } else {
           navigate('/');
         }
@@ -177,7 +35,19 @@ const PromptDetailPage: React.FC = () => {
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
-  }, [navigate, isFullScreen]);
+  }, [navigate, isDrawerOpen]);
+
+  // Prevent body scroll when drawer is open
+  useEffect(() => {
+    if (isDrawerOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isDrawerOpen]);
 
   if (!prompt) {
     return (
@@ -192,22 +62,6 @@ const PromptDetailPage: React.FC = () => {
 
   return (
     <div className="w-full min-h-screen animate-in slide-in-from-right duration-500 ease-out">
-
-      {/* Full Screen Live Demo Modal */}
-      {isFullScreen && (
-        <div className="fixed inset-0 z-[100] bg-white dark:bg-[#050505] overflow-y-auto animate-in fade-in duration-300">
-          <button
-            onClick={() => setIsFullScreen(false)}
-            className="fixed top-6 right-6 z-[110] p-3 bg-black/50 hover:bg-black/70 backdrop-blur-md rounded-full text-white transition-all hover:scale-110 shadow-lg border border-white/10"
-            title="Close Demo [ESC]"
-          >
-            <X size={24} />
-          </button>
-          <MockPageContext category={prompt.category} title={prompt.title}>
-            {LiveComponent}
-          </MockPageContext>
-        </div>
-      )}
 
       {/* Sticky Sub-Header */}
       <div className="sticky top-20 z-30 backdrop-blur-xl border-b px-4 md:px-6 h-14 flex items-center justify-between transition-colors duration-300 dark:bg-[#0a0a0b]/80 dark:border-white/5 bg-white/80 border-slate-200">
@@ -245,12 +99,12 @@ const PromptDetailPage: React.FC = () => {
               {LiveComponent}
             </div>
             <div
-              onClick={() => setIsFullScreen(true)}
+              onClick={() => setIsDrawerOpen(true)}
               className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer backdrop-blur-[2px]"
             >
-              <button className="bg-white/20 backdrop-blur-md border border-white/30 text-white px-6 py-3 rounded-full font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+              <span className="bg-white/20 backdrop-blur-md border border-white/30 text-white px-6 py-3 rounded-full font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                 <Maximize2 size={18} /> View Live Demo
-              </button>
+              </span>
             </div>
           </div>
 
@@ -285,7 +139,7 @@ const PromptDetailPage: React.FC = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <button
-                onClick={() => setIsFullScreen(true)}
+                onClick={() => setIsDrawerOpen(true)}
                 className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-4 bg-violet-600 hover:bg-violet-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-violet-500/20 hover:scale-105 active:scale-95 border border-violet-500"
               >
                 <Maximize2 size={18} />
@@ -334,7 +188,283 @@ const PromptDetailPage: React.FC = () => {
 
         </div>
       </div>
+
+      {/* Bottom Drawer Overlay */}
+      {isDrawerOpen && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setIsDrawerOpen(false)}
+        />
+      )}
+
+      {/* Bottom Drawer */}
+      <div
+        className={`fixed inset-x-0 bottom-0 z-[101] h-[85vh] transform transition-transform duration-500 ease-out ${
+          isDrawerOpen ? 'translate-y-0' : 'translate-y-full'
+        }`}
+      >
+        {/* Drawer Handle */}
+        <div className="flex justify-center py-3 bg-transparent">
+          <button
+            onClick={() => setIsDrawerOpen(false)}
+            className="flex items-center gap-2 px-6 py-2 bg-white dark:bg-slate-800 rounded-full shadow-lg border border-slate-200 dark:border-white/10 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+          >
+            <ChevronDown size={18} />
+            Close Demo
+          </button>
+        </div>
+
+        {/* Drawer Content */}
+        <div className="h-full bg-white dark:bg-[#0a0a0b] rounded-t-3xl shadow-2xl overflow-hidden border-t border-slate-200 dark:border-white/10">
+          <div className="h-full overflow-y-auto">
+            <LiveDemoContent prompt={prompt} LiveComponent={LiveComponent} onClose={() => setIsDrawerOpen(false)} />
+          </div>
+        </div>
+      </div>
     </div>
+  );
+};
+
+// --- Live Demo Content ---
+const LiveDemoContent: React.FC<{ prompt: any; LiveComponent: React.ReactNode; onClose: () => void }> = ({ prompt, LiveComponent, onClose }) => {
+  const isHero = prompt.category === 'Hero';
+  const isBackground = prompt.category === 'Background';
+
+  if (isBackground) {
+    return <BackgroundDemoContext prompt={prompt}>{LiveComponent}</BackgroundDemoContext>;
+  } else if (isHero) {
+    return <HeroDemoContext prompt={prompt}>{LiveComponent}</HeroDemoContext>;
+  } else {
+    return <ComponentDemoContext prompt={prompt}>{LiveComponent}</ComponentDemoContext>;
+  }
+};
+
+// --- Background Effect Demo Context ---
+const BackgroundDemoContext: React.FC<{ children: React.ReactNode; prompt: any }> = ({ children, prompt }) => {
+  return (
+    <div className="relative w-full min-h-full bg-slate-900">
+      <div className="absolute inset-0 z-0">{children}</div>
+      <div className="relative z-10">
+        <SaaSHeader variant="dark" />
+        <section className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 py-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm font-medium mb-8">
+            <Sparkles size={16} className="text-violet-400" />
+            Now with AI-Powered Automation
+          </div>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8 tracking-tight max-w-4xl leading-[0.9]">
+            Ship Products <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400">10x Faster</span>
+          </h1>
+          <p className="text-lg md:text-xl text-white/70 max-w-2xl mb-10 leading-relaxed font-light">
+            The all-in-one platform for modern teams. Build, deploy, and scale your applications without the complexity.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <button className="px-8 py-4 bg-white text-slate-900 rounded-full font-bold text-lg hover:bg-slate-100 transition-all shadow-2xl shadow-white/20 flex items-center gap-2">
+              Start Free Trial <ArrowRight size={20} />
+            </button>
+            <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-full font-bold text-lg hover:bg-white/20 transition-all flex items-center gap-2">
+              <Play size={20} /> Watch Demo
+            </button>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-6 text-white/60 text-sm">
+            <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-400" /> No credit card required</div>
+            <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-400" /> 14-day free trial</div>
+          </div>
+        </section>
+        <TrustedBySection variant="dark" />
+        <FeaturesSection variant="dark" />
+        <CTASection variant="dark" />
+        <SaaSFooter variant="dark" />
+      </div>
+    </div>
+  );
+};
+
+// --- Hero Component Demo Context ---
+const HeroDemoContext: React.FC<{ children: React.ReactNode; prompt: any }> = ({ children, prompt }) => {
+  return (
+    <div className="w-full min-h-full bg-white dark:bg-[#0a0a0b]">
+      <SaaSHeader />
+      <div className="relative">{children}</div>
+      <TrustedBySection />
+      <FeaturesSection />
+      <CTASection />
+      <SaaSFooter />
+    </div>
+  );
+};
+
+// --- Regular Component Demo Context ---
+const ComponentDemoContext: React.FC<{ children: React.ReactNode; prompt: any }> = ({ children, prompt }) => {
+  return (
+    <div className="w-full min-h-full bg-white dark:bg-[#0a0a0b]">
+      <SaaSHeader />
+      <section className="py-16 px-6 text-center border-b border-slate-100 dark:border-white/5 bg-gradient-to-b from-slate-50 to-white dark:from-[#0f0f12] dark:to-[#0a0a0b]">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 text-xs font-bold uppercase tracking-wider mb-4">
+          Interactive Component
+        </div>
+        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">{prompt.title}</h1>
+        <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
+          See how this component integrates seamlessly into a real application.
+        </p>
+      </section>
+      <section className="py-16 px-6 bg-slate-50 dark:bg-[#0f0f12]">
+        <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4">Built for Modern Applications</h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+              This component is designed with performance and accessibility in mind. Fully responsive, dark mode compatible, with smooth animations.
+            </p>
+            <ul className="space-y-3 mb-6">
+              {['Fully Responsive Design', 'Dark Mode Compatible', 'Smooth CSS Animations', 'Accessible by Default'].map((item, i) => (
+                <li key={i} className="flex items-center gap-3 text-slate-700 dark:text-slate-300 text-sm">
+                  <div className="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                    <CheckCircle2 size={12} className="text-green-600 dark:text-green-400" />
+                  </div>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="relative group">
+            <div className="absolute -inset-3 bg-gradient-to-r from-violet-500/20 to-pink-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition duration-500"></div>
+            <div className="relative bg-white dark:bg-[#1a1a1a] rounded-xl border border-slate-200 dark:border-white/10 shadow-xl p-6 md:p-10 flex items-center justify-center min-h-[300px]">
+              <div className="absolute inset-0 opacity-[0.02] pointer-events-none rounded-xl" style={{ backgroundImage: 'radial-gradient(#6366f1 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
+              <div className="relative z-10 w-full flex justify-center">{children}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <FeaturesSection />
+      <CTASection />
+      <SaaSFooter />
+    </div>
+  );
+};
+
+// --- Shared Components ---
+const SaaSHeader: React.FC<{ variant?: 'dark' | 'light' }> = ({ variant }) => {
+  const isDark = variant === 'dark';
+  return (
+    <header className={`w-full py-4 px-6 flex items-center justify-between border-b sticky top-0 z-50 backdrop-blur-xl ${isDark ? 'bg-slate-900/80 border-white/10' : 'bg-white/80 dark:bg-[#0a0a0b]/80 border-slate-200 dark:border-white/10'}`}>
+      <div className="flex items-center gap-6">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-pink-600 flex items-center justify-center">
+            <Zap size={18} className="text-white" />
+          </div>
+          <span className={`font-bold text-lg ${isDark ? 'text-white' : 'text-slate-900 dark:text-white'}`}>Velocity</span>
+        </div>
+        <nav className={`hidden md:flex gap-5 text-sm font-medium ${isDark ? 'text-white/70' : 'text-slate-600 dark:text-slate-400'}`}>
+          <a href="#" className="hover:text-violet-500 transition-colors">Product</a>
+          <a href="#" className="hover:text-violet-500 transition-colors">Solutions</a>
+          <a href="#" className="hover:text-violet-500 transition-colors">Pricing</a>
+          <a href="#" className="hover:text-violet-500 transition-colors">Enterprise</a>
+        </nav>
+      </div>
+      <div className="flex items-center gap-3">
+        <a href="#" className={`text-sm font-medium hidden sm:block ${isDark ? 'text-white/70 hover:text-white' : 'text-slate-600 dark:text-slate-300'}`}>Sign in</a>
+        <button className="px-4 py-2 bg-gradient-to-r from-violet-600 to-pink-600 text-white rounded-full text-sm font-bold hover:opacity-90 transition-opacity shadow-lg shadow-violet-500/25">
+          Start Free
+        </button>
+      </div>
+    </header>
+  );
+};
+
+const TrustedBySection: React.FC<{ variant?: 'dark' | 'light' }> = ({ variant }) => {
+  const isDark = variant === 'dark';
+  const logos = ['STRIPE', 'VERCEL', 'NOTION', 'FIGMA', 'LINEAR'];
+  return (
+    <section className={`py-12 border-y ${isDark ? 'border-white/10 bg-white/5' : 'border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-[#0f0f12]'}`}>
+      <div className="max-w-5xl mx-auto px-6">
+        <p className={`text-center text-xs font-medium mb-6 ${isDark ? 'text-white/50' : 'text-slate-500'}`}>TRUSTED BY 10,000+ COMPANIES</p>
+        <div className="flex flex-wrap justify-center gap-x-10 gap-y-4">
+          {logos.map((logo) => (
+            <span key={logo} className={`text-lg font-bold tracking-wider ${isDark ? 'text-white/30' : 'text-slate-300 dark:text-white/20'}`}>{logo}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const FeaturesSection: React.FC<{ variant?: 'dark' | 'light' }> = ({ variant }) => {
+  const isDark = variant === 'dark';
+  const features = [
+    { icon: Rocket, title: "Lightning Fast", desc: "Deploy in seconds with our optimized infrastructure." },
+    { icon: Shield, title: "Enterprise Security", desc: "SOC 2 Type II certified. End-to-end encryption." },
+    { icon: BarChart3, title: "Advanced Analytics", desc: "Real-time insights and custom dashboards." },
+    { icon: Users, title: "Team Collaboration", desc: "Built-in tools for seamless teamwork." },
+    { icon: Globe, title: "Global Edge Network", desc: "200+ edge locations worldwide." },
+    { icon: Cpu, title: "AI-Powered", desc: "Intelligent automation that learns and adapts." },
+  ];
+  return (
+    <section className={`py-16 px-6 ${isDark ? 'bg-transparent' : 'bg-white dark:bg-[#0a0a0b]'}`}>
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <p className="text-violet-500 font-bold text-xs uppercase tracking-wider mb-3">Features</p>
+          <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900 dark:text-white'}`}>Everything you need to scale</h2>
+          <p className={`text-lg max-w-xl mx-auto ${isDark ? 'text-white/60' : 'text-slate-500 dark:text-slate-400'}`}>
+            A complete toolkit for modern development teams.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, i) => (
+            <div key={i} className={`p-6 rounded-xl border transition-all ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 dark:bg-[#121214] border-slate-100 dark:border-white/5'}`}>
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-violet-500/20 to-pink-500/20 flex items-center justify-center text-violet-500 mb-4">
+                <feature.icon size={20} />
+              </div>
+              <h3 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900 dark:text-white'}`}>{feature.title}</h3>
+              <p className={`text-sm ${isDark ? 'text-white/60' : 'text-slate-500 dark:text-slate-400'}`}>{feature.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const CTASection: React.FC<{ variant?: 'dark' | 'light' }> = ({ variant }) => {
+  const isDark = variant === 'dark';
+  return (
+    <section className={`py-16 px-6 ${isDark ? 'bg-gradient-to-b from-transparent to-slate-900' : 'bg-gradient-to-b from-violet-600 to-purple-700'}`}>
+      <div className="max-w-3xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to ship faster?</h2>
+        <p className="text-lg text-white/70 mb-8 max-w-xl mx-auto">
+          Join thousands of developers who have transformed their deployment workflow.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <button className="px-8 py-4 bg-white text-slate-900 rounded-full font-bold hover:bg-slate-100 transition-all shadow-xl flex items-center justify-center gap-2">
+            Start Free Trial <ArrowRight size={18} />
+          </button>
+          <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-full font-bold hover:bg-white/20 transition-all">
+            Talk to Sales
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SaaSFooter: React.FC<{ variant?: 'dark' | 'light' }> = ({ variant }) => {
+  const isDark = variant === 'dark';
+  return (
+    <footer className={`py-12 px-6 border-t ${isDark ? 'bg-slate-900 border-white/10' : 'bg-slate-50 dark:bg-[#0a0a0b] border-slate-200 dark:border-white/5'}`}>
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-600 to-pink-600 flex items-center justify-center">
+            <Zap size={14} className="text-white" />
+          </div>
+          <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900 dark:text-white'}`}>Velocity</span>
+        </div>
+        <p className={`text-sm ${isDark ? 'text-white/40' : 'text-slate-500'}`}>© 2025 Velocity, Inc. All rights reserved.</p>
+        <div className="flex gap-6">
+          <a href="#" className={`text-sm hover:text-violet-500 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Twitter</a>
+          <a href="#" className={`text-sm hover:text-violet-500 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>GitHub</a>
+          <a href="#" className={`text-sm hover:text-violet-500 ${isDark ? 'text-white/40' : 'text-slate-500'}`}>Discord</a>
+        </div>
+      </div>
+    </footer>
   );
 };
 

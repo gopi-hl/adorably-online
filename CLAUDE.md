@@ -47,7 +47,7 @@ Set `GEMINI_API_KEY` in `.env.local` for AI code generation features.
 │   └── AppContext.tsx   # Global state (theme, user, favorites, auth modal)
 ├── pages/
 │   ├── HomePage.tsx     # Catalog view with search, filters, grid/list view
-│   └── PromptDetailPage.tsx # Single prompt detail with live demo, code viewer
+│   └── PromptDetailPage.tsx # Prompt detail with code viewer and live demo drawer
 ├── components/
 │   ├── Layout.tsx       # Shared layout with header, footer, auth modal
 │   ├── PromptCard.tsx   # Card display (grid/list view modes)
@@ -62,7 +62,7 @@ Set `GEMINI_API_KEY` in `.env.local` for AI code generation features.
 
 ### Routes
 - `/` - Home page with catalog, search, and filters
-- `/prompt/:id` - Prompt detail page with live demo and code viewer
+- `/prompt/:id` - Prompt detail page with code viewer and live demo drawer (85vh bottom drawer)
 
 ### Key Patterns
 
