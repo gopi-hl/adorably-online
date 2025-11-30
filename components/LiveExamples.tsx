@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Box, Layers, MousePointer2, Search as SearchIcon, Bell, Check, X, Code, Terminal, Star, ChevronDown, ChevronRight, Info, Play, ArrowRight, Layout, Monitor, Smartphone, Globe } from 'lucide-react';
+import { Box, Layers, MousePointer2, Search as SearchIcon, Bell, Check, X, Code, Terminal, Star, ChevronDown, ChevronRight, Info, Play, ArrowRight, Layout, Monitor, Smartphone, Globe, CheckCircle } from 'lucide-react';
 
 // --- Utility ---
 export const ExampleContainer = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => (
@@ -1040,6 +1040,24 @@ import {
   HoverTilt,
   MagneticCursor,
   MagneticElement,
+  // New SaaS Components (72-91)
+  AnimatedPricingCard,
+  TestimonialCarousel,
+  TestimonialShowcase,
+  AnimatedStatsCounter,
+  ProcessTimeline,
+  FeatureBento,
+  LogoCloud,
+  CTABanner,
+  FeatureTabs,
+  IntegrationOrbit,
+  MorphingText,
+  FloatingDashboard,
+  AnimatedFAQ,
+  ScrollRevealSection,
+  GlowingCard,
+  StackedCards,
+  ElasticSlider,
 } from './ui';
 
 // --- 52. Magnetic Button ---
@@ -1446,6 +1464,381 @@ export const MagneticCursorExampleNew = () => {
   );
 };
 
+// === NEW SAAS COMPONENT EXAMPLES (72-91) ===
+
+// --- 72. Animated Pricing Card ---
+export const AnimatedPricingCardExample = () => {
+  const tier = {
+    name: 'Pro',
+    price: '$29',
+    period: 'month',
+    description: 'Perfect for growing teams',
+    features: ['Unlimited projects', 'Priority support', 'Advanced analytics', 'Custom integrations'],
+    highlighted: true,
+    badge: 'Most Popular',
+    ctaText: 'Start Free Trial',
+  };
+  return (
+    <ExampleContainer>
+      <AnimatedPricingCard tier={tier} />
+    </ExampleContainer>
+  );
+};
+
+// --- 73. Testimonial Showcase ---
+export const TestimonialShowcaseExample = () => {
+  const testimonials = [
+    { id: 1, content: 'This product transformed our workflow completely. Highly recommended!', author: 'Sarah Chen', role: 'CEO', company: 'TechCorp', rating: 5 },
+    { id: 2, content: 'The best investment we made this year. Support is outstanding.', author: 'Mike Johnson', role: 'CTO', company: 'StartupXYZ', rating: 5 },
+    { id: 3, content: 'Simple, powerful, and reliable. Everything we needed.', author: 'Emily Davis', role: 'Product Lead', company: 'DesignCo', rating: 4 },
+  ];
+  return (
+    <ExampleContainer>
+      <div className="w-full px-4">
+        <TestimonialShowcase testimonials={testimonials} variant="cards" columns={3} />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 74. Animated Stats Counter ---
+export const AnimatedStatsCounterExample = () => {
+  const stats = [
+    { value: 10000, label: 'Users', suffix: '+', icon: <span>👥</span> },
+    { value: 99, label: 'Uptime', suffix: '%', icon: <span>⚡</span> },
+    { value: 50, label: 'Countries', suffix: '+', icon: <span>🌍</span> },
+    { value: 4.9, label: 'Rating', icon: <span>⭐</span> },
+  ];
+  return (
+    <ExampleContainer>
+      <div className="w-full px-4">
+        <AnimatedStatsCounter stats={stats} variant="cards" />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 75. Process Timeline ---
+export const ProcessTimelineExample = () => {
+  const steps = [
+    { title: 'Sign Up', description: 'Create your account in seconds', status: 'completed' as const },
+    { title: 'Configure', description: 'Set up your workspace', status: 'current' as const },
+    { title: 'Integrate', description: 'Connect your tools', status: 'upcoming' as const },
+    { title: 'Launch', description: 'Go live with confidence', status: 'upcoming' as const },
+  ];
+  return (
+    <ExampleContainer>
+      <div className="w-full px-8">
+        <ProcessTimeline steps={steps} variant="horizontal" />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 76. Feature Bento ---
+export const FeatureBentoExample = () => {
+  const items = [
+    { title: 'Analytics', description: 'Real-time insights', icon: <span>📊</span>, span: 'wide' as const },
+    { title: 'Security', description: 'Enterprise-grade', icon: <span>🔒</span> },
+    { title: 'Speed', description: 'Lightning fast', icon: <span>⚡</span> },
+    { title: 'Support', description: '24/7 assistance', icon: <span>💬</span>, span: 'wide' as const },
+  ];
+  return (
+    <ExampleContainer>
+      <div className="w-full px-4 h-64">
+        <FeatureBento items={items} />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 77. Logo Cloud ---
+export const LogoCloudExample = () => {
+  const logos = [
+    { name: 'Stripe' }, { name: 'Vercel' }, { name: 'Notion' },
+    { name: 'Figma' }, { name: 'Linear' }, { name: 'Slack' },
+  ];
+  return (
+    <ExampleContainer>
+      <div className="w-full">
+        <LogoCloud logos={logos} variant="scroll" title="Trusted by industry leaders" />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 78. CTA Banner ---
+export const CTABannerExample = () => {
+  return (
+    <ExampleContainer>
+      <div className="w-full px-4">
+        <CTABanner
+          title="Ready to get started?"
+          description="Join thousands of teams already using our platform."
+          primaryCTA={{ text: 'Start Free Trial' }}
+          secondaryCTA={{ text: 'Learn More' }}
+          variant="gradient"
+        />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 79. Feature Tabs ---
+export const FeatureTabsExample = () => {
+  const tabs = [
+    { id: 'dashboard', label: 'Dashboard', icon: <Layout size={16} />, content: <div className="p-8 text-center dark:text-slate-300 text-slate-600">Dashboard Content</div> },
+    { id: 'analytics', label: 'Analytics', icon: <Monitor size={16} />, content: <div className="p-8 text-center dark:text-slate-300 text-slate-600">Analytics Content</div> },
+    { id: 'settings', label: 'Settings', icon: <Globe size={16} />, content: <div className="p-8 text-center dark:text-slate-300 text-slate-600">Settings Content</div> },
+  ];
+  return (
+    <ExampleContainer>
+      <div className="w-full px-4">
+        <FeatureTabs tabs={tabs} variant="pills" />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 80. Integration Orbit ---
+export const IntegrationOrbitExample = () => {
+  const integrations = [
+    { id: 'slack', name: 'Slack', icon: <span>💬</span> },
+    { id: 'github', name: 'GitHub', icon: <span>🐙</span> },
+    { id: 'figma', name: 'Figma', icon: <span>🎨</span> },
+    { id: 'notion', name: 'Notion', icon: <span>📝</span> },
+    { id: 'linear', name: 'Linear', icon: <span>📋</span> },
+  ];
+  return (
+    <ExampleContainer>
+      <IntegrationOrbit integrations={integrations} orbitRadius={100} />
+    </ExampleContainer>
+  );
+};
+
+// --- 81. Notification Toast ---
+// Note: NotificationToast uses fixed positioning, so we show a static preview here
+export const NotificationToastExample = () => {
+  return (
+    <ExampleContainer>
+      <div className="flex flex-col gap-3 w-80">
+        {/* Success Toast Preview */}
+        <div className="p-4 rounded-lg dark:bg-slate-800 bg-white border dark:border-white/10 border-slate-200 shadow-lg border-l-4 border-l-emerald-500">
+          <div className="flex items-start gap-3">
+            <CheckCircle className="text-emerald-500 mt-0.5" size={20} />
+            <div className="flex-1">
+              <h4 className="font-semibold dark:text-white text-slate-900">Success!</h4>
+              <p className="text-sm dark:text-slate-400 text-slate-500">Your changes have been saved.</p>
+            </div>
+            <button className="dark:text-slate-400 text-slate-500 hover:text-slate-700">
+              <X size={16} />
+            </button>
+          </div>
+        </div>
+        {/* Info Toast Preview */}
+        <div className="p-4 rounded-lg dark:bg-slate-800 bg-white border dark:border-white/10 border-slate-200 shadow-lg border-l-4 border-l-blue-500">
+          <div className="flex items-start gap-3">
+            <Info className="text-blue-500 mt-0.5" size={20} />
+            <div className="flex-1">
+              <h4 className="font-semibold dark:text-white text-slate-900">New Notification</h4>
+              <p className="text-sm dark:text-slate-400 text-slate-500">You have a new message.</p>
+            </div>
+            <button className="dark:text-slate-400 text-slate-500 hover:text-slate-700">
+              <X size={16} />
+            </button>
+          </div>
+        </div>
+        <p className="text-xs dark:text-slate-500 text-slate-400 text-center">
+          Preview (actual component uses fixed positioning)
+        </p>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 82. Morphing Text ---
+export const MorphingTextExample = () => {
+  return (
+    <ExampleContainer>
+      <div className="text-center">
+        <p className="dark:text-slate-400 text-slate-500 mb-2">We help you</p>
+        <MorphingText
+          texts={['Build', 'Ship', 'Scale', 'Grow']}
+          variant="slide"
+          className="text-4xl font-black dark:text-white text-slate-900"
+        />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 83. Floating Dashboard ---
+export const FloatingDashboardExample = () => {
+  return (
+    <ExampleContainer>
+      <div className="w-80">
+        <FloatingDashboard variant="3d-tilt" />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 84. Animated FAQ ---
+export const AnimatedFAQExample = () => {
+  const items = [
+    { id: 1, question: 'How does it work?', answer: 'Simply sign up, configure your settings, and you are ready to go!' },
+    { id: 2, question: 'Is there a free trial?', answer: 'Yes! We offer a 14-day free trial with full access to all features.' },
+    { id: 3, question: 'Can I cancel anytime?', answer: 'Absolutely. No contracts, cancel whenever you want.' },
+  ];
+  return (
+    <ExampleContainer>
+      <div className="w-full max-w-lg px-4">
+        <AnimatedFAQ items={items} variant="accordion" />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 85. Scroll Reveal Section ---
+export const ScrollRevealSectionExample = () => {
+  return (
+    <ExampleContainer>
+      <ScrollRevealSection variant="slide-up" stagger staggerDelay={0.15}>
+        <div className="flex gap-4">
+          <div className="w-16 h-16 rounded-xl bg-violet-500/20 flex items-center justify-center">
+            <span className="text-2xl">🚀</span>
+          </div>
+          <div className="w-16 h-16 rounded-xl bg-pink-500/20 flex items-center justify-center">
+            <span className="text-2xl">💡</span>
+          </div>
+          <div className="w-16 h-16 rounded-xl bg-blue-500/20 flex items-center justify-center">
+            <span className="text-2xl">⚡</span>
+          </div>
+        </div>
+      </ScrollRevealSection>
+    </ExampleContainer>
+  );
+};
+
+// --- 86. Animated Nav ---
+// Note: AnimatedNav uses fixed positioning, so we show a static preview here
+export const AnimatedNavExample = () => {
+  return (
+    <ExampleContainer>
+      <div className="w-full max-w-2xl">
+        {/* Static preview since AnimatedNav uses fixed positioning */}
+        <div className="px-2 py-2 rounded-2xl dark:bg-slate-900/90 bg-white/90 backdrop-blur-xl border dark:border-white/10 border-slate-200 shadow-2xl">
+          <div className="flex items-center gap-4">
+            <div className="px-4">
+              <span className="text-lg font-bold dark:text-white text-slate-900">Logo</span>
+            </div>
+            <div className="hidden md:flex items-center">
+              {['Features', 'Pricing', 'About'].map((item) => (
+                <span
+                  key={item}
+                  className="px-4 py-2 dark:text-slate-300 text-slate-600 hover:text-violet-500 transition-colors font-medium text-sm cursor-pointer"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+            <button className="px-5 py-2 rounded-xl bg-violet-500 text-white font-medium text-sm hover:bg-violet-600 transition-colors">
+              Get Started
+            </button>
+          </div>
+        </div>
+        <p className="text-xs dark:text-slate-500 text-slate-400 mt-3 text-center">
+          Preview of floating variant (actual component uses fixed positioning)
+        </p>
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 87. Glowing Card ---
+export const GlowingCardExample = () => {
+  return (
+    <ExampleContainer>
+      <GlowingCard variant="ambient" glowColor="rgba(139, 92, 246, 0.4)">
+        <div className="p-6">
+          <h3 className="font-bold dark:text-white text-slate-900 mb-2">Premium Feature</h3>
+          <p className="text-sm dark:text-slate-400 text-slate-500">Experience the magic of ambient glow effects.</p>
+        </div>
+      </GlowingCard>
+    </ExampleContainer>
+  );
+};
+
+// --- 88. Stacked Cards ---
+export const StackedCardsExample = () => {
+  const cards = [
+    { id: 1, content: <div className="p-6 h-full bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-white font-bold text-xl">Card 1</div> },
+    { id: 2, content: <div className="p-6 h-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-xl">Card 2</div> },
+    { id: 3, content: <div className="p-6 h-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold text-xl">Card 3</div> },
+  ];
+  return (
+    <ExampleContainer>
+      <StackedCards cards={cards} variant="stack" />
+    </ExampleContainer>
+  );
+};
+
+// --- 89. Elastic Slider ---
+export const ElasticSliderExample = () => {
+  const [value, setValue] = useState(50);
+  return (
+    <ExampleContainer>
+      <div className="w-64">
+        <ElasticSlider
+          value={value}
+          onChange={setValue}
+          variant="gradient"
+          label="Volume"
+          showValue
+          formatValue={(v) => `${v}%`}
+        />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 90. Testimonial Carousel ---
+export const TestimonialCarouselExample = () => {
+  const testimonials = [
+    { id: 1, content: 'Absolutely incredible product. Changed how we work.', author: 'Alex Rivera', role: 'Founder', company: 'TechStart', rating: 5 },
+    { id: 2, content: 'The best tool in our stack. Period.', author: 'Jordan Lee', role: 'Engineering Lead', company: 'ScaleUp Inc', rating: 5 },
+  ];
+  return (
+    <ExampleContainer>
+      <div className="w-full max-w-md px-8">
+        <TestimonialCarousel testimonials={testimonials} autoPlay={false} />
+      </div>
+    </ExampleContainer>
+  );
+};
+
+// --- 91. Animated Counter ---
+export const AnimatedCounterExample = () => {
+  return (
+    <ExampleContainer>
+      <div className="flex gap-8 text-center">
+        <div>
+          <div className="text-4xl font-bold dark:text-white text-slate-900">
+            <NumberCounter end={1000} duration={2000} />+
+          </div>
+          <p className="text-sm dark:text-slate-400 text-slate-500">Customers</p>
+        </div>
+        <div>
+          <div className="text-4xl font-bold dark:text-white text-slate-900">
+            $<NumberCounter end={5} duration={1500} />M
+          </div>
+          <p className="text-sm dark:text-slate-400 text-slate-500">Revenue</p>
+        </div>
+      </div>
+    </ExampleContainer>
+  );
+};
+
 // --- Generic Fallback ---
 export const GenericExample = ({ title }: { title: string }) => (
     <ExampleContainer>
@@ -1532,6 +1925,27 @@ export const getExampleComponent = (id: number) => {
     case 69: return <ShimmerCardExampleNew />;
     case 70: return <HoverTiltExampleNew />;
     case 71: return <MagneticCursorExampleNew />;
+    // New SaaS Components (72-91)
+    case 72: return <AnimatedPricingCardExample />;
+    case 73: return <TestimonialShowcaseExample />;
+    case 74: return <AnimatedStatsCounterExample />;
+    case 75: return <ProcessTimelineExample />;
+    case 76: return <FeatureBentoExample />;
+    case 77: return <LogoCloudExample />;
+    case 78: return <CTABannerExample />;
+    case 79: return <FeatureTabsExample />;
+    case 80: return <IntegrationOrbitExample />;
+    case 81: return <NotificationToastExample />;
+    case 82: return <MorphingTextExample />;
+    case 83: return <FloatingDashboardExample />;
+    case 84: return <AnimatedFAQExample />;
+    case 85: return <ScrollRevealSectionExample />;
+    case 86: return <AnimatedNavExample />;
+    case 87: return <GlowingCardExample />;
+    case 88: return <StackedCardsExample />;
+    case 89: return <ElasticSliderExample />;
+    case 90: return <TestimonialCarouselExample />;
+    case 91: return <AnimatedCounterExample />;
     default: return null;
   }
 };
