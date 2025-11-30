@@ -90,12 +90,19 @@ const PromptDetailClient: React.FC<PromptDetailClientProps> = ({ prompt }) => {
         {/* Left Column: Sticky Preview */}
         <div className="lg:sticky lg:top-40 h-fit space-y-6">
           <div
-            className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] dark:bg-[#121214] dark:border-white/10 dark:shadow-black/50 bg-white border-slate-200 shadow-slate-200/50 border ring-1 ring-white/10 cursor-pointer"
-            onClick={() => setIsDrawerOpen(true)}
+            className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] dark:bg-[#121214] dark:border-white/10 dark:shadow-black/50 bg-white border-slate-200 shadow-slate-200/50 border ring-1 ring-white/10"
           >
             <div className="absolute inset-0 dark:bg-[#0f0f1a] bg-slate-50 transition-colors duration-300">
               {LiveComponent}
             </div>
+            {/* Fullscreen button */}
+            <button
+              onClick={() => setIsDrawerOpen(true)}
+              className="absolute bottom-4 right-4 p-2.5 rounded-xl dark:bg-white/10 dark:hover:bg-white/20 bg-black/10 hover:bg-black/20 backdrop-blur-sm transition-all hover:scale-105 active:scale-95 dark:text-white text-slate-700"
+              title="View Fullscreen"
+            >
+              <Maximize2 size={16} />
+            </button>
           </div>
 
           <div className="rounded-2xl p-6 border dark:bg-[#121214]/50 dark:border-white/10 bg-white border-slate-200">
@@ -123,19 +130,9 @@ const PromptDetailClient: React.FC<PromptDetailClientProps> = ({ prompt }) => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-[1.1] dark:text-white text-slate-900 tracking-tight">
               {prompt.title}
             </h1>
-            <p className="text-lg md:text-xl leading-relaxed font-light dark:text-slate-400 text-slate-600 border-l-2 dark:border-white/10 border-slate-200 pl-6 mb-8">
+            <p className="text-lg md:text-xl leading-relaxed font-light dark:text-slate-400 text-slate-600 border-l-2 dark:border-white/10 border-slate-200 pl-6">
               {prompt.description}
             </p>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={() => setIsDrawerOpen(true)}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold transition-all shadow-lg hover:scale-105 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 bg-slate-900 text-white hover:bg-slate-800"
-              >
-                <Maximize2 size={18} />
-                View Live Demo
-              </button>
-            </div>
           </div>
 
           {/* Use Cases */}
