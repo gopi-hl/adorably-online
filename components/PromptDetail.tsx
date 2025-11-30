@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { DesignPrompt } from '../types';
 import { getExampleComponent } from './LiveExamples';
 import CodeViewer from './CodeViewer';
-import { ArrowLeft, Lightbulb, Accessibility, Layers, Heart, Share2, Maximize2, X } from 'lucide-react';
+import { ArrowLeft, Lightbulb, Accessibility, Layers, Heart, Share2, Maximize2, X, CheckCircle2, BarChart3, Users, Globe, ArrowRight, Menu } from 'lucide-react';
 
 interface PromptDetailProps {
   prompt: DesignPrompt;
@@ -11,6 +11,172 @@ interface PromptDetailProps {
   isFavorite: boolean;
   onToggleFavorite: () => void;
 }
+
+// --- Mock Page Context for Live Demo ---
+const MockPageContext: React.FC<{ children: React.ReactNode; category: string; title: string }> = ({ children, category, title }) => {
+  const isHero = category === 'Hero';
+  const isBackground = category === 'Background';
+
+  // Shared Header
+  const Header = () => (
+    <header className={`w-full py-4 px-6 flex items-center justify-between border-b z-20 relative ${isBackground ? 'bg-transparent border-white/10' : 'bg-white dark:bg-[#0a0a0b] border-slate-200 dark:border-white/10'}`}>
+      <div className="flex items-center gap-2">
+        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">A</div>
+        <span className={`font-bold ${isBackground ? 'text-white' : 'text-slate-900 dark:text-white'}`}>Acme Corp</span>
+      </div>
+      <nav className={`hidden md:flex gap-6 text-sm font-medium ${isBackground ? 'text-white/80' : 'text-slate-600 dark:text-slate-400'}`}>
+        <span>Product</span>
+        <span>Solutions</span>
+        <span>Enterprise</span>
+        <span>Pricing</span>
+      </nav>
+      <div className="flex gap-3">
+        <button className={`text-sm font-medium px-4 py-2 ${isBackground ? 'text-white' : 'text-slate-600 dark:text-slate-300'}`}>Log in</button>
+        <button className="text-sm font-medium px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500">Sign up</button>
+      </div>
+    </header>
+  );
+
+  // Shared Features Section
+  const Features = () => (
+    <section className={`py-20 px-6 ${isBackground ? 'relative z-10 text-white' : 'bg-slate-50 dark:bg-[#111] text-slate-900 dark:text-white'}`}>
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold mb-4">Enterprise-grade capabilities</h2>
+          <p className={`max-w-2xl mx-auto ${isBackground ? 'text-white/70' : 'text-slate-500 dark:text-slate-400'}`}>
+            Everything you need to manage your business, scale your operations, and delight your customers.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { icon: BarChart3, title: "Advanced Analytics", desc: "Real-time insights into your performance metrics." },
+            { icon: Users, title: "Team Collaboration", desc: "Built-in tools for seamless remote work." },
+            { icon: Globe, title: "Global Scale", desc: "Deploy worldwide with edge computing network." }
+          ].map((f, i) => (
+            <div key={i} className={`p-6 rounded-xl border ${isBackground ? 'bg-white/10 border-white/10 backdrop-blur-md' : 'bg-white dark:bg-[#1a1a1a] border-slate-200 dark:border-white/5'}`}>
+              <div className="w-12 h-12 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 mb-4">
+                <f.icon size={24} />
+              </div>
+              <h3 className="text-xl font-bold mb-2">{f.title}</h3>
+              <p className={isBackground ? 'text-white/60' : 'text-slate-500 dark:text-slate-400'}>{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
+  // If it's a Background component, it wraps everything
+  if (isBackground) {
+    return (
+      <div className="relative w-full h-full min-h-screen overflow-y-auto overflow-x-hidden bg-slate-900">
+        <div className="fixed inset-0 z-0">{children}</div>
+        <div className="relative z-10">
+          <Header />
+          <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-4">
+            <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
+              Build the <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Future</span>
+            </h1>
+            <p className="text-xl text-white/70 max-w-2xl mb-10 leading-relaxed">
+              Experience the background effect in a full-page context. Scroll down to see how it behaves with content overlays.
+            </p>
+            <div className="flex gap-4">
+              <button className="px-8 py-4 bg-white text-slate-900 rounded-full font-bold hover:bg-slate-200 transition-colors">Get Started</button>
+              <button className="px-8 py-4 bg-white/10 text-white border border-white/20 rounded-full font-bold hover:bg-white/20 transition-colors">Learn More</button>
+            </div>
+          </section>
+          <Features />
+          <footer className="py-12 text-center text-white/40 border-t border-white/10">
+            <p>© 2024 Acme Corp. All rights reserved.</p>
+          </footer>
+        </div>
+      </div>
+    );
+  }
+
+  // If it's a Hero component, it takes the top slot
+  if (isHero) {
+    return (
+      <div className="w-full h-full min-h-screen overflow-y-auto bg-white dark:bg-[#0a0a0b]">
+        <Header />
+        <div className="relative z-0">
+          {children}
+        </div>
+        <div className="py-12 border-y border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-[#111]">
+           <div className="max-w-6xl mx-auto px-6 flex flex-wrap justify-center gap-12 opacity-50 grayscale">
+              <span className="text-xl font-bold">NETFLIX</span>
+              <span className="text-xl font-bold">STRIPE</span>
+              <span className="text-xl font-bold">SPOTIFY</span>
+              <span className="text-xl font-bold">SLACK</span>
+           </div>
+        </div>
+        <Features />
+      </div>
+    );
+  }
+
+  // Default: Component Demo (Card, Button, etc.) embedded in a section
+  return (
+    <div className="w-full h-full min-h-screen overflow-y-auto bg-white dark:bg-[#0a0a0b]">
+      <Header />
+      
+      {/* Standard Page Hero */}
+      <section className="py-20 px-6 text-center border-b border-slate-100 dark:border-white/5">
+        <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">Integrate Seemlessly</h1>
+        <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+          See how the <span className="text-indigo-600 font-mono bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 rounded">{title}</span> component fits into a real application layout.
+        </p>
+      </section>
+
+      {/* Feature Spotlight Section containing the Demo Component */}
+      <section className="py-24 px-6 bg-slate-50 dark:bg-[#0f0f12]">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-wider mb-6">
+              Live Component Demo
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
+              Interactive & Dynamic
+            </h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+              This component is designed to enhance user engagement. Interact with the live example on the right to see its behavior in context. 
+              Notice how it fits with the surrounding aesthetics.
+            </p>
+            <ul className="space-y-4 mb-8">
+              {['Fully Responsive', 'Dark Mode Compatible', 'Smooth Animations'].map((item, i) => (
+                <li key={i} className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                  <CheckCircle2 size={20} className="text-indigo-500" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <button className="flex items-center gap-2 font-bold text-indigo-600 hover:text-indigo-500 transition-colors">
+              Read Documentation <ArrowRight size={16} />
+            </button>
+          </div>
+
+          {/* The Live Component Wrapper */}
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+            <div className="relative bg-white dark:bg-[#1a1a1a] rounded-xl border border-slate-200 dark:border-white/10 shadow-2xl p-8 md:p-12 flex items-center justify-center min-h-[400px]">
+               {/* Pattern Background for Container */}
+               <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#6366f1 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+               <div className="relative z-10 w-full flex justify-center">
+                 {children}
+               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Features />
+      
+      <footer className="py-12 border-t border-slate-200 dark:border-white/5 bg-white dark:bg-[#0a0a0b] text-center text-slate-500 text-sm">
+        <p>© 2024 Acme Corp. Built with Adorably.</p>
+      </footer>
+    </div>
+  );
+};
 
 const PromptDetail: React.FC<PromptDetailProps> = ({ prompt, onClose, isFavorite, onToggleFavorite }) => {
   const LiveComponent = getExampleComponent(prompt.id);
@@ -36,27 +202,20 @@ const PromptDetail: React.FC<PromptDetailProps> = ({ prompt, onClose, isFavorite
       
       {/* Full Screen Live Demo Modal */}
       {isFullScreen && (
-        <div className="fixed inset-0 z-[100] bg-slate-50/95 dark:bg-[#050505]/95 backdrop-blur-md flex flex-col animate-in fade-in duration-200">
-           <div className="flex items-center justify-between px-6 h-20 border-b dark:border-white/10 border-slate-200 bg-white/50 dark:bg-black/50">
-              <div className="flex items-center gap-4">
-                  <span className="px-3 py-1 rounded-full bg-violet-500/10 text-violet-500 border border-violet-500/20 text-[10px] font-bold font-mono uppercase tracking-wider">
-                    {prompt.category}
-                  </span>
-                  <h2 className="font-bold text-lg dark:text-white text-slate-900">{prompt.title}</h2>
-              </div>
-              <button 
+        <div className="fixed inset-0 z-[100] bg-white dark:bg-[#050505] overflow-y-auto animate-in fade-in duration-300">
+           {/* Close Button Float */}
+           <button 
                 onClick={() => setIsFullScreen(false)} 
-                className="p-2 hover:bg-slate-200 dark:hover:bg-white/10 rounded-full transition-colors dark:text-white text-slate-900"
+                className="fixed top-6 right-6 z-[110] p-3 bg-black/50 hover:bg-black/70 backdrop-blur-md rounded-full text-white transition-all hover:scale-110 shadow-lg border border-white/10"
                 title="Close Demo [ESC]"
-              >
-                 <X size={24} />
-              </button>
-           </div>
-           <div className="flex-1 p-4 md:p-8 overflow-hidden flex items-center justify-center">
-                <div className="w-full h-full border dark:border-white/5 border-slate-200 shadow-2xl rounded-2xl overflow-hidden bg-white dark:bg-[#0a0a0b] relative">
-                    {LiveComponent}
-                </div>
-           </div>
+            >
+                <X size={24} />
+            </button>
+
+           {/* Content Context Wrapper */}
+           <MockPageContext category={prompt.category} title={prompt.title}>
+              {LiveComponent}
+           </MockPageContext>
         </div>
       )}
 
@@ -102,7 +261,7 @@ const PromptDetail: React.FC<PromptDetailProps> = ({ prompt, onClose, isFavorite
                     className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer backdrop-blur-[2px]"
                 >
                     <button className="bg-white/20 backdrop-blur-md border border-white/30 text-white px-6 py-3 rounded-full font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                        <Maximize2 size={18} /> Open Full Screen
+                        <Maximize2 size={18} /> View Live Demo
                     </button>
                 </div>
             </div>
@@ -136,13 +295,15 @@ const PromptDetail: React.FC<PromptDetailProps> = ({ prompt, onClose, isFavorite
                     {prompt.description}
                 </p>
 
-                <button 
-                    onClick={() => setIsFullScreen(true)}
-                    className="flex items-center gap-2 px-6 py-3.5 bg-violet-600 hover:bg-violet-500 text-white rounded-full font-bold transition-all shadow-lg shadow-violet-500/20 hover:scale-105 active:scale-95"
-                >
-                    <Maximize2 size={18} />
-                    View Live Demo
-                </button>
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <button 
+                        onClick={() => setIsFullScreen(true)}
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-4 bg-violet-600 hover:bg-violet-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-violet-500/20 hover:scale-105 active:scale-95 border border-violet-500"
+                    >
+                        <Maximize2 size={18} />
+                        View Live Demo
+                    </button>
+                </div>
             </div>
 
             {/* Use Cases */}
