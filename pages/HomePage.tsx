@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { DESIGN_PROMPTS } from '../constants';
 import PromptCard from '../components/PromptCard';
 import { useApp } from '../context/AppContext';
-import { Sparkles, Palette, Search, LayoutList, LayoutGrid } from 'lucide-react';
+import { Palette, Search, LayoutList, LayoutGrid } from 'lucide-react';
 
 const CATEGORIES = ['All', 'Hero', 'Card', 'Layout', 'Animation', 'Interaction', 'Background'];
 
@@ -49,13 +49,6 @@ const HomePage: React.FC = () => {
     navigate(`/prompt/${promptId}`);
   };
 
-  const handleViewHeroDesigns = () => {
-    setActiveCategory('Hero');
-    const filterSection = document.getElementById('filter-section');
-    if (filterSection) {
-      filterSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <>
@@ -71,15 +64,6 @@ const HomePage: React.FC = () => {
         <p className={`text-xl max-w-2xl mx-auto font-light mb-10 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
           A curated collection of modern UI effects, including <span className="text-violet-500 font-medium">6 new Hero Sections</span>. Preview live, copy the prompt, or generate the React code instantly.
         </p>
-        <div className="flex justify-center gap-4">
-          <button
-            onClick={handleViewHeroDesigns}
-            className={`flex items-center gap-2 px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform ${isDarkMode ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.3)]' : 'bg-slate-900 text-white shadow-xl shadow-slate-900/20'}`}
-          >
-            <Sparkles size={18} className={isDarkMode ? "text-violet-600" : "text-violet-400"} />
-            View New Hero Designs
-          </button>
-        </div>
       </div>
 
       {/* Search & Filter */}
