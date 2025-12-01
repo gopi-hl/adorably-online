@@ -1054,15 +1054,5 @@ export const DESIGN_PROMPTS: DesignPrompt[] = [
     useCases: ["Customer testimonials", "Reviews showcase", "Quote rotator", "Social proof"],
     implementationTips: ["Use perspective for 3D effect", "Calculate rotation from drag", "Swipe detection with thresholds", "Auto-play with intersection"],
     accessibility: "Include pause control. Full quotes available to screen readers."
-  },
-  {
-    id: 91,
-    title: "Animated Counter",
-    category: "Animation",
-    componentType: "Data Display",
-    description: "Spring-physics number counter that animates from 0 to target value on scroll into view. Supports prefixes, suffixes, decimals, and locale formatting.",
-    useCases: ["Statistics display", "Metrics counters", "Progress indicators", "Achievement numbers"],
-    implementationTips: ["useSpring for smooth counting", "useInView for trigger", "Format with toLocaleString", "Support decimal places"],
-    accessibility: "Announce final value. Don't rely solely on animation for information."
   }
 ];

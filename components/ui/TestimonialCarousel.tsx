@@ -43,11 +43,11 @@ export const TestimonialCarousel: React.FC<TestimonialCarouselProps> = ({
     if (!autoPlay) return;
 
     const interval = setInterval(() => {
-      paginate(1);
+      setPage(([prevPage]) => [prevPage + 1, 1]);
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval, page]);
+  }, [autoPlay, autoPlayInterval]);
 
   const swipeConfidenceThreshold = 10000;
   const swipePower = (offset: number, velocity: number) => {

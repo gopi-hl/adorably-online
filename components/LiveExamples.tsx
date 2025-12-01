@@ -373,15 +373,15 @@ export const SpotlightCursorExample = () => {
 export const FlipCardExample = () => {
     return (
         <ExampleContainer>
-            <div className="flex flex-col items-center group perspective-1000 cursor-pointer">
-                <div className="relative w-40 h-56 preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
+            <div className="flex flex-col items-center group cursor-pointer" style={{ perspective: '1000px' }}>
+                <div className="relative w-40 h-56 transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                     {/* Front */}
-                    <div className="absolute inset-0 backface-hidden rounded-xl p-6 bg-gradient-to-br from-cyan-500 to-blue-500 flex flex-col justify-between shadow-xl">
+                    <div className="absolute inset-0 rounded-xl p-6 bg-gradient-to-br from-cyan-500 to-blue-500 flex flex-col justify-between shadow-xl [backface-visibility:hidden]">
                          <span className="text-3xl text-white">📊</span>
                          <h4 className="text-white font-bold">Analytics</h4>
                     </div>
                     {/* Back */}
-                    <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-xl p-6 bg-gradient-to-br from-fuchsia-500 to-purple-600 flex flex-col justify-between shadow-xl">
+                    <div className="absolute inset-0 rounded-xl p-6 bg-gradient-to-br from-fuchsia-500 to-purple-600 flex flex-col justify-between shadow-xl [backface-visibility:hidden] [transform:rotateY(180deg)]">
                          <span className="text-3xl text-white">📈</span>
                          <h4 className="text-white font-bold">+340% Growth</h4>
                     </div>
@@ -400,22 +400,30 @@ export const MeshGradientExample = () => {
             <div className="relative w-full h-full overflow-hidden">
                 {/* Dark Mode */}
                 <div className="hidden dark:block">
-                     <div className="absolute top-[-30%] left-[-10%] w-64 h-64 rounded-full bg-[radial-gradient(circle,rgba(255,0,110,0.7)_0%,transparent_70%)] filter blur-3xl animate-blob-drift"></div>
-                    <div className="absolute top-[20%] right-[-5%] w-60 h-60 rounded-full bg-[radial-gradient(circle,rgba(131,56,236,0.6)_0%,transparent_70%)] filter blur-3xl animate-blob-drift [animation-delay:-5s] [animation-direction:reverse]"></div>
-                    <div className="absolute bottom-[-20%] left-[20%] w-56 h-56 rounded-full bg-[radial-gradient(circle,rgba(58,134,255,0.5)_0%,transparent_70%)] filter blur-3xl animate-blob-drift [animation-delay:-10s]"></div>
+                     <div className="absolute top-[-30%] left-[-10%] w-64 h-64 rounded-full bg-[radial-gradient(circle,rgba(255,0,110,0.7)_0%,transparent_70%)] filter blur-3xl animate-[drift_20s_ease-in-out_infinite]"></div>
+                    <div className="absolute top-[20%] right-[-5%] w-60 h-60 rounded-full bg-[radial-gradient(circle,rgba(131,56,236,0.6)_0%,transparent_70%)] filter blur-3xl animate-[drift_25s_ease-in-out_infinite_reverse]"></div>
+                    <div className="absolute bottom-[-20%] left-[20%] w-56 h-56 rounded-full bg-[radial-gradient(circle,rgba(58,134,255,0.5)_0%,transparent_70%)] filter blur-3xl animate-[drift_22s_ease-in-out_infinite]" style={{ animationDelay: '-10s' }}></div>
                 </div>
 
                 {/* Light Mode */}
                 <div className="block dark:hidden">
-                    <div className="absolute top-[-30%] left-[-10%] w-64 h-64 rounded-full bg-[radial-gradient(circle,rgba(255,0,110,0.3)_0%,transparent_70%)] filter blur-3xl animate-blob-drift"></div>
-                    <div className="absolute top-[20%] right-[-5%] w-60 h-60 rounded-full bg-[radial-gradient(circle,rgba(131,56,236,0.2)_0%,transparent_70%)] filter blur-3xl animate-blob-drift [animation-delay:-5s] [animation-direction:reverse]"></div>
-                    <div className="absolute bottom-[-20%] left-[20%] w-56 h-56 rounded-full bg-[radial-gradient(circle,rgba(58,134,255,0.2)_0%,transparent_70%)] filter blur-3xl animate-blob-drift [animation-delay:-10s]"></div>
+                    <div className="absolute top-[-30%] left-[-10%] w-64 h-64 rounded-full bg-[radial-gradient(circle,rgba(255,0,110,0.3)_0%,transparent_70%)] filter blur-3xl animate-[drift_20s_ease-in-out_infinite]"></div>
+                    <div className="absolute top-[20%] right-[-5%] w-60 h-60 rounded-full bg-[radial-gradient(circle,rgba(131,56,236,0.2)_0%,transparent_70%)] filter blur-3xl animate-[drift_25s_ease-in-out_infinite_reverse]"></div>
+                    <div className="absolute bottom-[-20%] left-[20%] w-56 h-56 rounded-full bg-[radial-gradient(circle,rgba(58,134,255,0.2)_0%,transparent_70%)] filter blur-3xl animate-[drift_22s_ease-in-out_infinite]" style={{ animationDelay: '-10s' }}></div>
                 </div>
 
                  <div className="absolute inset-0 flex items-center justify-center">
                     <h3 className="text-2xl font-bold dark:text-white text-slate-800 drop-shadow-lg">Ship Faster</h3>
                  </div>
             </div>
+            <style>{`
+                @keyframes drift {
+                    0%, 100% { transform: translate(0, 0) scale(1); }
+                    25% { transform: translate(30px, -20px) scale(1.05); }
+                    50% { transform: translate(-20px, 20px) scale(0.95); }
+                    75% { transform: translate(20px, 30px) scale(1.02); }
+                }
+            `}</style>
         </ExampleContainer>
     )
 }
@@ -424,9 +432,16 @@ export const MeshGradientExample = () => {
 export const AuroraTextExample = () => {
   return (
     <ExampleContainer>
-      <h1 className="text-5xl font-black text-transparent bg-clip-text bg-[linear-gradient(45deg,#3b82f6,#8b5cf6,#ec4899,#3b82f6)] bg-[length:200%_auto] animate-shimmer dark:drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+      <h1 className="text-5xl font-black text-transparent bg-clip-text bg-[linear-gradient(45deg,#3b82f6,#8b5cf6,#ec4899,#3b82f6)] bg-[length:200%_auto] animate-[aurora_3s_linear_infinite] dark:drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]">
         VELOCITY
       </h1>
+      <style>{`
+        @keyframes aurora {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}</style>
     </ExampleContainer>
   );
 };
@@ -449,12 +464,17 @@ export const NeumorphicSwitchExample = () => {
   const [isOn, setIsOn] = useState(false);
   return (
     <ExampleContainer className="dark:bg-[#2d2d2d] bg-[#e0e5ec]">
-      <button 
-        onClick={(e) => { e.stopPropagation(); setIsOn(!isOn); }}
-        className={`w-20 h-10 rounded-full p-1 transition-all duration-300 flex items-center ${isOn ? 'dark:shadow-[inset_3px_3px_6px_#1e1e1e,inset_-3px_-3px_6px_#3c3c3c] shadow-[inset_4px_4px_8px_#bec3c9,inset_-4px_-4px_8px_#ffffff]' : 'dark:shadow-[5px_5px_10px_#1e1e1e,-5px_-5px_10px_#3c3c3c] shadow-[6px_6px_12px_#bec3c9,-6px_-6px_12px_#ffffff]'}`}
-      >
-        <div className={`w-8 h-8 rounded-full transition-all duration-300 transform ${isOn ? 'translate-x-10 bg-cyan-400' : 'translate-x-0 bg-slate-400'}`}></div>
-      </button>
+      <div className="flex items-center gap-4">
+        <button
+          onClick={(e) => { e.stopPropagation(); setIsOn(!isOn); }}
+          className={`w-20 h-10 rounded-full p-1 transition-all duration-300 flex items-center ${isOn ? 'dark:shadow-[inset_3px_3px_6px_#1e1e1e,inset_-3px_-3px_6px_#3c3c3c] shadow-[inset_4px_4px_8px_#bec3c9,inset_-4px_-4px_8px_#ffffff] dark:bg-[#2d2d2d] bg-[#e0e5ec]' : 'dark:shadow-[5px_5px_10px_#1e1e1e,-5px_-5px_10px_#3c3c3c] shadow-[6px_6px_12px_#bec3c9,-6px_-6px_12px_#ffffff] dark:bg-[#2d2d2d] bg-[#e0e5ec]'}`}
+        >
+          <div className={`w-8 h-8 rounded-full transition-all duration-300 transform shadow-md ${isOn ? 'translate-x-10 bg-cyan-400 shadow-cyan-400/50' : 'translate-x-0 bg-slate-400 dark:bg-slate-500'}`}></div>
+        </button>
+        <span className={`text-sm font-medium transition-colors ${isOn ? 'text-cyan-500 dark:text-cyan-400' : 'text-slate-500 dark:text-slate-400'}`}>
+          {isOn ? 'ON' : 'OFF'}
+        </span>
+      </div>
     </ExampleContainer>
   );
 };
@@ -476,9 +496,19 @@ export const HolographicCardExample = () => {
 export const TypewriterExample = () => {
   return (
     <ExampleContainer>
-      <div className="font-mono text-xl dark:text-green-400 text-slate-800 border-r-2 border-current animate-typewriter overflow-hidden whitespace-nowrap w-0">
+      <div className="font-mono text-xl dark:text-green-400 text-slate-800 border-r-2 border-current animate-[typewriter_2s_steps(22)_forwards,blink_0.7s_infinite]">
         console.log("Hello!");
       </div>
+      <style>{`
+        @keyframes typewriter {
+          from { width: 0; }
+          to { width: 22ch; }
+        }
+        @keyframes blink {
+          0%, 100% { border-color: currentColor; }
+          50% { border-color: transparent; }
+        }
+      `}</style>
     </ExampleContainer>
   );
 };
@@ -488,10 +518,10 @@ export const MagicBorderBeamExample = () => {
   return (
     <ExampleContainer>
       <div className="relative w-64 h-40 rounded-xl bg-slate-900 overflow-hidden flex items-center justify-center">
-        <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-[150%] h-[150%] bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] animate-spin-slow opacity-50"></div>
+        <div className="absolute inset-[-2px] flex items-center justify-center animate-[spin_4s_linear_infinite]">
+            <div className="w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent_0_340deg,#8b5cf6_350deg,#ec4899_360deg)] opacity-70"></div>
         </div>
-        <div className="absolute inset-[1px] bg-[#0a0a0b] rounded-xl flex items-center justify-center">
+        <div className="absolute inset-[2px] bg-slate-900 rounded-xl flex items-center justify-center">
             <span className="text-white font-bold">Deploy Now</span>
         </div>
       </div>
@@ -594,15 +624,43 @@ export const RadarPulseExample = () => {
 
 // --- 28. Ripple Button ---
 export const RippleButtonExample = () => {
+    const [ripples, setRipples] = useState<{x: number; y: number; id: number}[]>([]);
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const id = Date.now();
+        setRipples(prev => [...prev, {x, y, id}]);
+        setTimeout(() => setRipples(prev => prev.filter(r => r.id !== id)), 600);
+    };
+
     return (
         <ExampleContainer>
             <button
-                className="relative overflow-hidden px-8 py-3 bg-blue-600 text-white rounded-full font-bold active:scale-95 transition-transform group"
-                onClick={(e) => e.stopPropagation()}
+                className="relative overflow-hidden px-8 py-3 bg-blue-600 text-white rounded-full font-bold active:scale-95 transition-transform"
+                onClick={handleClick}
             >
                 Try Free
-                <div className="absolute inset-0 pointer-events-none group-active:after:content-[''] group-active:after:absolute group-active:after:top-1/2 group-active:after:left-1/2 group-active:after:w-4 group-active:after:h-4 group-active:after:bg-white/30 group-active:after:rounded-full group-active:after:-translate-x-1/2 group-active:after:-translate-y-1/2 group-active:after:animate-ripple"></div>
+                {ripples.map(ripple => (
+                    <span
+                        key={ripple.id}
+                        className="absolute bg-white/30 rounded-full animate-[ripple_0.6s_ease-out]"
+                        style={{
+                            left: ripple.x,
+                            top: ripple.y,
+                            transform: 'translate(-50%, -50%)',
+                        }}
+                    />
+                ))}
             </button>
+            <style>{`
+                @keyframes ripple {
+                    0% { width: 0; height: 0; opacity: 0.5; }
+                    100% { width: 200px; height: 200px; opacity: 0; }
+                }
+            `}</style>
         </ExampleContainer>
     )
 }
@@ -610,19 +668,29 @@ export const RippleButtonExample = () => {
 // --- 29. Sliding Tabs ---
 export const SlidingTabsExample = () => {
     const [active, setActive] = useState(0);
+    const tabs = ['Overview', 'Analytics', 'Settings'];
+    const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
     return (
         <ExampleContainer>
             <div className="relative flex bg-slate-200 dark:bg-slate-800 rounded-full p-1">
-                {['Overview', 'Analytics', 'Settings'].map((tab, i) => (
+                {tabs.map((tab, i) => (
                     <button
                         key={tab}
+                        ref={el => { tabRefs.current[i] = el; }}
                         onClick={(e) => { e.stopPropagation(); setActive(i); }}
                         className={`relative z-10 px-4 py-2 text-sm font-medium transition-colors ${active === i ? 'text-slate-900 dark:text-white' : 'text-slate-500'}`}
                     >
                         {tab}
                     </button>
                 ))}
-                <div className="absolute top-1 bottom-1 bg-white dark:bg-slate-600 rounded-full shadow-sm transition-all duration-300" style={{ left: `${active * 33.33}%`, width: '33.33%' }}></div>
+                <div
+                    className="absolute top-1 bottom-1 bg-white dark:bg-slate-600 rounded-full shadow-sm transition-all duration-300"
+                    style={{
+                        left: `calc(${(100 / tabs.length) * active}% + 4px)`,
+                        width: `calc(${100 / tabs.length}% - 8px)`,
+                    }}
+                ></div>
             </div>
         </ExampleContainer>
     )
@@ -659,13 +727,31 @@ export const BlurFocusCardsExample = () => {
 
 // --- 32. Interactive Grid Pattern ---
 export const InteractiveGridPatternExample = () => {
+    const [activeSquares, setActiveSquares] = useState<Set<number>>(new Set());
+
+    const handleMouseEnter = (index: number) => {
+        setActiveSquares(prev => new Set([...prev, index]));
+        setTimeout(() => {
+            setActiveSquares(prev => {
+                const newSet = new Set(prev);
+                newSet.delete(index);
+                return newSet;
+            });
+        }, 1000);
+    };
+
     return (
         <ExampleContainer>
              <div className="grid grid-cols-12 gap-0.5 p-4 rounded-xl dark:bg-[#0f0f1a] bg-slate-100 border dark:border-white/10 border-slate-200 shadow-inner overflow-hidden">
                 {[...Array(144)].map((_, i) => (
-                    <div 
-                        key={i} 
-                        className="w-3 h-3 rounded-[1px] dark:bg-white/5 bg-slate-300/50 transition-colors duration-1000 ease-out hover:bg-violet-500 hover:duration-0 hover:delay-0 cursor-crosshair"
+                    <div
+                        key={i}
+                        onMouseEnter={() => handleMouseEnter(i)}
+                        className={`w-3 h-3 rounded-[1px] transition-all duration-500 cursor-crosshair ${
+                            activeSquares.has(i)
+                                ? 'bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.6)]'
+                                : 'dark:bg-white/5 bg-slate-300/50'
+                        }`}
                     ></div>
                 ))}
              </div>
@@ -677,13 +763,19 @@ export const InteractiveGridPatternExample = () => {
 export const ButtonShineSweepExample = () => {
     return (
         <ExampleContainer>
-            <button 
+            <button
                 className="relative px-8 py-3 bg-slate-900 text-white font-bold rounded-lg overflow-hidden group"
                 onClick={(e) => e.stopPropagation()}
             >
                 Get Started
-                <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:animate-shine"></div>
+                <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 group-hover:animate-[shine_0.8s_ease-in-out]"></div>
             </button>
+            <style>{`
+                @keyframes shine {
+                    0% { left: -100%; }
+                    100% { left: 100%; }
+                }
+            `}</style>
         </ExampleContainer>
     )
 }
@@ -709,15 +801,21 @@ export const SunMoonToggleExample = () => {
 export const DotPulseLoaderExample = () => {
     return (
         <ExampleContainer>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
                 {[0, 150, 300].map((delay) => (
-                    <div 
-                        key={delay} 
-                        className="w-4 h-4 bg-violet-500 rounded-full animate-bounce" 
+                    <div
+                        key={delay}
+                        className="w-4 h-4 bg-violet-500 rounded-full animate-[dotPulse_1s_ease-in-out_infinite]"
                         style={{ animationDelay: `${delay}ms` }}
                     ></div>
                 ))}
             </div>
+            <style>{`
+                @keyframes dotPulse {
+                    0%, 100% { transform: scale(1); opacity: 1; }
+                    50% { transform: scale(0.5); opacity: 0.5; }
+                }
+            `}</style>
         </ExampleContainer>
     )
 }
@@ -759,10 +857,20 @@ export const CodeTypingExample = () => {
                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                 </div>
-                <div className="text-green-400 animate-typewriter overflow-hidden whitespace-nowrap w-0 border-r-2 border-green-400">
+                <div className="text-green-400 overflow-hidden whitespace-nowrap border-r-2 border-green-400 animate-[codeType_2.5s_steps(19)_forwards,codeBlink_0.7s_infinite]">
                     npx velocity deploy
                 </div>
             </div>
+            <style>{`
+                @keyframes codeType {
+                    from { width: 0; }
+                    to { width: 19ch; }
+                }
+                @keyframes codeBlink {
+                    0%, 100% { border-color: #4ade80; }
+                    50% { border-color: transparent; }
+                }
+            `}</style>
         </ExampleContainer>
     )
 }
@@ -802,13 +910,19 @@ export const BreadcrumbCollapseExample = () => {
 export const BadgePulseExample = () => {
     return (
         <ExampleContainer>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-medium border border-green-200">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm font-medium border border-green-200 dark:border-green-800">
+                <span className="relative flex h-3 w-3">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-[badgePing_1.5s_cubic-bezier(0,0,0.2,1)_infinite]"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
                 Live Status
             </span>
+            <style>{`
+                @keyframes badgePing {
+                    0% { transform: scale(1); opacity: 1; }
+                    75%, 100% { transform: scale(2); opacity: 0; }
+                }
+            `}</style>
         </ExampleContainer>
     )
 }
@@ -832,15 +946,27 @@ export const SearchBarExpandExample = () => {
     const [expanded, setExpanded] = useState(false);
     return (
         <ExampleContainer>
-            <div className={`flex items-center ${expanded ? 'w-64 px-3' : 'w-10 justify-center'} h-10 bg-white dark:bg-white/10 rounded-full shadow-sm border transition-all duration-300 overflow-hidden`}>
-                <button onClick={(e) => { e.stopPropagation(); setExpanded(!expanded); }} className="shrink-0"><SearchIcon size={18} className="text-slate-500" /></button>
-                <input 
-                    type="text" 
-                    placeholder="Search..." 
-                    className={`ml-2 bg-transparent outline-none text-sm w-full ${expanded ? 'opacity-100' : 'opacity-0'} transition-opacity`} 
-                    onClick={(e) => e.stopPropagation()}
-                />
-                {expanded && <button onClick={(e) => { e.stopPropagation(); setExpanded(false); }}><X size={14} className="text-slate-400" /></button>}
+            <div className={`flex items-center justify-center ${expanded ? 'w-64 px-3' : 'w-10'} h-10 bg-white dark:bg-white/10 rounded-full shadow-sm border dark:border-white/20 border-slate-200 transition-all duration-300 overflow-hidden`}>
+                <button
+                    onClick={(e) => { e.stopPropagation(); setExpanded(!expanded); }}
+                    className={`shrink-0 flex items-center justify-center ${expanded ? '' : 'w-full h-full'}`}
+                >
+                    <SearchIcon size={18} className="text-slate-500" />
+                </button>
+                {expanded && (
+                    <>
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            className="ml-2 bg-transparent outline-none text-sm w-full dark:text-white text-slate-700"
+                            onClick={(e) => e.stopPropagation()}
+                            autoFocus
+                        />
+                        <button onClick={(e) => { e.stopPropagation(); setExpanded(false); }}>
+                            <X size={14} className="text-slate-400 hover:text-slate-600" />
+                        </button>
+                    </>
+                )}
             </div>
         </ExampleContainer>
     )
@@ -942,26 +1068,37 @@ export const RetroGridExample = () => {
 // --- 49. Modern SaaS Hero ---
 export const ModernSaaSHeroExample = () => {
     return (
-        <ExampleContainer className="flex-col">
-            <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center">
-                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 text-violet-500 text-xs font-bold mb-4 border border-violet-500/20">
-                     <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse"></span>
-                     New Release 2.0
-                 </div>
-                 <h1 className="text-3xl font-bold dark:text-white text-slate-900 mb-4">
-                     Build faster with <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-pink-500">AI Power</span>
-                 </h1>
-                 <p className="text-sm dark:text-slate-400 text-slate-500 max-w-sm mb-6">
-                     Deploy your next project in seconds, not hours. Trusted by 10,000+ developers worldwide.
-                 </p>
-                 <div className="flex gap-3 mb-8">
-                     <button className="px-5 py-2 bg-violet-600 text-white rounded-lg text-sm font-bold shadow-lg shadow-violet-500/25 hover:bg-violet-500 transition-colors">Get Started</button>
-                     <button className="px-5 py-2 dark:bg-white/5 bg-slate-200 dark:text-white text-slate-700 rounded-lg text-sm font-bold hover:bg-slate-300 dark:hover:bg-white/10 transition-colors">Documentation</button>
-                 </div>
-                 
-                 {/* Dashboard Mockup */}
-                 <div className="w-64 h-32 bg-slate-900 rounded-t-xl border-t border-x border-slate-700 shadow-2xl p-2 relative overflow-hidden perspective-1000">
-                      <div className="w-full h-full bg-slate-800 rounded-lg opacity-80 border border-slate-700"></div>
+        <ExampleContainer className="flex-col dark:bg-slate-950 bg-slate-50">
+            <div className="w-full h-full flex flex-col items-center justify-center p-4 text-center relative overflow-hidden">
+                 {/* Background gradient */}
+                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-transparent to-pink-500/10 pointer-events-none"></div>
+
+                 <div className="relative z-10">
+                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400 text-xs font-bold mb-3 border border-violet-500/30">
+                         <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse"></span>
+                         New Release 2.0
+                     </div>
+                     <h1 className="text-2xl font-bold dark:text-white text-slate-900 mb-2">
+                         Build faster with <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-pink-500">AI Power</span>
+                     </h1>
+                     <p className="text-xs dark:text-slate-400 text-slate-600 max-w-xs mb-4">
+                         Deploy your next project in seconds.
+                     </p>
+                     <div className="flex gap-2 mb-4 justify-center">
+                         <button className="px-4 py-1.5 bg-violet-600 text-white rounded-lg text-xs font-bold shadow-lg shadow-violet-500/25 hover:bg-violet-500 transition-colors">Get Started</button>
+                         <button className="px-4 py-1.5 dark:bg-white/10 bg-white dark:text-white text-slate-700 rounded-lg text-xs font-bold border dark:border-white/20 border-slate-200 hover:bg-slate-100 dark:hover:bg-white/20 transition-colors">Docs</button>
+                     </div>
+
+                     {/* Dashboard Mockup */}
+                     <div className="w-56 h-24 bg-slate-900 rounded-t-lg border-t border-x border-slate-700 shadow-2xl p-1.5 relative mx-auto">
+                          <div className="w-full h-full bg-slate-800 rounded-md border border-slate-700 flex items-center justify-center">
+                              <div className="flex gap-1">
+                                  <div className="w-8 h-2 bg-violet-500/50 rounded"></div>
+                                  <div className="w-6 h-2 bg-pink-500/50 rounded"></div>
+                                  <div className="w-10 h-2 bg-blue-500/50 rounded"></div>
+                              </div>
+                          </div>
+                     </div>
                  </div>
             </div>
         </ExampleContainer>
@@ -1249,19 +1386,19 @@ export const NumberCounterExampleNew = () => {
       <div className="flex gap-8 text-center">
         <div>
           <div className="text-4xl font-bold dark:text-white text-slate-900">
-            <NumberCounter end={1234} duration={2000} />
+            <NumberCounter end={1234} duration={2000} triggerOnView={false} />
           </div>
           <p className="text-sm dark:text-slate-400 text-slate-500">Users</p>
         </div>
         <div>
           <div className="text-4xl font-bold dark:text-white text-slate-900">
-            $<NumberCounter end={99} duration={1500} decimals={0} />K
+            $<NumberCounter end={99} duration={1500} decimals={0} triggerOnView={false} />K
           </div>
           <p className="text-sm dark:text-slate-400 text-slate-500">Revenue</p>
         </div>
         <div>
           <div className="text-4xl font-bold dark:text-white text-slate-900">
-            <NumberCounter end={99.9} duration={2500} decimals={1} />%
+            <NumberCounter end={99.9} duration={2500} decimals={1} triggerOnView={false} />%
           </div>
           <p className="text-sm dark:text-slate-400 text-slate-500">Uptime</p>
         </div>
@@ -1291,11 +1428,11 @@ export const TextRevealExampleNew = () => {
   return (
     <ExampleContainer>
       <div className="text-center space-y-6">
-        <TextReveal direction="up" stagger={40} className="text-3xl font-bold dark:text-white text-slate-900">
+        <TextReveal direction="up" stagger={40} triggerOnView={false} className="text-3xl font-bold dark:text-white text-slate-900">
           Words reveal one by one
         </TextReveal>
-        <TextReveal direction="left" stagger={30} className="text-lg dark:text-slate-400 text-slate-500">
-          Scroll triggered animation
+        <TextReveal direction="left" stagger={30} triggerOnView={false} className="text-lg dark:text-slate-400 text-slate-500">
+          Animated text effect
         </TextReveal>
       </div>
     </ExampleContainer>
@@ -1570,14 +1707,15 @@ export const LogoCloudExample = () => {
 // --- 78. CTA Banner ---
 export const CTABannerExample = () => {
   return (
-    <ExampleContainer>
+    <ExampleContainer className="dark:bg-slate-950 bg-slate-100">
       <div className="w-full px-4">
         <CTABanner
           title="Ready to get started?"
-          description="Join thousands of teams already using our platform."
-          primaryCTA={{ text: 'Start Free Trial' }}
+          description="Join thousands already using our platform."
+          primaryCTA={{ text: 'Start Free' }}
           secondaryCTA={{ text: 'Learn More' }}
           variant="gradient"
+          animated={false}
         />
       </div>
     </ExampleContainer>
@@ -1658,15 +1796,33 @@ export const NotificationToastExample = () => {
 
 // --- 82. Morphing Text ---
 export const MorphingTextExample = () => {
+  const [variant, setVariant] = useState<'slide' | 'fade' | 'flip' | 'blur'>('slide');
+
   return (
     <ExampleContainer>
       <div className="text-center">
         <p className="dark:text-slate-400 text-slate-500 mb-2">We help you</p>
         <MorphingText
           texts={['Build', 'Ship', 'Scale', 'Grow']}
-          variant="slide"
+          variant={variant}
+          interval={2500}
           className="text-4xl font-black dark:text-white text-slate-900"
         />
+        <div className="flex gap-2 mt-6 justify-center">
+          {(['slide', 'fade', 'flip', 'blur'] as const).map((v) => (
+            <button
+              key={v}
+              onClick={(e) => { e.stopPropagation(); setVariant(v); }}
+              className={`px-3 py-1 text-xs rounded-full transition-colors ${
+                variant === v
+                  ? 'bg-violet-500 text-white'
+                  : 'dark:bg-white/10 bg-slate-200 dark:text-white text-slate-700'
+              }`}
+            >
+              {v}
+            </button>
+          ))}
+        </div>
       </div>
     </ExampleContainer>
   );
@@ -1824,13 +1980,13 @@ export const AnimatedCounterExample = () => {
       <div className="flex gap-8 text-center">
         <div>
           <div className="text-4xl font-bold dark:text-white text-slate-900">
-            <NumberCounter end={1000} duration={2000} />+
+            <NumberCounter end={1000} duration={2000} triggerOnView={false} />+
           </div>
           <p className="text-sm dark:text-slate-400 text-slate-500">Customers</p>
         </div>
         <div>
           <div className="text-4xl font-bold dark:text-white text-slate-900">
-            $<NumberCounter end={5} duration={1500} />M
+            $<NumberCounter end={5} duration={1500} triggerOnView={false} />M
           </div>
           <p className="text-sm dark:text-slate-400 text-slate-500">Revenue</p>
         </div>
@@ -1945,7 +2101,6 @@ export const getExampleComponent = (id: number) => {
     case 88: return <StackedCardsExample />;
     case 89: return <ElasticSliderExample />;
     case 90: return <TestimonialCarouselExample />;
-    case 91: return <AnimatedCounterExample />;
     default: return null;
   }
 };
