@@ -50,22 +50,26 @@ export const SwitchToggle: React.FC<SwitchToggleProps> = ({
     default: {
       track: checked
         ? 'bg-violet-600'
-        : 'bg-slate-300 dark:bg-slate-700',
-      thumb: 'bg-white',
+        : 'bg-slate-300 dark:bg-slate-600',
+      thumb: checked
+        ? 'bg-white shadow-md'
+        : 'bg-white shadow-md border border-slate-200 dark:border-transparent',
     },
     gradient: {
       track: checked
         ? 'bg-gradient-to-r from-violet-600 via-pink-500 to-cyan-500'
-        : 'bg-slate-300 dark:bg-slate-700',
-      thumb: 'bg-white',
+        : 'bg-slate-300 dark:bg-slate-600',
+      thumb: checked
+        ? 'bg-white shadow-md'
+        : 'bg-white shadow-md border border-slate-200 dark:border-transparent',
     },
     glow: {
       track: checked
         ? 'bg-violet-600 shadow-lg shadow-violet-500/50'
-        : 'bg-slate-300 dark:bg-slate-700',
+        : 'bg-slate-300 dark:bg-slate-600',
       thumb: checked
         ? 'bg-white shadow-md shadow-violet-300'
-        : 'bg-white',
+        : 'bg-white shadow-md border border-slate-200 dark:border-transparent',
     },
   };
 

@@ -80,14 +80,11 @@ export const IntegrationOrbit: React.FC<IntegrationOrbitProps> = ({
       {/* Orbiting Items */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center"
-        animate={{ rotate: isPaused ? 0 : 360 }}
+        animate={isPaused ? {} : { rotate: 360 }}
         transition={{
           duration: orbitSpeed,
           repeat: Infinity,
           ease: 'linear',
-        }}
-        style={{
-          animationPlayState: isPaused ? 'paused' : 'running',
         }}
       >
         {integrations.map((integration, index) => {
@@ -115,23 +112,13 @@ export const IntegrationOrbit: React.FC<IntegrationOrbitProps> = ({
                 className={`cursor-pointer transition-all duration-300 ${
                   isHovered ? 'z-30' : 'z-10'
                 }`}
-                style={{
-                  // Counter-rotate to keep items upright
-                  transform: isPaused ? 'none' : `rotate(${-angle}deg)`,
-                }}
               >
                 <motion.div
-                  animate={{
-                    // Counter the parent's rotation
-                    rotate: isPaused ? 0 : -360,
-                  }}
+                  animate={isPaused ? {} : { rotate: -360 }}
                   transition={{
                     duration: orbitSpeed,
                     repeat: Infinity,
                     ease: 'linear',
-                  }}
-                  style={{
-                    animationPlayState: isPaused ? 'paused' : 'running',
                   }}
                 >
                   <div
