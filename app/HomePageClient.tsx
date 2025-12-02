@@ -76,7 +76,7 @@ const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
           </span>
         </h2>
         <p className={`text-xl max-w-2xl mx-auto font-light mb-10 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-          {prompts.length} production-ready React components with live previews. Copy the code, customize, and ship faster.
+          {prompts.length} curated design prompts with live previews. Copy the prompt, use with any AI, and build beautiful interfaces.
         </p>
       </div>
 

@@ -63,9 +63,10 @@ const HeaderNav: React.FC = () => {
               >
                 CATALOG
               </Link>
-              <a href="#" className={`flex items-center gap-2 transition-colors hover:text-violet-500 ${isDarkMode ? 'hover:text-white' : 'hover:text-slate-900'}`}>
+              <a href="#" className={`flex items-center gap-2 transition-colors cursor-not-allowed opacity-60 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
                 <Github size={16} />
                 GITHUB
+                <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-violet-500/20 text-violet-400 font-bold">SOON</span>
               </a>
             </div>
 
@@ -101,11 +102,12 @@ const HeaderNav: React.FC = () => {
               </div>
             ) : (
               <button
-                onClick={() => setIsAuthModalOpen(true)}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all font-bold tracking-tight text-xs uppercase ${isDarkMode ? 'bg-white text-black hover:bg-slate-200' : 'bg-slate-900 text-white hover:bg-slate-800'}`}
+                disabled
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all font-bold tracking-tight text-xs uppercase cursor-not-allowed opacity-60 ${isDarkMode ? 'bg-white/20 text-white/60' : 'bg-slate-300 text-slate-500'}`}
               >
                 <UserIcon size={14} />
                 <span>Sign In</span>
+                <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-violet-500/30 text-violet-400 font-bold">SOON</span>
               </button>
             )}
           </nav>
