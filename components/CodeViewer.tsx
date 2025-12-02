@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Copy, Terminal, Loader2, Code2, Check, Sparkles, MessageSquareText } from 'lucide-react';
-import { generateComponentCode } from '../services/geminiService';
+import { Copy, Terminal, Code2, Check, MessageSquareText } from 'lucide-react';
 import { DesignPrompt } from '../types';
 import { CODE_EXAMPLES } from '../exampleCode';
 
@@ -14,8 +13,6 @@ interface CodeViewerProps {
 
 const CodeViewer: React.FC<CodeViewerProps> = ({ prompt, onClose, isEmbedded = false }) => {
   const [code, setCode] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [isCopied, setIsCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<'prompt' | 'code'>('prompt');
 
@@ -25,21 +22,6 @@ const CodeViewer: React.FC<CodeViewerProps> = ({ prompt, onClose, isEmbedded = f
       setCode(CODE_EXAMPLES[prompt.id]);
     }
   }, [prompt.id]);
-
-  const handleGenerate = async () => {
-    setLoading(true);
-    setError(null);
-    setCode(null);
-    try {
-      const result = await generateComponentCode(prompt.title, prompt.description);
-      setCode(result.code);
-      setActiveTab('code');
-    } catch (err) {
-      setError("Failed to generate code. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -196,35 +178,18 @@ ${prompt.accessibility || 'Ensure proper contrast and keyboard accessibility.'}`
               )}
             </div>
 
-            {/* AI Generate button */}
-            <div className="mt-4 flex items-center justify-between">
+            <div className="mt-4">
               <p className="text-[10px] font-mono uppercase dark:text-slate-600 text-slate-400">
                 Copy this prompt to use with any AI
               </p>
-              <button
-                onClick={handleGenerate}
-                disabled={loading}
-                className="px-4 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-lg font-medium transition-all shadow-lg shadow-violet-500/20 flex items-center gap-2 text-xs disabled:opacity-50"
-              >
-                {loading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
-                Generate with AI
-              </button>
             </div>
-            {error && <p className="text-red-400 mt-2 text-xs">{error}</p>}
           </div>
         )}
 
         {/* Code Tab Content */}
         {activeTab === 'code' && (
           <>
-            {loading && (
-              <div className="flex flex-col items-center justify-center h-48">
-                <Loader2 size={24} className="text-violet-500 animate-spin mb-3" />
-                <p className="animate-pulse font-mono text-xs dark:text-slate-500 text-slate-400">Generating code...</p>
-              </div>
-            )}
-
-            {!loading && code && (
+            {code && (
               <div className="relative group animate-in fade-in duration-500">
                 <div className="absolute right-4 top-4 z-10">
                   <button
@@ -243,18 +208,12 @@ ${prompt.accessibility || 'Ensure proper contrast and keyboard accessibility.'}`
               </div>
             )}
 
-            {!loading && !code && (
+            {!code && (
               <div className="flex flex-col items-center justify-center h-48 border-2 border-dashed rounded-xl dark:border-white/10 dark:bg-white/[0.02] border-slate-200 bg-slate-50">
                 <Code2 size={32} className="mb-3 dark:text-slate-700 text-slate-400" />
-                <p className="text-xs mb-4 text-center max-w-[200px] dark:text-slate-500 text-slate-500">
-                  No sample code available. Generate one using AI.
+                <p className="text-xs text-center max-w-[200px] dark:text-slate-500 text-slate-500">
+                  No sample code available for this component.
                 </p>
-                <button
-                  onClick={handleGenerate}
-                  className="px-4 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-lg font-medium transition-all shadow-lg shadow-violet-500/20 flex items-center gap-2 text-xs"
-                >
-                  <Sparkles size={14} /> Generate
-                </button>
               </div>
             )}
           </>
