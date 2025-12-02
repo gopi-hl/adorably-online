@@ -71,7 +71,16 @@ const HomePageClient: React.FC<HomePageClientProps> = ({ prompts }) => {
         <p className="font-mono text-violet-500 text-xs tracking-[0.2em] uppercase mb-6">UI Component Library</p>
         <h2 className={`text-5xl md:text-7xl font-bold mb-8 leading-[0.9] ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
           Build Stunning UIs<br />
-          <span className="font-serif italic bg-gradient-to-r from-pink-500 via-violet-500 to-blue-500 bg-clip-text text-transparent pr-4" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          <span
+            className="font-serif italic pr-4"
+            style={{
+              background: 'linear-gradient(to right, #ec4899, #8b5cf6, #3b82f6)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              color: 'transparent'
+            }}
+          >
             with Simple Prompts
           </span>
         </h2>
