@@ -65,6 +65,13 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
                         <div className="w-px h-4 bg-slate-300 dark:bg-white/10 mx-2"></div>
 
                         <button
+                            onClick={handleCopyPrompt}
+                            className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-500 hover:text-slate-900"
+                        >
+                            {promptCopied ? <span className="text-green-500 flex items-center gap-1"><Check size={14}/> Copied</span> : "Copy Prompt"}
+                        </button>
+
+                        <button
                             onClick={handleCopyCode}
                             className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-500 hover:text-slate-900"
                         >
