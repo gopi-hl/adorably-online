@@ -5,12 +5,15 @@ import LayoutWrapper from '@/components/LayoutWrapper';
 
 export const metadata: Metadata = {
   title: 'Adorably.online - UI Design Prompts',
-  description: 'A curated collection of 71 premium design effects. Preview live, copy the prompt, or generate the React code instantly.',
-  keywords: ['UI design', 'React components', 'Tailwind CSS', 'design prompts', 'animations', 'interactions'],
+  description: 'A curated collection of 90 premium design effects. Preview live, copy the prompt, or generate the React code instantly.',
+  keywords: ['UI design', 'React components', 'Tailwind CSS', 'design prompts', 'animations', 'interactions', 'dark mode'],
   openGraph: {
     title: 'Adorably.online - UI Design Prompts',
-    description: 'A curated collection of 71 premium design effects. Preview live, copy the prompt, or generate the React code instantly.',
+    description: 'A curated collection of 90 premium design effects. Preview live, copy the prompt, or generate the React code instantly.',
     type: 'website',
+  },
+  other: {
+    'color-scheme': 'dark light',
   },
 };
 
