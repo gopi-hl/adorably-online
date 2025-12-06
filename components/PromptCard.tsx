@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { DesignPrompt } from '../types';
 import { getExampleComponent, GenericExample } from './LiveExamples';
-import { Copy, Check, Heart, Code2, Terminal, ArrowRight, Layers } from 'lucide-react';
-import { CODE_EXAMPLES } from '../exampleCode';
+import { Copy, Check, Heart, Code2, ArrowRight } from 'lucide-react';
+import { FEATURE_FLAGS } from '../featureFlags';
 
 interface PromptCardProps {
   prompt: DesignPrompt;
@@ -17,7 +17,6 @@ interface PromptCardProps {
 
 const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = 'grid', isFavorite, onToggleFavorite, onOpenCode }) => {
   const [promptCopied, setPromptCopied] = useState(false);
-  const [codeCopied, setCodeCopied] = useState(false);
   const LiveComponent = getExampleComponent(prompt.id);
 
   const handleCopyPrompt = (e: React.MouseEvent) => {
@@ -25,16 +24,6 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
     navigator.clipboard.writeText(prompt.description);
     setPromptCopied(true);
     setTimeout(() => setPromptCopied(false), 2000);
-  };
-
-  const handleCopyCode = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const code = CODE_EXAMPLES[prompt.id];
-    if (code) {
-      navigator.clipboard.writeText(code);
-      setCodeCopied(true);
-      setTimeout(() => setCodeCopied(false), 2000);
-    }
   };
 
   // --- LIST MODE LAYOUT (Linear Section) ---
@@ -71,19 +60,14 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
                             {promptCopied ? <span className="text-green-500 flex items-center gap-1"><Check size={14}/> Copied</span> : "Copy Prompt"}
                         </button>
 
-                        <button
-                            onClick={handleCopyCode}
-                            className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-500 hover:text-slate-900"
-                        >
-                            {codeCopied ? <span className="text-green-500 flex items-center gap-1"><Check size={14}/> Copied</span> : "Copy Code"}
-                        </button>
-
-                        <button
-                            onClick={(e) => { e.stopPropagation(); onToggleFavorite(); }}
-                            className={`p-2 rounded-full transition-colors ${isFavorite ? 'text-pink-500' : 'text-slate-500 hover:text-pink-500'}`}
-                        >
-                            <Heart size={18} className={isFavorite ? "fill-current" : ""} />
-                        </button>
+                        {FEATURE_FLAGS.ENABLE_AUTH_FEATURES && (
+                          <button
+                              onClick={(e) => { e.stopPropagation(); onToggleFavorite(); }}
+                              className={`p-2 rounded-full transition-colors ${isFavorite ? 'text-pink-500' : 'text-slate-500 hover:text-pink-500'}`}
+                          >
+                              <Heart size={18} className={isFavorite ? "fill-current" : ""} />
+                          </button>
+                        )}
                      </div>
                  </div>
             </div>
@@ -127,22 +111,24 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
          </div>
 
         {/* Floating Controls */}
-        <div className="absolute top-6 right-6 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0 z-20">
-            <button 
-                onClick={(e) => {
-                    e.stopPropagation();
-                    onToggleFavorite();
-                }}
-                className={`w-10 h-10 rounded-full backdrop-blur-md flex items-center justify-center border transition-all shadow-lg ${
-                    isFavorite
-                    ? 'bg-pink-500 text-white border-pink-500'
-                    : 'dark:bg-black/50 dark:text-white dark:hover:bg-white dark:hover:text-black dark:border-white/10 bg-white/80 text-slate-700 hover:bg-slate-900 hover:text-white border-slate-200'
-                }`}
-                title="Add to Favorites"
-            >
-                <Heart size={18} className={isFavorite ? "fill-current" : ""} />
-            </button>
-        </div>
+        {FEATURE_FLAGS.ENABLE_AUTH_FEATURES && (
+          <div className="absolute top-6 right-6 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0 z-20">
+              <button
+                  onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleFavorite();
+                  }}
+                  className={`w-10 h-10 rounded-full backdrop-blur-md flex items-center justify-center border transition-all shadow-lg ${
+                      isFavorite
+                      ? 'bg-pink-500 text-white border-pink-500'
+                      : 'dark:bg-black/50 dark:text-white dark:hover:bg-white dark:hover:text-black dark:border-white/10 bg-white/80 text-slate-700 hover:bg-slate-900 hover:text-white border-slate-200'
+                  }`}
+                  title="Add to Favorites"
+              >
+                  <Heart size={18} className={isFavorite ? "fill-current" : ""} />
+              </button>
+          </div>
+        )}
 
         <div className="absolute top-6 left-6 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-4 group-hover:translate-x-0 z-20">
              <span className="font-mono text-[10px] uppercase dark:bg-black/60 bg-white/90 backdrop-blur border dark:border-white/10 border-slate-200 dark:text-white text-slate-800 px-3 py-1.5 rounded-full shadow-sm">
@@ -167,35 +153,19 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, index = 0, viewMode = '
         </p>
         
         <div className="mt-auto flex items-center justify-between border-t pt-6 gap-2 dark:border-white/5 border-slate-100">
-            <div className="flex items-center gap-4">
-                <button
-                    onClick={handleCopyPrompt}
-                    className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-500 hover:text-slate-900"
-                    title="Copy Prompt Description"
-                >
-                    {promptCopied ? (
-                        <span className="text-green-500 flex items-center gap-1"><Check size={12}/> Copied</span>
-                    ) : (
-                        <span className="flex items-center gap-1 group/btn">
-                            <Copy size={12} className="group-hover/btn:text-violet-500 transition-colors" /> Prompt
-                        </span>
-                    )}
-                </button>
-
-                <button
-                    onClick={handleCopyCode}
-                    className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-500 hover:text-slate-900"
-                    title="Copy Component Code"
-                >
-                    {codeCopied ? (
-                        <span className="text-green-500 flex items-center gap-1"><Check size={12}/> Copied</span>
-                    ) : (
-                        <span className="flex items-center gap-1 group/btn">
-                            <Terminal size={12} className="group-hover/btn:text-violet-500 transition-colors" /> Code
-                        </span>
-                    )}
-                </button>
-            </div>
+            <button
+                onClick={handleCopyPrompt}
+                className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider transition-colors dark:text-slate-500 dark:hover:text-white text-slate-500 hover:text-slate-900"
+                title="Copy Prompt Description"
+            >
+                {promptCopied ? (
+                    <span className="text-green-500 flex items-center gap-1"><Check size={12}/> Copied</span>
+                ) : (
+                    <span className="flex items-center gap-1 group/btn">
+                        <Copy size={12} className="group-hover/btn:text-violet-500 transition-colors" /> Copy Prompt
+                    </span>
+                )}
+            </button>
 
             <button
                 onClick={(e) => {

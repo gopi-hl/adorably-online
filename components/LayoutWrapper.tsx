@@ -6,6 +6,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { Sparkles, Github, User as UserIcon, LogOut, Heart, Sun, Moon } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import AuthModal from './AuthModal';
+import { FEATURE_FLAGS } from '@/featureFlags';
 
 interface LayoutWrapperProps {
   children: ReactNode;
@@ -79,46 +80,50 @@ const HeaderNav: React.FC = () => {
               {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
-            {user ? (
-              <div className={`flex items-center gap-4 pl-6 border-l ${isDarkMode ? 'border-white/10' : 'border-slate-200'}`}>
-                <Link
-                  href="/?favorites=true"
-                  className={`flex items-center gap-2 transition-colors ${hasFavoritesParam ? 'text-pink-500' : 'hover:text-pink-400'}`}
-                >
-                  <Heart size={16} className={hasFavoritesParam ? "fill-current" : ""} />
-                  <span className="hidden sm:inline">FAVORITES</span>
-                  {favorites.length > 0 && (
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${isDarkMode ? 'bg-white/10 text-white' : 'bg-slate-200 text-slate-700'}`}>{favorites.length}</span>
-                  )}
-                </Link>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center text-white shadow-lg shadow-violet-500/20">
-                    <UserIcon size={14} />
+            {FEATURE_FLAGS.ENABLE_AUTH_FEATURES && (
+              user ? (
+                <div className={`flex items-center gap-4 pl-6 border-l ${isDarkMode ? 'border-white/10' : 'border-slate-200'}`}>
+                  <Link
+                    href="/?favorites=true"
+                    className={`flex items-center gap-2 transition-colors ${hasFavoritesParam ? 'text-pink-500' : 'hover:text-pink-400'}`}
+                  >
+                    <Heart size={16} className={hasFavoritesParam ? "fill-current" : ""} />
+                    <span className="hidden sm:inline">FAVORITES</span>
+                    {favorites.length > 0 && (
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${isDarkMode ? 'bg-white/10 text-white' : 'bg-slate-200 text-slate-700'}`}>{favorites.length}</span>
+                    )}
+                  </Link>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center text-white shadow-lg shadow-violet-500/20">
+                      <UserIcon size={14} />
+                    </div>
+                    <button onClick={handleLogout} className="text-slate-500 hover:text-red-400" title="Sign Out">
+                      <LogOut size={16} />
+                    </button>
                   </div>
-                  <button onClick={handleLogout} className="text-slate-500 hover:text-red-400" title="Sign Out">
-                    <LogOut size={16} />
-                  </button>
                 </div>
-              </div>
-            ) : (
-              <button
-                disabled
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all font-bold tracking-tight text-xs uppercase cursor-not-allowed opacity-60 ${isDarkMode ? 'bg-white/20 text-white/60' : 'bg-slate-300 text-slate-500'}`}
-              >
-                <UserIcon size={14} />
-                <span>Sign In</span>
-                <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-violet-500/30 text-violet-400 font-bold">SOON</span>
-              </button>
+              ) : (
+                <button
+                  disabled
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all font-bold tracking-tight text-xs uppercase cursor-not-allowed opacity-60 ${isDarkMode ? 'bg-white/20 text-white/60' : 'bg-slate-300 text-slate-500'}`}
+                >
+                  <UserIcon size={14} />
+                  <span>Sign In</span>
+                  <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-violet-500/30 text-violet-400 font-bold">SOON</span>
+                </button>
+              )
             )}
           </nav>
         </div>
       </header>
 
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-        onLogin={handleLogin}
-      />
+      {FEATURE_FLAGS.ENABLE_AUTH_FEATURES && (
+        <AuthModal
+          isOpen={isAuthModalOpen}
+          onClose={() => setIsAuthModalOpen(false)}
+          onLogin={handleLogin}
+        />
+      )}
     </>
   );
 };
