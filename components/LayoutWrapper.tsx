@@ -64,10 +64,14 @@ const HeaderNav: React.FC = () => {
               >
                 CATALOG
               </Link>
-              <a href="#" className={`flex items-center gap-2 transition-colors cursor-not-allowed opacity-60 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+              <a
+                href="https://github.com/gopi-hl/adorably-online"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center gap-2 transition-colors hover:text-violet-500 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}
+              >
                 <Github size={16} />
                 GITHUB
-                <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-violet-500/20 text-violet-400 font-bold">SOON</span>
               </a>
             </div>
 
