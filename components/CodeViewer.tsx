@@ -33,11 +33,8 @@ const CodeViewer: React.FC<CodeViewerProps> = ({ prompt, onClose, isEmbedded = f
     ? "flex flex-col h-full w-full rounded-2xl border overflow-hidden dark:bg-[#0a0a0b] dark:border-white/5 bg-slate-50 border-slate-200"
     : "flex flex-col h-full w-full md:w-[600px] shadow-2xl absolute right-0 top-0 bottom-0 z-50 animate-in slide-in-from-right duration-300 dark:bg-[#0a0a0b] dark:border-l dark:border-white/10 dark:shadow-black/50 bg-white border-l border-slate-200 shadow-slate-200/50";
 
-  // Build the full prompt text from the design prompt
-  const fullPromptText = `${prompt.description}
-
-Use Cases:
-${prompt.useCases?.map(uc => `• ${uc}`).join('\n') || 'N/A'}
+  // Build the prompt text (description + implementation tips + accessibility, but NOT use cases)
+  const promptText = `${prompt.description}
 
 Implementation Tips:
 ${prompt.implementationTips?.map(tip => `• ${tip}`).join('\n') || 'N/A'}
@@ -133,7 +130,7 @@ ${prompt.accessibility || 'Ensure proper contrast and keyboard accessibility.'}`
           <div className="relative group animate-in fade-in duration-500">
             <div className="absolute right-4 top-4 z-10">
               <button
-                onClick={() => copyToClipboard(fullPromptText)}
+                onClick={() => copyToClipboard(promptText)}
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-md backdrop-blur-md transition-all border ${isCopied
                   ? 'bg-green-500/20 border-green-500/50 text-green-500'
                   : 'dark:bg-slate-800/80 dark:border-white/10 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white bg-white/80 border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}
@@ -147,17 +144,6 @@ ${prompt.accessibility || 'Ensure proper contrast and keyboard accessibility.'}`
                 <span className="text-violet-400 font-semibold">Prompt:</span>
                 <p className="mt-2 text-slate-200">{prompt.description}</p>
               </div>
-
-              {prompt.useCases && prompt.useCases.length > 0 && (
-                <div className="mb-4">
-                  <span className="text-emerald-400 font-semibold">Use Cases:</span>
-                  <ul className="mt-2 space-y-1">
-                    {prompt.useCases.map((uc, i) => (
-                      <li key={i} className="text-slate-400">• {uc}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
 
               {prompt.implementationTips && prompt.implementationTips.length > 0 && (
                 <div className="mb-4">

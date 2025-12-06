@@ -11,6 +11,7 @@ import {
   ArrowLeft, Lightbulb, Accessibility, Layers, Heart, Share2, Maximize2,
   ChevronDown
 } from 'lucide-react';
+import { FEATURE_FLAGS } from '@/featureFlags';
 
 interface PromptDetailClientProps {
   prompt: DesignPrompt;
@@ -69,16 +70,18 @@ const PromptDetailClient: React.FC<PromptDetailClientProps> = ({ prompt }) => {
         </Link>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={() => toggleFavorite(prompt.id)}
-            className={`p-1.5 rounded-full transition-all ${promptIsFavorite
-                ? 'text-pink-500'
-                : 'dark:text-slate-500 dark:hover:text-white text-slate-400 hover:text-slate-900'
-              }`}
-            title="Toggle Favorite"
-          >
-            <Heart size={16} className={promptIsFavorite ? "fill-current" : ""} />
-          </button>
+          {FEATURE_FLAGS.ENABLE_AUTH_FEATURES && (
+            <button
+              onClick={() => toggleFavorite(prompt.id)}
+              className={`p-1.5 rounded-full transition-all ${promptIsFavorite
+                  ? 'text-pink-500'
+                  : 'dark:text-slate-500 dark:hover:text-white text-slate-400 hover:text-slate-900'
+                }`}
+              title="Toggle Favorite"
+            >
+              <Heart size={16} className={promptIsFavorite ? "fill-current" : ""} />
+            </button>
+          )}
           <button className="p-1.5 rounded-full transition-colors dark:text-slate-500 dark:hover:text-white text-slate-400 hover:text-slate-900">
             <Share2 size={16} />
           </button>
