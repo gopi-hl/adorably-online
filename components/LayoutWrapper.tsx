@@ -12,6 +12,8 @@ interface LayoutWrapperProps {
   children: ReactNode;
 }
 
+const THEME_TOOLTIP_SHOWN_KEY = 'adorably-theme-tooltip-shown';
+
 // Header navigation component that uses searchParams
 const HeaderNav: React.FC = () => {
   const pathname = usePathname();
@@ -25,6 +27,34 @@ const HeaderNav: React.FC = () => {
     setIsAuthModalOpen,
     favorites,
   } = useApp();
+
+  const [showThemeTooltip, setShowThemeTooltip] = React.useState(false);
+
+  // Show tooltip for first-time visitors, auto-hide after 5 seconds
+  React.useEffect(() => {
+    const hasSeenTooltip = localStorage.getItem(THEME_TOOLTIP_SHOWN_KEY);
+    if (!hasSeenTooltip) {
+      // Small delay so the page loads first
+      const showTimer = setTimeout(() => setShowThemeTooltip(true), 1000);
+      return () => clearTimeout(showTimer);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (showThemeTooltip) {
+      const hideTimer = setTimeout(() => {
+        setShowThemeTooltip(false);
+        localStorage.setItem(THEME_TOOLTIP_SHOWN_KEY, 'true');
+      }, 5000);
+      return () => clearTimeout(hideTimer);
+    }
+  }, [showThemeTooltip]);
+
+  const handleThemeToggle = () => {
+    setShowThemeTooltip(false);
+    localStorage.setItem(THEME_TOOLTIP_SHOWN_KEY, 'true');
+    toggleTheme();
+  };
 
   const isHome = pathname === '/';
   const hasFavoritesParam = searchParams.get('favorites') === 'true';
@@ -76,13 +106,26 @@ const HeaderNav: React.FC = () => {
             </div>
 
             {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              className={`p-2 rounded-full transition-all ${isDarkMode ? 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white' : 'bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900'}`}
-              title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            >
-              {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
+            <div className="relative">
+              <button
+                onClick={handleThemeToggle}
+                className={`p-2 rounded-full transition-all ${isDarkMode ? 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white' : 'bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900'}`}
+                title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              >
+                {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
+
+              {/* Theme toggle tooltip */}
+              {showThemeTooltip && (
+                <div className="absolute top-full right-0 mt-3 animate-fade-in">
+                  {/* Arrow pointing up */}
+                  <div className="absolute -top-2 right-4 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-violet-500"></div>
+                  <div className="bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-medium px-3 py-2 rounded-lg shadow-lg shadow-violet-500/25 whitespace-nowrap">
+                    Switch to light mode
+                  </div>
+                </div>
+              )}
+            </div>
 
             {FEATURE_FLAGS.ENABLE_AUTH_FEATURES && (
               user ? (
